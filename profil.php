@@ -98,19 +98,24 @@
 
 <div class="inhalt">
 
-    <h1>Mein Konto</h1><br>
-    <div class="gemeinsam">
 
-        <div class="bild">
-            <img src="standardbild2.jpg" id="bild" class="rounded-circle"><br><br>
+    <div class="container">
+        <h1>Mein Konto</h1><br>
+        <div class="row">
+            <div class="col">
+                <div class="bild">
+                    <img src="standardbild2.jpg" id="bild" class="rounded-circle"><br><br>
+                </div>
+            </div>
+            <div class="col">
+                    Benutzername: <br><br>
+                    E-Mail:<br><br>
+                    Nachname:<br><br>
+                    Vorname:<br><br>
+            </div>
         </div>
 
-        <div id="information">
-            Benutzername: Name1234<br><br>
-            E-Mail:<br><br>
-            Nachname:<br><br>
-            Vorname:<br><br>
-        </div>
+
     </div>
     <div class="aendern">
         <div action="upload.php" method="post" enctype="multipart/form-data">

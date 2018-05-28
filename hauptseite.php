@@ -14,7 +14,7 @@
     <title>Meine Ablage</title>
     <style>
         .fas {
-            border: none;
+            border: none;h
             background-color: inherit;
         }
         .far{

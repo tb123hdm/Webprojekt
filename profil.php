@@ -115,7 +115,7 @@
             </div>
         </div>
 
-    <br>
+    <br><br>
     </div>
     <div class="aendern">
         <div action="upload.php" method="post" enctype="multipart/form-data">

@@ -77,9 +77,19 @@
                         </div>
                     </li>
                     <nav style='padding-left:50px' class="navbar navbar-light bg-light">
-                        <a class="navbar-brand" href="#">
-                            <img src="standardbild2.jpg" width="60" height="60" class="rounded-circle" alt="">
-                            er042
+                        <a class="navbar-brand" href="profil.php">
+                            <?php
+                            $pdo= new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset'=>'utf8'));
+                            $statement=$pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2'); //Über Session hier noch ID automatisch eintragen lassen
+                            $statement->execute(array());
+                            while($row=$statement->fetch()) {
+                                echo '<img src="data:image/jpg;base64,'.base64_encode($row['Bild']).'" class="rounded-circle" width="60" height="60"/>';}
+
+                            $statement=$pdo->prepare('SELECT Benutzername, Email, Nachname, Vorname FROM Nutzer WHERE ID=2');
+                            $statement->execute(array());
+                            while($row=$statement->fetch()) {
+                                echo $row["Benutzername"];}
+                            ?>
                         </a>
                     </nav>
                 </ul>
@@ -104,27 +114,58 @@
         <div class="row">
             <div class="col">
                 <div class="bild">
-                    <img src="standardbild2.jpg" id="bild" class="rounded-circle"><br><br>
+                    <?php
+                    $statement=$pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2');
+                    $statement->execute(array());
+                    while($row=$statement->fetch()) {
+                        echo '<img src="data:image/jpg;base64,'.base64_encode($row['Bild']).'" class="rounded-circle"/>';}
+                    ?>
                 </div>
             </div>
+
             <div class="col">
-                    Benutzername: <br><br>
-                    E-Mail:<br><br>
-                    Nachname:<br><br>
-                    Vorname:<br><br>
+                <br>
+                Name:
+                        <?php
+                        $statement=$pdo->prepare('SELECT Benutzername, Email, Nachname, Vorname FROM Nutzer WHERE ID=2');
+                        $statement->execute(array());
+                        while($row=$statement->fetch()) {
+                            echo $row["Benutzername"];}
+                ?><br><br>
+                Mailadresse:
+                <?php
+                        $statement=$pdo->prepare('SELECT Email FROM Nutzer WHERE ID=2');
+                        $statement->execute(array());
+                        while($row=$statement->fetch()) {
+                        echo $row["Email"];}
+                ?><br><br>
+                Vorname:
+                <?php
+                        $statement=$pdo->prepare('SELECT Vorname FROM Nutzer WHERE ID=2');
+                        $statement->execute(array());
+                        while($row=$statement->fetch()) {
+                        echo $row["Vorname"];}
+                ?><br><br>
+                Nachname:
+                <?php
+                        $statement=$pdo->prepare('SELECT Nachname FROM Nutzer WHERE ID=2');
+                        $statement->execute(array());
+                        while($row=$statement->fetch()) {
+                        echo $row["Nachname"];}
+                ?>
+                <br><br>
             </div>
         </div>
-
-    <br>
+    <br><br>
     </div>
     <div class="aendern">
-        <div action="upload.php" method="post" enctype="multipart/form-data">
-            Profilbild ändern <input type="file" name="bild" id="bild">
+        <form action="upload2.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="bild">
             <input type="submit" value="Hochladen" name="hochladen">
-            </form>
-        </div>
+        </form>
     </div>
-
+    </div>
 </div>
+            ?>
 </body>
 </html>

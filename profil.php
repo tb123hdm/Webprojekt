@@ -79,16 +79,24 @@
                     <nav style='padding-left:50px' class="navbar navbar-light bg-light">
                         <a class="navbar-brand" href="profil.php">
                             <?php
-                            $pdo= new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset'=>'utf8'));
-                            $statement=$pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2'); //Über Session hier noch ID automatisch eintragen lassen
-                            $statement->execute(array());
-                            while($row=$statement->fetch()) {
-                                echo '<img src="data:image/jpg;base64,'.base64_encode($row['Bild']).'" class="rounded-circle" width="60" height="60"/>';}
+                            $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset' => 'utf8'));
+                                $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2'); //Über Session hier noch ID automatisch eintragen lassen
+                                $statement->execute(array());
+                                while ($row = $statement->fetch()) {
+                                    if ($row['Bild']==NULL) {
+                                        echo "<img src='standardbild.jpg' class=\"rounded-circle\">";
+                                    }
+                                    else {
+                                        echo '<img src="data:image/jpg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle" width="60" height="60"/>';
+                                    }
+                                }
 
-                            $statement=$pdo->prepare('SELECT Benutzername, Email, Nachname, Vorname FROM Nutzer WHERE ID=2');
-                            $statement->execute(array());
-                            while($row=$statement->fetch()) {
-                                echo $row["Benutzername"];}
+                                $statement = $pdo->prepare('SELECT Benutzername FROM Nutzer WHERE ID=2');
+                                $statement->execute(array());
+                                while ($row = $statement->fetch()) {
+                                    echo $row["Benutzername"];
+                                }
+
                             ?>
                         </a>
                     </nav>
@@ -115,10 +123,16 @@
             <div class="col">
                 <div class="bild">
                     <?php
-                    $statement=$pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2');
+                    $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2');
                     $statement->execute(array());
-                    while($row=$statement->fetch()) {
-                        echo '<img src="data:image/jpg;base64,'.base64_encode($row['Bild']).'" class="rounded-circle"/>';}
+                    while ($row = $statement->fetch()) {
+                        if ($row['Bild']==NULL) {
+                            echo "<img src='standardbild.jpg' class=\"rounded-circle\" id='bild'>";
+                        }
+                        else {
+                            echo '<img src="data:image/jpg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle"/>';
+                        }
+                    }
                     ?>
                 </div>
             </div>
@@ -127,7 +141,7 @@
                 <br>
                 Name:
                         <?php
-                        $statement=$pdo->prepare('SELECT Benutzername, Email, Nachname, Vorname FROM Nutzer WHERE ID=2');
+                        $statement=$pdo->prepare('SELECT Benutzername FROM Nutzer WHERE ID=2');
                         $statement->execute(array());
                         while($row=$statement->fetch()) {
                             echo $row["Benutzername"];}
@@ -159,13 +173,12 @@
     <br><br>
     </div>
     <div class="aendern">
-        <form action="upload2.php" method="post" enctype="multipart/form-data">
+        <form action="upload.php" method="post" enctype="multipart/form-data">
             <input type="file" name="bild">
             <input type="submit" value="Hochladen" name="hochladen">
         </form>
     </div>
     </div>
 </div>
-            ?>
 </body>
 </html>

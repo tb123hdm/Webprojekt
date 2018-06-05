@@ -79,6 +79,8 @@
                     <nav style='padding-left:50px' class="navbar navbar-light bg-light">
                         <a class="navbar-brand" href="profil.php">
                             <?php
+                            session_start();
+
                             $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset' => 'utf8'));
                                 $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2'); //Über Session hier noch ID automatisch eintragen lassen
                                 $statement->execute(array());
@@ -123,14 +125,13 @@
             <div class="col">
                 <div class="bild">
                     <?php
-                    $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2');
-                    $statement->execute(array());
-                    while ($row = $statement->fetch()) {
-                        if ($row['Bild']==NULL) {
+                    $ordner='/home/tb123/public_html/cleo/uploads';
+                    $bild=;
+                        if ($bild==NULL) {
                             echo "<img src='standardbild.jpg' class=\"rounded-circle\" id='bild'>";
                         }
                         else {
-                            echo '<img src="data:image/jpg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle"/>';
+                            echo '<img src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle" id="bild"/>';
                         }
                     }
                     ?>
@@ -173,7 +174,7 @@
     <br><br>
     </div>
     <div class="aendern">
-        <form action="upload.php" method="post" enctype="multipart/form-data">
+        <form action="newupload.php" method="post" enctype="multipart/form-data">
             <input type="file" name="bild">
             <input type="submit" value="Hochladen" name="hochladen">
         </form>

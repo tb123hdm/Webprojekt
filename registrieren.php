@@ -1,16 +1,6 @@
 <?php
 session_start();
-
-$dsn="mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123";
-try {
-	
-	$db = new PDO ($dsn,'tb123', 'JahJ8cuuz3');
-}
-
-catch (PDOException $p)
-{
-	echo ("Fehler beim Aufbau der Datenbankverbindung.");
-}
+require_once("config.inc.php");
 
 ?>
 

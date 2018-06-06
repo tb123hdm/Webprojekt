@@ -57,6 +57,7 @@ if (isset($_POST['hochladen'])) {
     echo "Bild erfolgreich hochgeladen: <a href\"$upload_folder$bildname\">$new_path</a>";
 
 
+    // echo
 
 
 

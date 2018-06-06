@@ -73,9 +73,9 @@ if(isset($_POST['absenden'])):
 	  $insert->bindParam(3, $email, PDO::PARAM_STR);
 	  $insert->bindParam(4, $passwort, PDO::PARAM_STR);
 	  $erfolg=$insert-> execute();
-	  
       
       if($erfolg !== false):
+	    $_SESSION['user'] =  $db->lastInsertId();
         header('Location: hauptseite.php?success=true');
 		// echo 'Dein Account wurde erfolgreich erstellt!';
       endif;

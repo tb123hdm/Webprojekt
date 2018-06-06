@@ -3,7 +3,7 @@ session_start();
 require_once("config.inc.php");
 
 try {	
-$db = new PDO ($pdo);
+$db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
 }
 
 catch (PDOException $p)

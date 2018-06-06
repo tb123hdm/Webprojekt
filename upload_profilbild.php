@@ -48,7 +48,7 @@ if (isset($_POST['hochladen'])) {
         $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw');
         $statement = $pdo->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
         $statement->execute(array($new_path, $_SESSION['user']));
-
+jsj
     }
 */
     echo 'Bild erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';

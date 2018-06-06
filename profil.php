@@ -89,7 +89,7 @@
                                         echo "<img src='standardbild.jpg' width=\"60\" height=\"60\" class=\"rounded-circle\" >";
                                     }
                                     else {
-                                        echo '<img src="data:image/jpg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle" width="60" height="60"/>';
+                                        echo '<img src="$upload_folder$bildname" class="rounded-circle" width="60" height="60"/>';
                                     }
                                 }
 

@@ -1,7 +1,8 @@
 <?php
 session_start();
 if (isset($_POST['hochladen'])) {
-    $upload_folder = '/home/tb123/public_html/cleo/uploads/';
+    $fullpath ='/home/tb123/public_html';
+    $upload_folder = '/cleo/uploads/';
    // $filename = pathinfo($_FILES['bild']['name'], PATHINFO_FILENAME);
     $extension = strtolower(pathinfo($_FILES['bild']['name'], PATHINFO_EXTENSION));
 
@@ -29,7 +30,9 @@ if (isset($_POST['hochladen'])) {
 
 
 //Pfad zum Upload
-    $new_path = $upload_folder . $_SESSION['user'] . '.' . $extension;
+    $bildname =  uniqid($_SESSION['user']) . '.' . $extension;
+    $new_path = $fullpath.$upload_folder.$bildname;
+
 
 //Neuer Dateiname falls die Datei bereits existiert
 
@@ -44,14 +47,14 @@ if (isset($_POST['hochladen'])) {
 */
 //Alles okay, verschiebe Datei an neuen Pfad
     move_uploaded_file($_FILES['bild']['tmp_name'], $new_path);
-  /*  while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
+   while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
         $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw');
         $statement = $pdo->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
-        $statement->execute(array($new_path, $_SESSION['user']));
-jsj
+        $statement->bindParam(1,$bildname);
+        $statement->bindParam(2,$_SESSION['user']);
+        $statement->execute();
     }
-*/
-    echo 'Bild erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
+    echo "Bild erfolgreich hochgeladen: <a href\"$upload_folder$bildname\">$new_path</a>";
 
 
 

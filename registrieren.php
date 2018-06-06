@@ -2,6 +2,15 @@
 session_start();
 require_once("config.inc.php");
 
+try {	
+$db = new PDO ($pdo);
+}
+
+catch (PDOException $p)
+{
+echo ("Fehler beim Aufbau der Datenbankverbindung.");
+}
+
 ?>
 
 <!doctype html>

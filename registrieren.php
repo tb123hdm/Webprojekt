@@ -3,7 +3,7 @@ session_start();
 require_once("config.inc.php");
 
 try {	
-$db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+$db = new PDO("mysql:: host=$db_host; dbname=$db_name", $db_user, $db_password);
 }
 
 catch (PDOException $p)
@@ -58,18 +58,26 @@ if(isset($_POST['absenden'])):
   $passwort2 = $_POST['passwort2'];
 
   $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ?");
-  $search_user->bind_param('s',$email);
+  $search_user->bindParam(1,$email);
   $search_user->execute();
-  $search_result = $search_user->get_result();
+ // $search_result = $search_user->getResult();
+  $search_result = $search_user-> fetch(PDO::FETCH_ASSOC);
 
-  if($search_result->num_rows == 0):
-    if($passwort == $passwort_widerholen):
+  if($search_user->rowCount()==0):
+    if($passwort == $passwort2):
       $passwort = md5($passwort);
-      $insert = $db->prepare("INSERT INTO Nutzer (vorname, name, email, passwort) VALUES (?,?,?,?)");
-      $insert->bind_param('ssss',$vorname,$nachname, $email, $passwort);
-      $insert->execute();
-      if($insert !== false):
-        echo 'Dein Account wurde erfolgreich erstellt!';
+      $insert = $db->prepare("INSERT INTO Nutzer (vorname, nachname, email, passwort) VALUES (?,?,?,?)");
+  //    $insert->bindParam('ssss',$vorname,$nachname, $email, $passwort);
+	  $insert->bindParam(1, $vorname, PDO::PARAM_STR);
+	  $insert->bindParam(2, $nachname, PDO::PARAM_STR);
+	  $insert->bindParam(3, $email, PDO::PARAM_STR);
+	  $insert->bindParam(4, $passwort, PDO::PARAM_STR);
+	  $erfolg=$insert-> execute();
+	  
+      
+      if($erfolg !== false):
+        header('Location: hauptseite.php?success=true');
+		// echo 'Dein Account wurde erfolgreich erstellt!';
       endif;
     else:
       echo 'Deine Passwörter stimmen nicht überein!';
@@ -83,25 +91,25 @@ endif;
 ?>
 
 	<div id="form">
-		<form class="form-signin" form action="?register=1" method="post">
+		<form class="form-signin" form action="" method="post">
 			<img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
 			<h1 class="h3 m-0 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
-			<input type="text" id="vorname" class="form-control" placeholder="Vorname" required autofocus>
+			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>
 
 			<label for="inputname" class="sr-only">nachname</label>
-			<input type="text" id="name" class="form-control" placeholder="Nachname" required autofocus>
+			<input type="text" name="name" class="form-control" placeholder="Nachname" required autofocus>
 			<br>
 
 			<label for="inputEmail" class="sr-only">email</label>
-			<input type="email" id="email" class="form-control" placeholder="Deine Email" required autofocus>
+			<input type="email" name="email" class="form-control" placeholder="Deine Email" required autofocus>
 			<label for="inputPassword" class="sr-only">passwort</label>
-			<input type="password" id="passwort" class="form-control" placeholder="Passwort" required>
+			<input type="password" name="passwort" class="form-control" placeholder="Passwort" required>
 			<label for="inputPassword" class="sr-only">passwort2</label>
-			<input type="password" id="passwort2" class="form-control" placeholder="Wiederhole dein Passwort" required>
+			<input type="password" name="passwort2" class="form-control" placeholder="Wiederhole dein Passwort" required>
 
 			<div class="checkbox mb-3">
-				<button class="btn btn-lg btn-primary btn-block" id="absenden" type="submit">Registrieren</button>
+				<button class="btn btn-lg btn-primary btn-block" name="absenden" type="submit">Registrieren</button>
 		</form>
 		<p class="mt-3 mb-5 text-muted">Cleo 2018</p>
 		</div>

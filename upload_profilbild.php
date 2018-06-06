@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once ('config.inc.php');
 if (isset($_POST['hochladen'])) {
     $fullpath ='/home/tb123/public_html';
     $upload_folder = '/cleo/uploads/';

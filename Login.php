@@ -3,29 +3,32 @@ session_start();
 require_once("config.inc.php");
 
 try {	
-$db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+$db = new PDO("mysql:: host=$db_host; dbname=$db_name", $db_user, $db_password);
 }
 
 catch (PDOException $p)
 {
 echo ("Fehler beim Aufbau der Datenbankverbindung.");
+echo $p-> getMessage();
 }
+
 
 if(isset($_POST['absenden'])):
   $email = strtolower($_POST['email']);
   $passwort = $_POST['passwort'];
   $passwort = md5($passwort);
 
-  $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ? AND passwort = ?");
+  $search_user = $db->prepare("SELECT Id FROM Nutzer WHERE email = ? AND passwort = ?");
   $search_user->bind_param('ss',$email,$passwort);
   $search_user->execute();
-  $search_result = $search_user->get_result();
+ // $search_result = $search_user->get_result();
+  $search_result = $search_user-> fetch(PDO::FETCH_ASSOC);
 
-  if($search_result->num_rows == 1):
+  if($search_result->rowCount() == 1):
     $search_object = $search_result->fetch_object();
 
     $_SESSION['user'] = $search_object->id;
-    header('Location: /tutorials/login/');
+    header('Location: hauptseite.php');
   else:
     echo 'Deine Angaben sind leider nicht korrekt!';
   endif;

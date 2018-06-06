@@ -1,8 +1,8 @@
 <?php
+session_start();
 if (isset($_POST['hochladen'])) {
-
     $upload_folder = 'uploads/';
-    $filename = pathinfo($_FILES['bild']['name'], PATHINFO_FILENAME);
+   // $filename = pathinfo($_FILES['bild']['name'], PATHINFO_FILENAME);
     $extension = strtolower(pathinfo($_FILES['bild']['name'], PATHINFO_EXTENSION));
 
 
@@ -27,10 +27,13 @@ if (isset($_POST['hochladen'])) {
         }
     }
 
+
 //Pfad zum Upload
-    $new_path = $upload_folder . $filename . '.' . $extension;
+    $new_path = $upload_folder . $_SESSION['user'] . '.' . $extension;
 
 //Neuer Dateiname falls die Datei bereits existiert
+
+/*
     if (file_exists($new_path)) { //Falls Datei existiert, hänge eine Zahl an den Dateinamen
         $id = 1; // ID des Nutzers anfügen --> SESSION generieren und ID des Nutzers anhängen
         do {
@@ -38,16 +41,16 @@ if (isset($_POST['hochladen'])) {
             $id++;
         } while (file_exists($new_path));
     }
-
+*/
 //Alles okay, verschiebe Datei an neuen Pfad
     move_uploaded_file($_FILES['bild']['tmp_name'], $new_path);
-    while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
+  /*  while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
         $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw');
-        $statement = $pdo->prepare('UPDATE Nutzer SET bild=? WHERE ID=2');
-        $statement->execute(array($new_path));
+        $statement = $pdo->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
+        $statement->execute(array($new_path, $_SESSION['user']));
 
     }
-
+*/
     echo 'Bild erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
 
 

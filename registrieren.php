@@ -36,60 +36,40 @@ require_once("config.inc.php");
 	<div id="willkommen">
 		<h1> Hey willkommen bei Cleo</h1>
 	</div>
+	
+<?php
+	if(isset($_POST['absenden'])):
 
-	<?php
-	$showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
+  $vorname = $_POST['vorname'];
+  $nachname = $_POST['name'];
+  $email = $_POST['email'];
+  $passwort = $_POST['passwort'];
+  $passwort2 = $_POST['passwort2'];
 
-	if ( isset( $_GET[ 'register' ] ) ) {
-		$error = false;
-		$email = $_POST[ 'email' ];
-		$passwort = $_POST[ 'passwort' ];
-		$passwort2 = $_POST[ 'passwort2' ];
+  $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ?");
+  $search_user->bind_param('s',$email);
+  $search_user->execute();
+  $search_result = $search_user->get_result();
 
-		if ( !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-			echo 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
-			$error = true;
-		}
-		if ( strlen( $passwort ) == 0 ) {
-			echo 'Bitte ein Passwort angeben<br>';
-			$error = true;
-		}
-		if ( $passwort != $passwort2 ) {
-			echo 'Die Passwörter müssen übereinstimmen<br>';
-			$error = true;
-		}
+  if($search_result->num_rows == 0):
+    if($passwort == $passwort_widerholen):
+      $passwort = md5($passwort);
+      $insert = $db->prepare("INSERT INTO Nutzer (vorname, name, email, passwort) VALUES (?,?,?,?)");
+      $insert->bind_param('ssss',$vorname,$nachname, $email, $passwort);
+      $insert->execute();
+      if($insert !== false):
+        echo 'Dein Account wurde erfolgreich erstellt!';
+      endif;
+    else:
+      echo 'Deine Passwörter stimmen nicht überein!';
+    endif;
+  else:
+    echo 'Der Benutzername ist leider schon vergeben!';
+  endif;
 
-		//Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
-		if ( !$error ) {
-			$statement = $pdo->prepare( "SELECT * FROM Nutzer WHERE email = :email" );
-			$result = $statement->execute( array( 'email' => $email ) );
-			$user = $statement->fetch();
-
-			if ( $user !== false ) {
-				echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
-				$error = true;
-			}
-		}
-
-		//Keine Fehler, wir können den Nutzer registrieren
-		if ( !$error ) {
-			$passwort_hash = password_hash( $passwort, PASSWORD_DEFAULT );
-
-			$statement = $pdo->prepare( "INSERT INTO Nutzer (email, passwort) VALUES (:email, :passwort)" );
-			$result = $statement->execute( array( 'email' => $email, 'passwort' => $passwort_hash ) );
-
-			if ( $result ) {
-				echo 'Du wurdest erfolgreich registriert. <a href="login.html">Zum Login</a>';
-				$showFormular = false;
-			} else {
-				echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
-			}
-		}
-	}
-
-	if ( $showFormular ) {
-		?>
-
+endif;
+	
+?>
 
 	<div id="form">
 		<form class="form-signin" form action="?register=1" method="post">
@@ -110,7 +90,7 @@ require_once("config.inc.php");
 			<input type="password" id="passwort2" class="form-control" placeholder="Wiederhole dein Passwort" required>
 
 			<div class="checkbox mb-3">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Registrieren</button>
+				<button class="btn btn-lg btn-primary btn-block" id="absenden" type="submit">Registrieren</button>
 		</form>
 		<p class="mt-3 mb-5 text-muted">Cleo 2018</p>
 		</div>
@@ -122,9 +102,6 @@ require_once("config.inc.php");
 				<div class="col-4 "> Webprojekt @ HdM Stuttgart </div>
 		</div>
 
-		<?php
-		} //Ende von if($showFormular)
-		?>
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->

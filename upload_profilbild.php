@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_POST['hochladen'])) {
-    $upload_folder = 'uploads/';
+    $upload_folder = '/home/tb123/public_html/cleo/uploads/';
    // $filename = pathinfo($_FILES['bild']['name'], PATHINFO_FILENAME);
     $extension = strtolower(pathinfo($_FILES['bild']['name'], PATHINFO_EXTENSION));
 

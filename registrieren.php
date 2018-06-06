@@ -2,17 +2,6 @@
 session_start();
 require_once("config.inc.php");
 
-try {	
-$db = new PDO("mysql:: host=$db_host; dbname=$db_name", $db_user, $db_password);
-}
-
-catch (PDOException $p)
-{
-echo ("Fehler beim Aufbau der Datenbankverbindung.");
-echo $p-> getMessage();
-}
-
-
 ?>
 
 <!doctype html>
@@ -83,7 +72,7 @@ if(isset($_POST['absenden'])):
       echo 'Deine Passwörter stimmen nicht überein!';
     endif;
   else:
-    echo 'Der Benutzername ist leider schon vergeben!';
+    echo 'Die Email ist leider schon vergeben!';
   endif;
 
 endif;
@@ -116,9 +105,8 @@ endif;
 	</div>
 	<div id="footer">
 		<div class="col-4 "> <a href="impressum.html"> Impressum </a> </div>
-		<div class="col-4 "> Made with
-			<3 in Stuttgart </div>
-				<div class="col-4 "> Webprojekt @ HdM Stuttgart </div>
+		<div class="col-4 "> Made with <3 in Stuttgart </div>
+		<div class="col-4 "> Webprojekt @ HdM Stuttgart </div>
 		</div>
 
 

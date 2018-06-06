@@ -70,7 +70,7 @@ endif;
 
 		
 <div id="form">	
-  <form class="form-signin" action="?login=1" method="post">
+  <form class="form-signin" action="" method="post">
   <img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
   <h1 class="h3 m-0 font-weight-light"><strong>Bitte anmelden</strong></h1>
   <label for="inputEmail" class="sr-only">Email</label>
@@ -86,7 +86,7 @@ endif;
 </div>
 	
 <div id="footer">
-  <div class="col-4 "> <a href="../../../../../PhpstormProjects/Webprojekt/impressum.html"> Impressum </a> </div>
+  <div class="col-4 "> <a href="impressum.html"> Impressum </a> </div>
   <div class="col-4 "> Made with <3 in Stuttgart </div>
   <div class="col-4 "> Webprojekt @ HdM Stuttgart </div>
 </div>

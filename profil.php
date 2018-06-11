@@ -15,7 +15,7 @@ require_once('config.inc.php');
     <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="hauptseite.php">
                 <img src="logo.png" style="margin-left:5px;" width="120" height="80" alt="">
             </a>
             <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ require_once('config.inc.php');
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="hauptseite.html" style="color: white; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="hauptseite.php" style="color: white; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" style=" color: white; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

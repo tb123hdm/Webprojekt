@@ -48,12 +48,15 @@ if (isset($_POST['hochladen'])) {
 */
 //Alles okay, verschiebe Datei an neuen Pfad
     move_uploaded_file($_FILES['bild']['tmp_name'], $new_path);
-   while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
         $statement = $db->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
         $statement->bindParam(1,$bildname);
         $statement->bindParam(2,$_SESSION['user']);
-        $statement->execute();
-    }
+        echo "User-ID:".$_SESSION['user'];
+        if (!$statement->execute()){
+           echo "Datenbank-Fehler:";
+           echo $statement->errorInfo()[2];
+           echo $statement->queryString;
+           die(); }
     echo "Bild erfolgreich hochgeladen: <a href\"$upload_folder$bildname\">$new_path</a>";
     header('Location: profil.php');
 

@@ -38,8 +38,20 @@ require_once('config.inc.php');
                         </div>
                     </li>
                 </ul>
-
-                <img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">
+                <?php
+                $userid = $_SESSION['user'];
+                $upload_folder='/cleo/uploads/';
+                $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
+                $statement->bindParam(1, $userid);
+                $statement->execute();
+                $row = $statement->fetch();
+                    if ($row['Bild']==NULL) {
+                        echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">';
+                    }
+                    else {
+                        echo '<img src="$upload_folder$row" width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;"/>';
+                    }
+                ?>
 
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search">

@@ -1,0 +1,41 @@
+
+.container{
+    width:100%;
+}
+.layout h1{
+    padding-left: 50px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: azure;
+}
+.img_profile
+{
+    position: relative;
+    top:0px;
+    left:0px;
+}
+#bild{
+
+}
+.inhalt{
+    margin-left: 85px;
+    margin-top:20px;
+    font-size: 15px;
+}
+.gemeinsam{
+    width: 730px;
+    height: 350px;
+    clear: both;
+}
+.bild{
+    float: left;
+    height: 100%;
+    width: 300px;
+    margin-right: 50px;
+}
+#information{
+    float: right;
+    width: 310px;
+    margin-left: 50px;
+    font-size: 20px;
+}

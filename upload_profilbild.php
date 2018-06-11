@@ -56,6 +56,7 @@ if (isset($_POST['hochladen'])) {
         $statement->execute();
     }
     echo "Bild erfolgreich hochgeladen: <a href\"$upload_folder$bildname\">$new_path</a>";
+    header('Location: profil.php');
 
 
     // echo

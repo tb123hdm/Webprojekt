@@ -80,23 +80,26 @@
                         <a class="navbar-brand" href="profil.php">
                             <?php
                             session_start();
-
-                            $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'tb123', 'JahJ8cuuz3', array('charset' => 'utf8'));
-                                $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=2'); //Über Session hier noch ID automatisch eintragen lassen
-                                $statement->execute(array());
+                            $userid = $_SESSION['user'];
+                            $upload_folder='/cleo/uploads/';
+                            $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset' => 'utf8'));
+                                $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
+                                $statement->bindParam(1, $userid);
+                                $statement->execute();
                                 while ($row = $statement->fetch()) {
                                     if ($row['Bild']==NULL) {
                                         echo "<img src='standardbild.jpg' width=\"60\" height=\"60\" class=\"rounded-circle\" >";
                                     }
                                     else {
-                                        echo '<img src="$upload_folder$bildname" class="rounded-circle" width="60" height="60"/>';
+                                        echo '<img src="$upload_folder$row" class="rounded-circle" width="60" height="60"/>';
                                     }
                                 }
 
-                                $statement = $pdo->prepare('SELECT Benutzername FROM Nutzer WHERE ID=2');
-                                $statement->execute(array());
+                                $statement = $pdo->prepare('SELECT vorname FROM Nutzer WHERE ID=?');
+                                $statement->bindParam(1, $userid);
+                                $statement->execute();
                                 while ($row = $statement->fetch()) {
-                                    echo $row["Benutzername"];
+                                    echo $row["Vorname"];
                                 }
 
                             ?>
@@ -125,12 +128,11 @@
             <div class="col">
                 <div class="bild">
                     <?php
-                    $ordner='/home/tb123/public_html/cleo/uploads';
                         if ($bild==NULL) {
                             echo "<img src='standardbild.jpg' class=\"rounded-circle\" id='bild'>";
                         }
                         else {
-                            echo '<img src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '" class="rounded-circle" id="bild"/>';
+                            echo '<img src="$upload_folder$row" class="rounded-circle" id="bild"/>';
                         }
 
                     ?>
@@ -139,31 +141,27 @@
 
             <div class="col">
                 <br>
-                Name:
-                        <?php
-                        $statement=$pdo->prepare('SELECT Benutzername FROM Nutzer WHERE ID=2');
-                        $statement->execute(array());
-                        while($row=$statement->fetch()) {
-                            echo $row["Benutzername"];}
-                ?><br><br>
                 Mailadresse:
                 <?php
-                        $statement=$pdo->prepare('SELECT Email FROM Nutzer WHERE ID=2');
-                        $statement->execute(array());
+                        $statement=$pdo->prepare('SELECT Email FROM Nutzer WHERE ID=?');
+                        $statement->bindParam(1, $userid);
+                        $statement->execute();
                         while($row=$statement->fetch()) {
                         echo $row["Email"];}
                 ?><br><br>
                 Vorname:
                 <?php
-                        $statement=$pdo->prepare('SELECT Vorname FROM Nutzer WHERE ID=2');
-                        $statement->execute(array());
+                        $statement=$pdo->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
+                        $statement->bindParam(1, $userid);
+                        $statement->execute();
                         while($row=$statement->fetch()) {
                         echo $row["Vorname"];}
                 ?><br><br>
                 Nachname:
                 <?php
-                        $statement=$pdo->prepare('SELECT Nachname FROM Nutzer WHERE ID=2');
-                        $statement->execute(array());
+                        $statement=$pdo->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
+                        $statement->bindParam(1, $userid);
+                        $statement->execute();
                         while($row=$statement->fetch()) {
                         echo $row["Nachname"];}
                 ?>

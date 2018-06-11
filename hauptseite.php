@@ -14,7 +14,7 @@
     <title>Meine Ablage</title>
     <style>
         .fas {
-            border: none;h
+            border: none;
             background-color: inherit;
         }
         .far{
@@ -68,7 +68,7 @@
                     </div>
                 </li>
             </ul>
-            <img src="userbild.png"  width="60" height="60" class="d-inline-block align-top img_profile" alt="">
+            <img src="standardbild.jpg"  width="60" height="60" class="rounded-circle" alt="">
             er042
 
 

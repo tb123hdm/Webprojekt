@@ -12,24 +12,23 @@ require_once('config.inc.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="profil_style.css" type="text/css" rel="stylesheet">
     <head/>
+    <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#">
-                    <img src="logo.png" width="120" height="80" alt="">
-                </a>
-            </nav>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" style="margin-left:5px;" width="120" height="80" alt="">
+            </a>
+            <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="hauptseite.html" style="color: white; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" style=" color: white; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Einstellungen
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -38,37 +37,13 @@ require_once('config.inc.php');
                             <a class="dropdown-item" href="#">Abmelden</a>
                         </div>
                     </li>
-                    <nav style='padding-left:50px' class="navbar navbar-light bg-light">
-                        <a class="navbar-brand" href="profil.php">
-                            <?php
-                            $userid = $_SESSION['user'];
-                            $upload_folder='/cleo/uploads/';
-                                $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
-                                $statement->bindParam(1, $userid);
-                                $statement->execute();
-                                while ($row = $statement->fetch()) {
-                                    if ($row['Bild']==NULL) {
-                                        echo "<img src='standardbild.jpg' width=\"60\" height=\"60\" class=\"rounded-circle\" >";
-                                    }
-                                    else {
-                                        echo '<img src="$upload_folder$row" class="rounded-circle" width="60" height="60"/>';
-                                    }
-                                }
-
-                                $statement = $db->prepare('SELECT vorname FROM Nutzer WHERE ID=?');
-                                $statement->bindParam(1, $userid);
-                                $statement->execute();
-                                while ($row = $statement->fetch()) {
-                                    echo $row["Vorname"];
-                                }
-
-                            ?>
-                        </a>
-                    </nav>
                 </ul>
+
+                <img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">
+
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border-color: deepskyblue; color: deepskyblue; background-color: inherit;">Los</button>
                 </form>
             </div>
         </nav>
@@ -76,7 +51,6 @@ require_once('config.inc.php');
     <head>
         <title>Kontoverwaltung</title>
     </head>
-<body>
 
 
 <div class="inhalt">

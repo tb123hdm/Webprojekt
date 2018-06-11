@@ -48,12 +48,12 @@ require_once('config.inc.php');
                 $bild = $row['Bild'];
                 $upload_bild=$upload_folder.$bild;
                     if ($row['Bild']==NULL) {
-                        echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">';
+                        echo '<img src="standardbild.jpg"  width="50" height="100%" class="rounded-circle" alt="" style="margin-right: 250px;">';
                     }
                     else {
                        echo '<img src="';
                        echo $upload_bild;
-                       echo '" width="60" height="60" class="rounded-circle" alt="" style="margin-right: 250px">';
+                       echo '" width="60" height="100%" class="rounded-circle" alt="" style="margin-right: 250px">';
                     }
                 ?>
 
@@ -84,7 +84,7 @@ require_once('config.inc.php');
                         else {
                             echo '<img src="';
                             echo $upload_bild;
-                            echo '" class="rounded-circle" id="bild">';
+                            echo '" class="rounded-circle" width="100%" height="100%" >';
                         }
 
                     ?>
@@ -93,7 +93,7 @@ require_once('config.inc.php');
 
             <div class="col">
                 <br>
-                Mailadresse:
+                <h5>Mailadresse:</h5>
                 <?php
                         $statement=$db->prepare('SELECT Email FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);
@@ -101,7 +101,7 @@ require_once('config.inc.php');
                         while($row=$statement->fetch()) {
                         echo $row["Email"];}
                 ?><br><br>
-                Vorname:
+                <h5>Vorname:</h5>
                 <?php
                         $statement=$db->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);
@@ -109,7 +109,7 @@ require_once('config.inc.php');
                         while($row=$statement->fetch()) {
                         echo $row["Vorname"];}
                 ?><br><br>
-                Nachname:
+                <h5>Nachname:</h5>
                 <?php
                         $statement=$db->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);

@@ -75,9 +75,11 @@ require_once('config.inc.php');
             else {
                 echo '<img src="';
                 echo $upload_bild;
-                echo '" width="60" height="60" class="rounded-circle" alt="" style="margin-right: 250px">';
+                echo '" width="60" height="100%" class="rounded-circle" alt="" style="margin-right: 250px">';
             }
             ?>
+            <form>Tabea</form>
+
 
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search">

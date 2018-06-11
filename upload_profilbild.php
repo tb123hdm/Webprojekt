@@ -49,8 +49,7 @@ if (isset($_POST['hochladen'])) {
 //Alles okay, verschiebe Datei an neuen Pfad
     move_uploaded_file($_FILES['bild']['tmp_name'], $new_path);
    while (move_uploaded_file($_FILES['bild']['tmp_name'], $new_path)) {
-        $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw');
-        $statement = $pdo->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
+        $statement = $db->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');
         $statement->bindParam(1,$bildname);
         $statement->bindParam(2,$_SESSION['user']);
         $statement->execute();

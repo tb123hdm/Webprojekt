@@ -65,7 +65,7 @@ if(isset($_POST['absenden'])):
       
       if($erfolg !== false):
 	    $_SESSION['user'] =  $db->lastInsertId();
-        header('Location: hauptseite.php?success=true');
+        header('Location: hauptseite.html?success=true');
 		// echo 'Dein Account wurde erfolgreich erstellt!';
       endif;
     else:

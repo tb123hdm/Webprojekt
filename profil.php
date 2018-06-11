@@ -1,3 +1,7 @@
+<?php
+session_start();
+require_once('config.inc.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,50 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="profil_style.css" type="text/css" rel="stylesheet">
     <head/>
-    <style>
-        .container{
-            width:100%;
-        }
-        .layout h1{
-            padding-left: 50px;
-            padding-top:10px;
-            padding-bottom:10px;
-            background-color: azure;
-        }
-        .img_profile
-        {
-            position: relative;
-            top:0px;
-            left:0px;
-        }
-        #bild{
-            height: 300px;
-            width: 300px;
-            margin-right: 20px;
-        }
-        .inhalt{
-            margin-left: 85px;
-            margin-top:20px;
-            font-size: 15px;
-        }
-        .gemeinsam{
-            width: 730px;
-            height: 350px;
-            clear: both;
-        }
-        .bild{
-            float: left;
-            width: 320px;
-            margin-right: 50px;
-        }
-        #information{
-            float: right;
-            width: 310px;
-            margin-left: 50px;
-            font-size: 20px;
-        }
-    </style>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <nav class="navbar navbar-light bg-light">
@@ -79,11 +41,9 @@
                     <nav style='padding-left:50px' class="navbar navbar-light bg-light">
                         <a class="navbar-brand" href="profil.php">
                             <?php
-                            session_start();
                             $userid = $_SESSION['user'];
                             $upload_folder='/cleo/uploads/';
-                            $pdo = new PDO('mysql:: host=mars.iuk.hdm-stuttgart.de; dbname=u-tb123', 'name', 'pw', array('charset' => 'utf8'));
-                                $statement = $pdo->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
+                                $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
                                 $statement->bindParam(1, $userid);
                                 $statement->execute();
                                 while ($row = $statement->fetch()) {
@@ -95,7 +55,7 @@
                                     }
                                 }
 
-                                $statement = $pdo->prepare('SELECT vorname FROM Nutzer WHERE ID=?');
+                                $statement = $db->prepare('SELECT vorname FROM Nutzer WHERE ID=?');
                                 $statement->bindParam(1, $userid);
                                 $statement->execute();
                                 while ($row = $statement->fetch()) {
@@ -143,7 +103,7 @@
                 <br>
                 Mailadresse:
                 <?php
-                        $statement=$pdo->prepare('SELECT Email FROM Nutzer WHERE ID=?');
+                        $statement=$db->prepare('SELECT Email FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);
                         $statement->execute();
                         while($row=$statement->fetch()) {
@@ -151,7 +111,7 @@
                 ?><br><br>
                 Vorname:
                 <?php
-                        $statement=$pdo->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
+                        $statement=$db->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);
                         $statement->execute();
                         while($row=$statement->fetch()) {
@@ -159,7 +119,7 @@
                 ?><br><br>
                 Nachname:
                 <?php
-                        $statement=$pdo->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
+                        $statement=$db->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
                         $statement->bindParam(1, $userid);
                         $statement->execute();
                         while($row=$statement->fetch()) {

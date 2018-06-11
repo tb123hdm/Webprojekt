@@ -40,16 +40,20 @@ require_once('config.inc.php');
                 </ul>
                 <?php
                 $userid = $_SESSION['user'];
-                $upload_folder='/cleo/uploads/';
+                $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
                 $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
                 $statement->bindParam(1, $userid);
                 $statement->execute();
                 $row = $statement->fetch();
+                $bild = $row['Bild'];
+                $upload_bild=$upload_folder.$bild;
                     if ($row['Bild']==NULL) {
                         echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">';
                     }
                     else {
-                        echo '<img src="$upload_folder$row" width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;"/>';
+                       echo '<img src="';
+                       echo $upload_bild;
+                       echo '" width="60" height="60" class="rounded-circle" alt="" style="margin-right: 250px">';
                     }
                 ?>
 
@@ -78,7 +82,9 @@ require_once('config.inc.php');
                             echo "<img src='standardbild.jpg' class=\"rounded-circle\" id='bild'>";
                         }
                         else {
-                            echo '<img src="$upload_folder$row" class="rounded-circle" id="bild"/>';
+                            echo '<img src="';
+                            echo $upload_bild;
+                            echo '" class="rounded-circle" id="bild">';
                         }
 
                     ?>

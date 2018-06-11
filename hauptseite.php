@@ -78,7 +78,6 @@ require_once('config.inc.php');
                 echo '" width="60" height="100%" class="rounded-circle" alt="" style="margin-right: 250px">';
             }
             ?>
-            <form>Tabea</form>
 
 
             <form class="form-inline my-2 my-lg-0">

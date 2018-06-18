@@ -25,18 +25,14 @@ require_once("config.inc.php");
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.dialog.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.button.min.js"></script>
-	<script>
-	<script>var __adobewebfontsappname__="dreamweaver"</script>
-	<script src="http://use.edgefonts.net/advent-pro:n1,n2,n4:default;gfs-neohellenic:n4:default;homenaje:n4:default;boogaloo:n4:default;roboto:n4:default;over-the-rainbow:n4:default;fresca:n4:default;ubuntu-condensed:n4:default;josefin-sans:n1,n3:default;acme:n4:default;droid-sans:n4:default.js" type="text/javascript">
-	</script>
-	
+
 </head>
 
 <body class="text-center">
 	<div id="willkommen">
 		<h1> Hey willkommen bei Cleo</h1>
 	</div>
-	
+
 <?php
 if(isset($_POST['absenden'])):
 
@@ -56,13 +52,12 @@ if(isset($_POST['absenden'])):
     if($passwort == $passwort2):
       $passwort = md5($passwort);
       $insert = $db->prepare("INSERT INTO Nutzer (vorname, nachname, email, passwort) VALUES (?,?,?,?)");
-  //    $insert->bindParam('ssss',$vorname,$nachname, $email, $passwort);
 	  $insert->bindParam(1, $vorname, PDO::PARAM_STR);
 	  $insert->bindParam(2, $nachname, PDO::PARAM_STR);
 	  $insert->bindParam(3, $email, PDO::PARAM_STR);
 	  $insert->bindParam(4, $passwort, PDO::PARAM_STR);
 	  $erfolg=$insert-> execute();
-      
+
       if($erfolg !== false):
 	    $_SESSION['user'] =  $db->lastInsertId();
         header('Location: hauptseite.php?success=true');
@@ -76,7 +71,7 @@ if(isset($_POST['absenden'])):
   endif;
 
 endif;
-	
+
 ?>
 
 	<div id="form">

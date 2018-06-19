@@ -19,22 +19,24 @@ require_once("config.inc.php");
 	<link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.resizable.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <title>Cleo - Registrierung</title>
+	<title>Cleo - Registrierung</title>
 	<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
 	<!-- <script src="jQueryAssets/jquery-1.11.1.min.js"></script> -->
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.dialog.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.button.min.js"></script>
-
+	<script>
+	<script>var __adobewebfontsappname__="dreamweaver"</script>
+	<script src="http://use.edgefonts.net/advent-pro:n1,n2,n4:default;gfs-neohellenic:n4:default;homenaje:n4:default;boogaloo:n4:default;roboto:n4:default;over-the-rainbow:n4:default;fresca:n4:default;ubuntu-condensed:n4:default;josefin-sans:n1,n3:default;acme:n4:default;droid-sans:n4:default.js" type="text/javascript">
+	</script>
+	
 </head>
 
 <body class="text-center">
-	<div id="headline">
+	<div id="willkommen">
 		<h1> Hey willkommen bei Cleo</h1>
 	</div>
-
+	
 <?php
 if(isset($_POST['absenden'])):
 
@@ -47,18 +49,20 @@ if(isset($_POST['absenden'])):
   $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ?");
   $search_user->bindParam(1,$email);
   $search_user->execute();
+ // $search_result = $search_user->getResult();
   $search_result = $search_user-> fetch(PDO::FETCH_ASSOC);
 
   if($search_user->rowCount()==0):
     if($passwort == $passwort2):
       $passwort = md5($passwort);
       $insert = $db->prepare("INSERT INTO Nutzer (vorname, nachname, email, passwort) VALUES (?,?,?,?)");
+  //    $insert->bindParam('ssss',$vorname,$nachname, $email, $passwort);
 	  $insert->bindParam(1, $vorname, PDO::PARAM_STR);
 	  $insert->bindParam(2, $nachname, PDO::PARAM_STR);
 	  $insert->bindParam(3, $email, PDO::PARAM_STR);
 	  $insert->bindParam(4, $passwort, PDO::PARAM_STR);
 	  $erfolg=$insert-> execute();
-
+      
       if($erfolg !== false):
 	    $_SESSION['user'] =  $db->lastInsertId();
         header('Location: hauptseite.php?success=true');
@@ -72,7 +76,7 @@ if(isset($_POST['absenden'])):
   endif;
 
 endif;
-
+	
 ?>
 
 	<div id="form">

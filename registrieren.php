@@ -19,7 +19,9 @@ require_once("config.inc.php");
 	<link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.resizable.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
-	<title>Cleo - Registrierung</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <title>Cleo - Registrierung</title>
 	<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
 	<!-- <script src="jQueryAssets/jquery-1.11.1.min.js"></script> -->
 	<script src="js/jquery-3.2.1.min.js"></script>
@@ -29,7 +31,7 @@ require_once("config.inc.php");
 </head>
 
 <body class="text-center">
-	<div id="willkommen">
+	<div id="headline">
 		<h1> Hey willkommen bei Cleo</h1>
 	</div>
 
@@ -45,7 +47,6 @@ if(isset($_POST['absenden'])):
   $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ?");
   $search_user->bindParam(1,$email);
   $search_user->execute();
- // $search_result = $search_user->getResult();
   $search_result = $search_user-> fetch(PDO::FETCH_ASSOC);
 
   if($search_user->rowCount()==0):

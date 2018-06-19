@@ -27,6 +27,7 @@ if(isset($_POST['absenden'])){
     if ($search_result !== false) {
         $_SESSION['user'] = $search_result['id'];
         header('Location: hauptseite.php');
+        die();
     } else {
         $errorMessage = "E-Mail nicht gültig<br>";
     }
@@ -36,10 +37,6 @@ if(isset($_POST['absenden'])){
     }
 
 }
-
-  /*  if(isset($errorMessage)) {
-        echo $errorMessage;
-    } */
 
 ?>
 
@@ -88,6 +85,7 @@ if(isset($_POST['absenden'])){
 	  
   <label for="inputPassword" class="sr-only">Passwort</label>
   <input type="password" name="passwort" class="form-control" placeholder="Passwort" required>
+
 
 	
   <button class="btn btn-lg btn-primary btn-block" name="absenden" type="submit">Anmelden</button>

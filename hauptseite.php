@@ -216,7 +216,7 @@ require_once('config.inc.php');
             <?php
             $userid = $_SESSION['user'];
             $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
-            $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?'); //Über Session hier noch ID automatisch eintragen lassen
+            $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
             $statement->bindParam(1, $userid);
             $statement->execute();
             $row = $statement->fetch();
@@ -356,20 +356,29 @@ require_once('config.inc.php');
                         </div>
                         <div class="modal-body">
                             <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
+                            <?php //Abfrage wer hat Zugriff
 
+                            $statement=$db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
+                            $statement->execute();
+                            $berechtigung=$statement->fetch();
+                            print_r($berechtigung);
+                            ?>
                             <br>
                             <p>Personen hinzufügen:</p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">@</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+                                <input id='email' type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
                             </div>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="button" class="btn btn-primary">Bestätigen</button>
+                            <button type="button" method="post" action="berechtigung.php" class="btn btn-primary">Bestätigen</button>
+
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

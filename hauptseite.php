@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('config.inc.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -244,7 +245,6 @@ require_once('config.inc.php');
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
                                 <div class="form-group">
                                     <label for="upload-file"></label>
 
@@ -257,7 +257,6 @@ require_once('config.inc.php');
                                         </div>
                                     </form>
                                 </div>
-                            </form>
 
                         </div>
                     </div>
@@ -294,7 +293,23 @@ require_once('config.inc.php');
 
     <tr>
         <th scope="row"> </th>
-        <td><i class="far fa-folder-open" style="margin-right:20px; "></i>Mobile Medien</td>
+        <td><i class="far fa-folder-open" style="margin-right:20px; "></i>
+            <?php //Abfrage Root Ordner
+
+            $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID IS NULL'); // user id eingefügt mit der ich eingeloggt bin
+            $statement->bindParam(1, $userid);
+            $statement->execute();
+            $root=$statement->fetch();
+
+
+            $statement=$db->prepare('SELECT * FROM Ordner WHERE ParentID= '.$root ['ID']); // query für Unterodner
+            $statement->execute();
+            $unterordner=$statement->fetch();
+            echo $unterordner ['Name'];
+
+            ?>
+
+        </td>
 
         <!--Benutzername-->
         <td>er042</td>

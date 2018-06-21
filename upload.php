@@ -37,7 +37,7 @@ if(isset($_POST['upload'])) {
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
 
-    move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/er042/public_html/Webprojekt1/'.$new_path);
+    move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
     echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
 }
 

@@ -361,24 +361,23 @@ require_once('config.inc.php');
                             $statement=$db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
                             $statement->execute();
                             $berechtigung=$statement->fetch();
-                            print_r($berechtigung);
+                            print_r ($berechtigung[0]);
                             ?>
+                            <br>
                             <br>
                             <p>Personen hinzufügen:</p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">@</span>
                                 </div>
-                                <input id='email' type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+                                <form method="post" action="berechtigung.php">
+                                <input type="text" name="email" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
                             </div>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="button" method="post" action="berechtigung.php" class="btn btn-primary">Bestätigen</button>
-
-                            }
-                            ?>
+                            <button type="submit"  class="btn btn-primary">Bestätigen</button>
                         </div>
                     </div>
                 </div>

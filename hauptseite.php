@@ -206,7 +206,7 @@ require_once('config.inc.php');
                         Einstellungen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Mein Konto</a>
+                        <a class="dropdown-item" href="profil.php">Mein Konto</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Abmleden</a>
                     </div>

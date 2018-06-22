@@ -1,7 +1,11 @@
 <?php
+session_start();
+require_once ('config.inc.php');
+$userid = $_SESSION['user'];
 
 if(isset($_POST['upload'])) {
-    $upload_ordner = 'uploads/'; //Ordner für hochgeladene Dateien
+    $fullpath ='/home/tb123/public_html';
+    $upload_ordner = '/cleo/uploads/'; //Ordner für hochgeladene Dateien
     $file = pathinfo($_FILES['uploaddatei']['name'], PATHINFO_FILENAME); //Pathinfo liefert Infos über den Dateipfad
     $extension = strtolower(pathinfo($_FILES['uploaddatei']['name'], PATHINFO_EXTENSION));
     print_r ($_FILES );
@@ -24,24 +28,26 @@ if(isset($_POST['upload'])) {
 
     echo $file;
 //Pfad zum Upload
-    $new_path = $upload_ordner . $file . '.' . $extension;
+   // $new_path = $upload_ordner . $file . '.' . $extension;
+    $new_path = $fullpath.$upload_ordner.$file . '.' . $extension;
 
 //Neuer Dateiname falls Datei mit dem gleichen Namen bereits existiert-> Zufällige ID gernerieren
     if (file_exists($new_path)) { //Falls Datei mit name bereits existiert, wird Zahl angehängt
         $id = 1;
         do {
-            $new_path = $upload_ordner . $file . '-'.$id.'.' . $extension;
+            $dateiname =  $file . '-'.$id.'.' . $extension;
+            $new_path = $fullpath.$upload_ordner .$dateiname;
             $id++;
         } while (file_exists($new_path));
     }
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
 
-    move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
-    $statement = $db->prepare("INSERT INTO Datei VALUES('ID', 'Name', 'dateiname','OrdnerID', '");
+    $file= 'Vorlesung';
+    move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname) VALUES (?,?)');
     $statement->bindParam(1,$file);
-    $statement->bindParam(2,$_SESSION['user']);
-    echo "User-ID:".$_SESSION['user'];
+    $statement->bindParam(2, $dateiname);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";
         echo $statement->errorInfo()[2];
@@ -51,7 +57,20 @@ if(isset($_POST['upload'])) {
 }
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
+
+
+move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
+$statement = $db->prepare("INSERT INTO Datei VALUES('ID', 'Name', 'dateiname','OrdnerID', '");
+$statement->bindParam(1,$file);
+$statement->bindParam(2,$_SESSION['user']);
+echo "User-ID:".$_SESSION['user'];
+if (!$statement->execute()){
+echo "Datenbank-Fehler:";
+echo $statement->errorInfo()[2];
+echo $statement->queryString;
+die(); }
+echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
+}
+
+//berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
 ?>
-
-
-

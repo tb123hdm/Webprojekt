@@ -65,6 +65,11 @@ if(isset($_POST['absenden'])):
       
       if($erfolg !== false):
 	    $_SESSION['user'] =  $db->lastInsertId();
+        $ordnername= 'root';
+        $statement = $db->prepare('INSERT INTO Ordner (ordnername, OwnerID) VALUES (?,?)');
+        $statement->bindParam(1,$ordnername);
+        $statement->bindParam(2,$_SESSION['user']);
+        $statement->execute();
         header('Location: hauptseite.php?success=true');
 		// echo 'Dein Account wurde erfolgreich erstellt!';
       endif;

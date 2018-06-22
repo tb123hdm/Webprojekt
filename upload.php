@@ -58,7 +58,7 @@ if(isset($_POST['upload'])) {
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
 
-
+/*
 move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
 $statement = $db->prepare("INSERT INTO Datei VALUES('ID', 'Name', 'dateiname','OrdnerID', '");
 $statement->bindParam(1,$file);
@@ -73,4 +73,6 @@ echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path .
 }
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
+
+*/
 ?>

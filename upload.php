@@ -38,6 +38,15 @@ if(isset($_POST['upload'])) {
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
 
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
+    $statement = $db->prepare("INSERT INTO Datei VALUES('ID', 'Name', 'dateiname','OrdnerID', '");
+    $statement->bindParam(1,$file);
+    $statement->bindParam(2,$_SESSION['user']);
+    echo "User-ID:".$_SESSION['user'];
+    if (!$statement->execute()){
+        echo "Datenbank-Fehler:";
+        echo $statement->errorInfo()[2];
+        echo $statement->queryString;
+        die(); }
     echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
 }
 

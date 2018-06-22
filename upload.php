@@ -45,9 +45,10 @@ if(isset($_POST['upload'])) {
 
     $file= 'Vorlesung';
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
-    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname) VALUES (?,?)');
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?, (SELECT Ordner.ID FROM Ordner WHERE OwnerID=?))');
     $statement->bindParam(1,$file);
     $statement->bindParam(2, $dateiname);
+    $statement->bindParam(3, $userid);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";
         echo $statement->errorInfo()[2];

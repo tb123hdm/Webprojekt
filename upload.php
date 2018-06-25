@@ -45,9 +45,10 @@ if(isset($_POST['upload'])) {
 
     $file= 'Vorlesung';
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
-    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname) VALUES (?,?)');
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?, (SELECT Ordner.ID FROM Ordner WHERE OwnerID=?))');
     $statement->bindParam(1,$file);
     $statement->bindParam(2, $dateiname);
+    $statement->bindParam(3, $userid);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";
         echo $statement->errorInfo()[2];
@@ -58,7 +59,7 @@ if(isset($_POST['upload'])) {
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
 
-
+/*
 move_uploaded_file($_FILES['uploaddatei']['tmp_name'],  '/home/tb123/public_html/cleo/uploads'.$new_path);
 $statement = $db->prepare("INSERT INTO Datei VALUES('ID', 'Name', 'dateiname','OrdnerID', '");
 $statement->bindParam(1,$file);
@@ -73,4 +74,6 @@ echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path .
 }
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into
+
+*/
 ?>

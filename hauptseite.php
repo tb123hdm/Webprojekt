@@ -305,7 +305,7 @@ require_once('config.inc.php');
             $statement=$db->prepare('SELECT * FROM Ordner WHERE ParentID= '.$root ['ID']); // query für Unterodner
             $statement->execute();
             $unterordner=$statement->fetch();
-            echo $unterordner ['Name'];
+            echo $unterordner ['ordnername'];
 
             ?>
 

@@ -1,7 +1,11 @@
 <?php
 session_start();
 require_once('config.inc.php');
-
+$userid = $_SESSION['user'];
+if($userid==0){
+    header('Location: cover.html');
+}
+else {
 ?>
 
 <!DOCTYPE html>
@@ -564,3 +568,6 @@ require_once('config.inc.php');
 
 </body>
 </html>
+    <?php
+}
+?>

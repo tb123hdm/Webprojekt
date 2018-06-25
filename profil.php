@@ -146,9 +146,6 @@ require_once('config.inc.php');
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
 
     <!-- Footer -->
     <section id="footer">

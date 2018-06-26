@@ -78,6 +78,11 @@ body{
 }
 
 /* Footer */
+footer{
+    background-color: #333a40;
+    height: 300px;
+}
+/* Footer */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 section {
     padding: 60px 0;
@@ -146,6 +151,16 @@ section .section-title {
 #footer ul.quick-links li:hover a i {
     font-weight: 700;
 }
+#footer h3{
+    font-family: 'Megrim', cursive;
+    color: white;
+}
+#footer {
+    color: lightgrey;
+    font-family: 'Open Sans Condensed', sans-serif;
+    letter-spacing: 1px;
+    font-size: large;
+}
 
 @media (max-width:767px){
     #footer h5 {
@@ -154,4 +169,5 @@ section .section-title {
         padding-bottom: 0px;
         margin-bottom: 10px;
     }
+
 }

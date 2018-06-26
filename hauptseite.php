@@ -2,10 +2,10 @@
 session_start();
 require_once('config.inc.php');
 $userid = $_SESSION['user'];
-if($userid==0){
+/*if($userid==0){
     header('Location: cover.html');
 }
-else {
+else {*/
 ?>
 
 <!DOCTYPE html>
@@ -410,6 +410,9 @@ else {
 
 </body>
 </html>
-    <?php
+<?php
+/*
+?>
 }
+*/
 ?>

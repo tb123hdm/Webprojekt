@@ -27,6 +27,14 @@ if(isset($_POST['upload'])) {
     }
 
     echo $file;
+
+
+//Pfad zum Upload
+    $bildname =  uniqid($_SESSION['user']) . '.' . $extension;
+    $new_path = $fullpath.$upload_ordner.$bildname;
+
+
+    /*
 //Pfad zum Upload
    // $new_path = $upload_ordner . $file . '.' . $extension;
     $new_path = $fullpath.$upload_ordner.$file . '.' . $extension;
@@ -40,14 +48,14 @@ if(isset($_POST['upload'])) {
             $id++;
         } while (file_exists($new_path));
     }
+    */
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
-
-    $file= 'Vorlesung';
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
     $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?, (SELECT Ordner.ID FROM Ordner WHERE OwnerID=?))');
-    $statement->bindParam(1,$file);
-    $statement->bindParam(2, $dateiname);
+   // 'ALTER TABLE Freigabe ADD FOREIGN KEY (DateiID) REFERENCES Datei (ID), ADD FOREIGN KEY (OwnerID) REFERENCES Nutzer (ID), ADD FOREIGN KEY (UserID) REFERENCES Nutzer (ID)');
+    $statement->bindParam(1, $file);
+    $statement->bindParam(2, $bildname);
     $statement->bindParam(3, $userid);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";

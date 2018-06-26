@@ -90,20 +90,18 @@ endif;
 			<h1 class="h3 m-0 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
 			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>
-
 			<label for="inputname" class="sr-only">nachname</label>
-			<input type="text" name="name" class="form-control" placeholder="Nachname" required autofocus>
-			<br>
-
+			<input type="text" name="name" class="form-control" placeholder="Nachname" required>
 			<label for="inputEmail" class="sr-only">email</label>
-			<input type="email" name="email" class="form-control" placeholder="Deine Email" required autofocus>
+			<input type="email" name="email" class="form-control" placeholder="Deine Email" required>
+
 			<label for="inputPassword" class="sr-only">passwort</label>
 			<input type="password" name="passwort" class="form-control" placeholder="Passwort" required>
 			<label for="inputPassword" class="sr-only">passwort2</label>
 			<input type="password" name="passwort2" class="form-control" placeholder="Wiederhole dein Passwort" required>
 
 			<div class="checkbox mb-3">
-				<button class="btn btn-lg btn-primary btn-block" name="absenden" type="submit">Registrieren</button>
+				<button class="btn btn-lg btn-success btn-block" name="absenden" type="submit">Registrieren</button>
 		</form>
 		<p class="mt-3 mb-5 text-muted">Cleo 2018</p>
 		</div>

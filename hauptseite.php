@@ -54,7 +54,7 @@ else {*/
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="profil.php">Mein Konto</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Abmleden</a>
+                        <a class="dropdown-item" href="#">Abmelden</a>
                     </div>
                 </li>
             </ul>

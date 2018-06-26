@@ -52,7 +52,7 @@ if(isset($_POST['upload'])) {
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
-    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?, (SELECT Ordner.ID FROM Ordner WHERE OwnerID=?))');
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?,? /*(SELECT Ordner.ID FROM Ordner WHERE OwnerID=?)*/)');
    // 'ALTER TABLE Freigabe ADD FOREIGN KEY (DateiID) REFERENCES Datei (ID), ADD FOREIGN KEY (OwnerID) REFERENCES Nutzer (ID), ADD FOREIGN KEY (UserID) REFERENCES Nutzer (ID)');
     $statement->bindParam(1, $file);
     $statement->bindParam(2, $bildname);
@@ -62,7 +62,8 @@ if(isset($_POST['upload'])) {
         echo $statement->errorInfo()[2];
         echo $statement->queryString;
         die(); }
-    echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
+    header('Location:hauptseite.php');
+        //echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
 }
 
 //berechtigungen, sql datenbank eintrag, name, eigentümer, session_id nutzer, insert into

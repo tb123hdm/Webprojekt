@@ -153,6 +153,13 @@ else {*/
             $unterordner=$statement->fetch();
             echo $unterordner ['ordnername'];
 
+            $statement=$db->prepare('SELECT original_name FROM Datei WHERE OrdnerID=? '); // query für Unterodner
+            $statement->bindParam(1, $userid);
+            $statement->execute();
+            $datei=$statement->fetch();
+            echo $datei ['original_name'];
+
+
             ?>
 
         </td>

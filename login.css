@@ -1,19 +1,21 @@
-html, body {
-    height: 100%
+html {
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     display: flex;
     flex-direction: column;
+    background-color: whitesmoke;
+    margin-bottom: 300px; /* Margin bottom by footer height */
 }
 
 
 #headline {
     background-color: whitesmoke;
     word-spacing: 10px;
-    letter-spacing: 1px;
-    color: #333a40;
-    height:10vh;
+    padding-bottom: 25px;
+    padding-top: 25px;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +26,6 @@ body {
 #form {
     background-color: whitesmoke;
     display:flex;
-    height: 80vh;
     align-items: center;
     justify-content: center;
 }
@@ -107,9 +108,17 @@ a:hover {
 
 /* Footer */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-section {
-    padding: 20px;
-    min-height: 25vh;
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px; /* Set the fixed height of the footer here */
+    background: #333a40;
+    color: lightgrey;
+    font-family: 'Open Sans Condensed', sans-serif;
+    letter-spacing: 1px;
+    font-size: large;
 }
 
 section .section-title {
@@ -118,45 +127,44 @@ section .section-title {
     margin-bottom: 50px;
     text-transform: uppercase;
 }
-#footer {
-    background: #333a40;
-}
-#footer h5{
+
+.footer h5{
     padding-left: 10px;
     padding-bottom: 6px;
+    padding-top: 25px;
     margin-bottom: 20px;
     color:white;
     font-family: 'Open Sans Condensed', sans-serif;
     letter-spacing: 1px;
 }
-#footer a {
+footer a {
     color: #ffffff;
     text-decoration: none !important;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 }
-#footer ul.social li{
+.footer ul.social li{
     padding: 3px 0;
 }
-#footer ul.social li a i {
+.footer ul.social li a i {
     margin-right: 5px;
     font-size:25px;
     -webkit-transition: .5s all ease;
     -moz-transition: .5s all ease;
     transition: .5s all ease;
 }
-#footer ul.social li:hover a i {
+.footer ul.social li:hover a i {
     font-size:30px;
     margin-top:-10px;
 }
-#footer ul.social li a,
-#footer ul.quick-links li a{
+.footer ul.social li a,
+.footer ul.quick-links li a{
     color:#ffffff;
 }
-#footer ul.social li a:hover{
+.footer ul.social li a:hover{
     color:#eeeeee;
 }
-#footer ul.quick-links li{
+.footer ul.quick-links li{
     padding: 3px 0;
     -webkit-transition: .5s all ease;
     -moz-transition: .5s all ease;
@@ -164,35 +172,33 @@ section .section-title {
     font-family: 'Open Sans Condensed', sans-serif;
     letter-spacing: 2px;
 }
-#footer ul.quick-links li:hover{
+.footer ul.quick-links li:hover{
     padding: 3px 0;
     margin-left:5px;
     font-weight:700;
 }
-#footer ul.quick-links li a i{
+.footer ul.quick-links li a i{
     margin-right: 5px;
 }
-#footer ul.quick-links li:hover a i {
+.footer ul.quick-links li:hover a i {
     font-weight: 700;
 }
 
-#footer h3{
+.footer h3{
     font-family: 'Megrim', cursive;
     color: white;
+    padding-top:25px;
 }
-#footer {
-    color: lightgrey;
-    font-family: 'Open Sans Condensed', sans-serif;
-    letter-spacing: 1px;
-    font-size: large;
-}
+
 
 @media (max-width:767px){
     #footer h5 {
         padding-left: 0;
         border-left: transparent;
         padding-bottom: 0px;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        padding-top: 15px;
     }
 
 }
+

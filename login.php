@@ -1,8 +1,6 @@
 <?php
 session_start();
-require_once("config.inc.php");
-
-
+require_once('config.inc.php');
 try {
     $db = new PDO("mysql:: host=$db_host; dbname=$db_name", $db_user, $db_password);
 }
@@ -13,6 +11,11 @@ catch (PDOException $p)
     echo $p-> getMessage();
 }
 
+
+$userid = $_SESSION['user'];
+if(!isset($userid)){
+    header('Location: cover.html');
+}
 
 if(isset($_POST['absenden'])){
     $email = strtolower($_POST['email']);

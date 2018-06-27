@@ -3,6 +3,14 @@ session_start();
 require_once ('config.inc.php');
 $userid = $_SESSION['user'];
 
+if(isset($_GET['ordnerid'])){
+    $ordnerid=$_GET['ordnerid'];
+}
+else{
+    $ordnerid= NULL;
+}
+
+
 if(isset($_POST['upload'])) {
     $fullpath ='/home/tb123/public_html';
     $upload_ordner = '/cleo/uploads/'; //Ordner für hochgeladene Dateien
@@ -52,18 +60,22 @@ if(isset($_POST['upload'])) {
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
-    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OwnerID) VALUES (?,?,? /*(SELECT Ordner.ID FROM Ordner WHERE OwnerID=?)*/)');
-   // 'ALTER TABLE Freigabe ADD FOREIGN KEY (DateiID) REFERENCES Datei (ID), ADD FOREIGN KEY (OwnerID) REFERENCES Nutzer (ID), ADD FOREIGN KEY (UserID) REFERENCES Nutzer (ID)');
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID, OwnerID) VALUES (?,?,?,?)');
+
     $statement->bindParam(1, $file);
     $statement->bindParam(2, $bildname);
-    //$statement->bindParam(3, );
-    $statement->bindParam(3, $userid);
+    $statement->bindParam(3,$ordnerid);
+    $statement->bindParam(4, $userid);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";
         echo $statement->errorInfo()[2];
         echo $statement->queryString;
         die(); }
-    header('Location:hauptseite.php');
+    if (isset($_GET['ordnerid'])) {
+        header('Location: hauptseite.php?ordnerid=' . $_GET['ordnerid']);
+    } else {
+        header('Location: hauptseite.php');
+    }
         //echo 'Datei erfolgreich hochgeladen: <a href="' . $new_path . '">' . $new_path . '</a>';
 }
 

@@ -12,11 +12,6 @@ catch (PDOException $p)
 }
 
 
-$userid = $_SESSION['user'];
-if(!isset($userid)){
-    header('Location: cover.html');
-}
-
 if(isset($_POST['absenden'])){
     $email = strtolower($_POST['email']);
     $passwort = $_POST['passwort'];
@@ -28,7 +23,7 @@ if(isset($_POST['absenden'])){
 
 
     if ($search_result !== false) {
-        $_SESSION['user'] = $search_result['id'];
+        $_SESSION['user'] = $search_result['ID'];
         header('Location: hauptseite.php');
         die();
     } else {

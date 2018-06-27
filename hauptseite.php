@@ -5,6 +5,14 @@ $userid = $_SESSION['user'];
 if(!isset($userid)){
     header('Location: cover.html');
 }
+if(isset($_GET['ordnerid'])){
+    $ordnerid=$_GET['ordnerid'];
+    $operator= "=";
+}
+else{
+    $ordnerid= NULL;
+    $operator= 'IS';
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +43,7 @@ if(!isset($userid)){
     <!----Navbar--->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <a class="navbar-brand" href="hauptseite.html" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
+        <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
         </a>
         <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,11 +52,28 @@ if(!isset($userid)){
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
-                    <a class="nav-link" href="hauptseite.html" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
+                    <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php
+                        $userid = $_SESSION['user'];
+                        $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
+                        $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
+                        $statement->bindParam(1, $userid);
+                        $statement->execute();
+                        $row = $statement->fetch();
+                        $bild = $row['Bild'];
+                        $upload_bild=$upload_folder.$bild;
+                        if ($row['Bild']==NULL) {
+                            echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                        }
+                        else {
+                            echo '<img src="';
+                            echo $upload_bild;
+                            echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle" alt="">';
+                        }
+                        ?>
                         Einstellungen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -59,24 +84,7 @@ if(!isset($userid)){
                 </li>
             </ul>
 
-            <?php
-            $userid = $_SESSION['user'];
-            $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
-            $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
-            $statement->bindParam(1, $userid);
-            $statement->execute();
-            $row = $statement->fetch();
-            $bild = $row['Bild'];
-            $upload_bild=$upload_folder.$bild;
-            if ($row['Bild']==NULL) {
-                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" style="margin-right: 250px;">';
-            }
-            else {
-                echo '<img src="';
-                echo $upload_bild;
-                echo '" width="60" height="100%" class="rounded-circle" alt="" style="margin-right: 250px">';
-            }
-            ?>
+
 
 
             <!---Datei-Upload--->
@@ -98,7 +106,11 @@ if(!isset($userid)){
                                 <div class="form-group">
                                     <label for="upload-file"></label>
 
-                                    <form action="upload.php" method="post" enctype="multipart/form-data">
+                                    <form action="upload.php<?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '?ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post" enctype="multipart/form-data">
                                         <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
                                         <br>
                                         <div class="modal-footer">
@@ -124,12 +136,16 @@ if(!isset($userid)){
                                 <div class="form-group">
                                     <label for="upload-file"></label>
 
-                                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                                        <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
+                                    <form action="ordner.php<?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '?ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post">
+                                        <input type="text" name="ordnername" class="form-control">
                                         <br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                            <input type="submit" value="Hochladen" name="upload" class="btn btn-primary"> </input>
+                                            <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
                                         </div>
                                     </form>
                                 </div>
@@ -179,10 +195,14 @@ if(!isset($userid)){
     </tr>
     </thead>
     <tbody>
+
     <?php
 
-    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID IS NULL) '); // user id eingefügt mit der ich eingeloggt bin
+
+//ORDNER ANZEIGEN
+    $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID '.$operator.' ? '); // user id eingefügt mit der ich eingeloggt bin
     $statement->bindParam(1, $userid);
+    $statement->bindParam(2,$ordnerid);
     $statement->execute();
     //print_r ($statement->fetchAll());
     foreach($statement->fetchAll() as $root) {
@@ -192,22 +212,23 @@ if(!isset($userid)){
         <tr>
             <th scope="row"></th>
             <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                <?=$root['original_name']?>
+                <a href="hauptseite.php?ordnerid=<?=$root['ID']?>">
+                    <?=$root['ordnername']?></a>
             </td>
 
             <!--Benutzername-->
             <td>
-                <?=$root['vorname']?>
+                ich
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal"></button>
+                <div class="modal fade" id="delete-folder-modal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <h5 class="modal-title">Bist Du dir sicher?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -217,102 +238,16 @@ if(!isset($userid)){
                                 gelöscht.
                             </div>
                             <div class="modal-footer">
-                                <form action="delete.php?delete=<?= $dateiname ?>" method="post">
+                                <form action="delete.php" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                     </button>
-                                    <button name="delete" type="button" class="btn btn-primary">Löschen</button>
+                                    <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!---Funktion: Download--->
-                <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
-                    <form action="download.php" method="get">
-
-                    </form>
-                </i>
-
-
-                <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!
-                    Pop-Up für die Funktion: Benutzerverwaltung>
-                </button>
-                <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
-                                <?php //Abfrage wer hat Zugriff
-
-                                $statement = $db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
-                                $statement->execute();
-                                $berechtigung = $statement->fetch();
-                                print_r($berechtigung[0]);
-                                ?>
-                                <br>
-                                <br>
-                                <p>Personen hinzufügen:</p>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@</span>
-                                    </div>
-                                    <form method="post" action="berechtigung.php">
-                                        <input type="text" name="email" class="form-control"
-                                               placeholder="E-Mail-Adresse" aria-label="e-mail"
-                                               aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                <button type="submit" class="btn btn-primary">Bestätigen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button>
-                <! Pop-Up für die Funktion: Teilen>
-                <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>... mit Deinen Freunden!</p>
-                                <input type="text" class="form-control" placeholder="Benutzername"
-                                       aria-label="benutzername" aria-describedby="basic-addon1">
-                                <br>
-                                <p>oder</p>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="E-Mail-Adresse"
-                                           aria-label="e-mail" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="button" class="btn btn-primary">Teilen</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
+            </td>
         </tr>
         <?php
     }
@@ -320,8 +255,9 @@ if(!isset($userid)){
 
     <?php
 
-    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID IS NULL) '); // user id eingefügt mit der ich eingeloggt bin
+    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
     $statement->bindParam(1, $userid);
+    $statement->bindParam(2,$ordnerid);
     $statement->execute();
     //print_r ($statement->fetchAll());
     foreach($statement->fetchAll() as $root) {
@@ -340,13 +276,13 @@ if(!isset($userid)){
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal"></button>
+                <div class="modal fade" id="delete-file-modal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <h5 class="modal-title">Bist Du dir sicher?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -356,10 +292,10 @@ if(!isset($userid)){
                                 gelöscht.
                             </div>
                             <div class="modal-footer">
-                                <form action="delete.php?delete=<?= $dateiname ?>" method="post">
+                                <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                     </button>
-                                    <button name="delete" type="button" class="btn btn-primary">Löschen</button>
+                                    <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
                                 </form>
                             </div>
                         </div>
@@ -367,11 +303,11 @@ if(!isset($userid)){
                 </div>
 
                 <!---Funktion: Download--->
-                <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
-                    <form action="download.php" method="get">
 
+                    <form action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+                        <button type="submit"><i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></i></button>
                     </form>
-                </i>
+
 
 
                 <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!
@@ -451,7 +387,7 @@ if(!isset($userid)){
                         </div>
                     </div>
                 </div>
-                </div>
+                </td>
         </tr>
         <?php
     }

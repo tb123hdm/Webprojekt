@@ -13,7 +13,7 @@ require_once("config.inc.php");
 
 	<!-- All CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="startseite.css"/>
+	<link rel="stylesheet" type="text/css" href="registrieren.css"/>
 	<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
@@ -25,17 +25,18 @@ require_once("config.inc.php");
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.dialog.min.js"></script>
 	<script src="jQueryAssets/jquery.ui-1.10.4.button.min.js"></script>
-	<script>
-	<script>var __adobewebfontsappname__="dreamweaver"</script>
-	<script src="http://use.edgefonts.net/advent-pro:n1,n2,n4:default;gfs-neohellenic:n4:default;homenaje:n4:default;boogaloo:n4:default;roboto:n4:default;over-the-rainbow:n4:default;fresca:n4:default;ubuntu-condensed:n4:default;josefin-sans:n1,n3:default;acme:n4:default;droid-sans:n4:default.js" type="text/javascript">
-	</script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
+
 
 </head>
 
 <body class="text-center">
-	<div id="willkommen">
+	<section id="willkommen">
 		<h1> Hey willkommen bei Cleo</h1>
-	</div>
+	</section>
 	
 <?php
 if(isset($_POST['absenden'])):
@@ -84,10 +85,10 @@ endif;
 	
 ?>
 
-	<div id="form">
+	<section id="form">
 		<form class="form-signin" form action="" method="post">
 			<img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
-			<h1 class="h3 m-0 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
+			<h1 class="h3 mb-5 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
 			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>
 			<label for="inputname" class="sr-only">nachname</label>
@@ -102,16 +103,43 @@ endif;
 
 			<div class="checkbox mb-3">
 				<button class="btn btn-lg btn-success btn-block" name="absenden" type="submit">Registrieren</button>
+                <a href="login.php" class="mt-3 btn btn-outline-info">Du hast schon dein Konto?</a>
 		</form>
 
 		<p class="mt-3 mb-5 text-muted">Cleo 2018</p>
-		</div>
-	</div>
-	<div id="footer">
-		<div class="col-4 "> <a href="impressum.html"> Impressum </a> </div>
-		<div class="col-4 "> Made with <3 in Stuttgart </div>
-		<div class="col-4 "> Webprojekt @ HdM Stuttgart </div>
-		</div>
+		</section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row text-center text-xs-center text-sm-left text-md-left">
+                <div class="col-xs-12 col-sm-4 col-md-4 mt-8">
+                    <h3>C L E O</h3>
+                    <br>
+                    <p>Hochschule der Medien<br>
+                        Nobelstraße 10<br>
+                        70569 Stuttgart</p>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 mt-8">
+                    <h5>Allgemeines</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                        <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+            <br>
+            <div class="row" style="font-family: 'Open Sans Condensed', sans-serif;">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
+                </div>
+                <br>
+            </div>
+
+
+    </footer>
+    <!-- ./Footer -->
 
 
 		<!-- Optional JavaScript -->

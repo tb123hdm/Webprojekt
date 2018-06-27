@@ -15,7 +15,7 @@ body {
     background-color: whitesmoke;
     word-spacing: 10px;
     padding-bottom: 25px;
-    padding-top: 25px;
+    padding-top: 35px;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +90,7 @@ h2 {
     font-weight: 400;
     font-variant: small-caps;
     font-size: 4vh;
-    padding-bottom: 20px;
+    margin-bottom: 40px;
 
 }
 
@@ -217,7 +217,6 @@ footer a {
     }
 
 }
-
 @media (max-width: 767px) {
 
     body {

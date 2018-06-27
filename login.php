@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('config.inc.php');
-try {
+/*try {
     $db = new PDO("mysql:: host=$db_host; dbname=$db_name", $db_user, $db_password);
 }
 
@@ -10,7 +10,7 @@ catch (PDOException $p)
     echo ("Fehler beim Aufbau der Datenbankverbindung.");
     echo $p-> getMessage();
 }
-
+*/
 
 if(isset($_POST['absenden'])){
     $email = strtolower($_POST['email']);
@@ -23,7 +23,7 @@ if(isset($_POST['absenden'])){
 
 
     if ($search_result !== false) {
-        $_SESSION['user'] = $search_result['id'];
+        $_SESSION['user'] = $search_result['ID'];
         header('Location: hauptseite.php');
         die();
     } else {
@@ -139,6 +139,7 @@ if(isset($errorMessage)) {
 <!-- ./Footer -->
 
 </div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -52,10 +52,11 @@ if(isset($_POST['upload'])) {
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);
-    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OrdnerID) VALUES (?,?,? /*(SELECT Ordner.ID FROM Ordner WHERE OwnerID=?)*/)');
+    $statement = $db->prepare('INSERT INTO Datei (original_name, dateiname, OwnerID) VALUES (?,?,? /*(SELECT Ordner.ID FROM Ordner WHERE OwnerID=?)*/)');
    // 'ALTER TABLE Freigabe ADD FOREIGN KEY (DateiID) REFERENCES Datei (ID), ADD FOREIGN KEY (OwnerID) REFERENCES Nutzer (ID), ADD FOREIGN KEY (UserID) REFERENCES Nutzer (ID)');
     $statement->bindParam(1, $file);
     $statement->bindParam(2, $bildname);
+    //$statement->bindParam(3, );
     $statement->bindParam(3, $userid);
     if (!$statement->execute()){
         echo "Datenbank-Fehler:";

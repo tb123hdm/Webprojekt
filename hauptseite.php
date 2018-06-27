@@ -2,10 +2,9 @@
 session_start();
 require_once('config.inc.php');
 $userid = $_SESSION['user'];
-/*if($userid==0){
+if(!isset($userid)){
     header('Location: cover.html');
 }
-else {*/
 ?>
 
 <!DOCTYPE html>
@@ -136,231 +135,285 @@ else {*/
     </tr>
     </thead>
     <tbody>
+    <?php
 
-    <tr>
-        <th scope="row"> </th>
-        <td><i class="far fa-folder-open" style="margin-right:20px; "></i>
-            <?php //Abfrage Root Ordner
+    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID IS NULL) '); // user id eingefügt mit der ich eingeloggt bin
+    $statement->bindParam(1, $userid);
+    $statement->execute();
+    //print_r ($statement->fetchAll());
+    foreach($statement->fetchAll() as $root) {
 
-            $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID IS NULL'); // user id eingefügt mit der ich eingeloggt bin
-            $statement->bindParam(1, $userid);
-            $statement->execute();
-            $root=$statement->fetch();
+        ?>
 
+        <tr>
+            <th scope="row"></th>
+            <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
+                <?=$root['original_name']?>
+            </td>
 
-            $statement=$db->prepare('SELECT * FROM Ordner WHERE ParentID= '.$root ['ID']); // query für Unterodner
-            $statement->execute();
-            $unterordner=$statement->fetch();
-            echo $unterordner ['ordnername'];
+            <!--Benutzername-->
+            <td>
+                <?=$root['vorname']?>
+            </td>
 
-            $statement=$db->prepare('SELECT original_name FROM Datei WHERE OrdnerID=? '); // query für Unterodner
-            $statement->bindParam(1, $userid);
-            $statement->execute();
-            $datei=$statement->fetch();
-            echo $datei ['original_name'];
-
-
-            ?>
-
-        </td>
-
-        <!--Benutzername-->
-        <td>er042</td>
-
-        <td><button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-            <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich gelöscht.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button action="delete.php" method="post" name="delete" type="button" class="btn btn-primary">Löschen</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!---Funktion: Download--->
-            <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
-                <form action="download.php" method="get">
-
-                </form>
-            </i>
-
-
-            <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <! Pop-Up für die Funktion: Benutzerverwaltung>
-            </button>
-            <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
-                            <?php //Abfrage wer hat Zugriff
-
-                            $statement=$db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
-                            $statement->execute();
-                            $berechtigung=$statement->fetch();
-                            print_r ($berechtigung[0]);
-                            ?>
-                            <br>
-                            <br>
-                            <p>Personen hinzufügen:</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <form method="post" action="berechtigung.php">
-                                <input type="text" name="email" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+            <td>
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
+                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="submit"  class="btn btn-primary">Bestätigen</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button> <! Pop-Up für die Funktion: Teilen>
-            <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>... mit Deinen Freunden!</p>
-                            <input  type="text" class="form-control" placeholder="Benutzername" aria-label="benutzername" aria-describedby="basic-addon1">
-                            <br>
-                            <p>oder</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+                            <div class="modal-body">
+                                Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                gelöscht.
+                            </div>
+                            <div class="modal-footer">
+                                <form action="delete.php?delete=<?= $dateiname ?>" method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                    </button>
+                                    <button name="delete" type="button" class="btn btn-primary">Löschen</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-primary">Teilen</button>
-                    </div>
                 </div>
-            </div>
-            </div>
-    </tr>
-    <tr>
-        <th scope="row"> </th>
-        <td><i class="far fa-file" style="margin-right:25px; "></i>Mobile Medien</td>
 
-        <td>er042</td> <!Benutzername>
+                <!---Funktion: Download--->
+                <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
+                    <form action="download.php" method="get">
 
-        <td><button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-            <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich gelöscht.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button action="delete.php" method="post" name="delete" type="button" class="btn btn-primary">Löschen</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Funktion: Download--->
-            <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></i>
+                    </form>
+                </i>
 
 
-            <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <! Pop-Up für die Funktion: Benutzerverwaltung>
-            </button>
-            <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
-
-                            <br>
-                            <p>Personen hinzufügen:</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+                <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!
+                    Pop-Up für die Funktion: Benutzerverwaltung>
+                </button>
+                <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </div>
+                            <div class="modal-body">
+                                <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
+                                <?php //Abfrage wer hat Zugriff
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="button" class="btn btn-primary">Bestätigen</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button> <! Pop-Up für die Funktion: Teilen>
-            <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>... mit Deinen Freunden!</p>
-                            <input  type="text" class="form-control" placeholder="Benutzername" aria-label="benutzername" aria-describedby="basic-addon1">
-                            <br>
-                            <p>oder</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
+                                $statement = $db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
+                                $statement->execute();
+                                $berechtigung = $statement->fetch();
+                                print_r($berechtigung[0]);
+                                ?>
+                                <br>
+                                <br>
+                                <p>Personen hinzufügen:</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
+                                    <form method="post" action="berechtigung.php">
+                                        <input type="text" name="email" class="form-control"
+                                               placeholder="E-Mail-Adresse" aria-label="e-mail"
+                                               aria-describedby="basic-addon1">
                                 </div>
-                                <input type="text" class="form-control" placeholder="E-Mail-Adresse" aria-label="e-mail" aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                <button type="submit" class="btn btn-primary">Bestätigen</button>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-primary">Teilen</button>
+                </div>
+
+                <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button>
+                <! Pop-Up für die Funktion: Teilen>
+                <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>... mit Deinen Freunden!</p>
+                                <input type="text" class="form-control" placeholder="Benutzername"
+                                       aria-label="benutzername" aria-describedby="basic-addon1">
+                                <br>
+                                <p>oder</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="E-Mail-Adresse"
+                                           aria-label="e-mail" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                            <button type="button" class="btn btn-primary">Teilen</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </div>
-    </tr>
+                </div>
+        </tr>
+        <?php
+    }
+    ?>
+
+    <?php
+
+    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID IS NULL) '); // user id eingefügt mit der ich eingeloggt bin
+    $statement->bindParam(1, $userid);
+    $statement->execute();
+    //print_r ($statement->fetchAll());
+    foreach($statement->fetchAll() as $root) {
+
+        ?>
+
+        <tr>
+            <th scope="row"></th>
+            <td><i class="far fa-file" style="margin-right:25px; "></i>
+                <?=$root['original_name']?>
+            </td>
+
+            <!--Benutzername-->
+            <td>
+                <?=$root['vorname']?>
+            </td>
+
+            <td>
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
+                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                gelöscht.
+                            </div>
+                            <div class="modal-footer">
+                                <form action="delete.php?delete=<?= $dateiname ?>" method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                    </button>
+                                    <button name="delete" type="button" class="btn btn-primary">Löschen</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---Funktion: Download--->
+                <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
+                    <form action="download.php" method="get">
+
+                    </form>
+                </i>
+
+
+                <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!
+                    Pop-Up für die Funktion: Benutzerverwaltung>
+                </button>
+                <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
+                                <?php //Abfrage wer hat Zugriff
+
+                                $statement = $db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
+                                $statement->execute();
+                                $berechtigung = $statement->fetch();
+                                print_r($berechtigung[0]);
+                                ?>
+                                <br>
+                                <br>
+                                <p>Personen hinzufügen:</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
+                                    <form method="post" action="berechtigung.php">
+                                        <input type="text" name="email" class="form-control"
+                                               placeholder="E-Mail-Adresse" aria-label="e-mail"
+                                               aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                <button type="submit" class="btn btn-primary">Bestätigen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button>
+                <! Pop-Up für die Funktion: Teilen>
+                <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>... mit Deinen Freunden!</p>
+                                <input type="text" class="form-control" placeholder="Benutzername"
+                                       aria-label="benutzername" aria-describedby="basic-addon1">
+                                <br>
+                                <p>oder</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="E-Mail-Adresse"
+                                           aria-label="e-mail" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                            <button type="button" class="btn btn-primary">Teilen</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </tr>
+        <?php
+    }
+        ?>
+
+
     </tbody>
 </table>
 </tbody>

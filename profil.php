@@ -2,7 +2,7 @@
 session_start();
 require_once('config.inc.php');
 $userid = $_SESSION['user'];
-if($userid==0){
+if(!isset($userid)){
     header('Location: cover.html');
 }
 else {

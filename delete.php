@@ -8,10 +8,15 @@ $new_path = $fullpath.$upload_ordner;
 
 if(isset($_GET['delete'])) {
     $dateiname = $_GET['delete'];
-    $statement = $db->prepare('DELETE * FROM Datei WHERE dateiname=? AND OwnerID=?');
-    $statement->bindParam(1, $dateiID);
+    $statement = $db->prepare('DELETE FROM Datei WHERE dateiname=? AND OwnerID=?');
+    $statement->bindParam(1, $dateiname);
     $statement->bindParam(2, $userid);
     $delete = $statement->execute();
     if ($delete !== false)
         unlink($new_path . $dateiname);
+    if (isset($_GET['ordnerid'])) { //Überpüfung ob OrdnerID gesetzt wurde
+        header('Location: hauptseite.php?ordnerid=' . $_GET['ordnerid']); //falls gesetzt wieder angefügt
+    } else {
+        header('Location: hauptseite.php');
+    }
 }

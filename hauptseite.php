@@ -43,7 +43,7 @@ else{
     <!----Navbar--->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <a class="navbar-brand" href="hauptseite.html" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
+        <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
         </a>
         <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -212,7 +212,8 @@ else{
         <tr>
             <th scope="row"></th>
             <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                <?=$root['ordnername']?>
+                <a href="hauptseite.php?ordnerid=<?=$root['ID']?>">
+                    <?=$root['ordnername']?></a>
             </td>
 
             <!--Benutzername-->
@@ -221,13 +222,13 @@ else{
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal"></button>
+                <div class="modal fade" id="delete-folder-modal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <h5 class="modal-title">Bist Du dir sicher?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -237,10 +238,10 @@ else{
                                 gelöscht.
                             </div>
                             <div class="modal-footer">
-                                <form action="delete.php?delete" method="post">
+                                <form action="delete.php" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                     </button>
-                                    <button name="delete" type="button" class="btn btn-primary">Löschen</button>
+                                    <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
                                 </form>
                             </div>
                         </div>
@@ -275,13 +276,13 @@ else{
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></button>
-                <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal"></button>
+                <div class="modal fade" id="delete-file-modal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="delete-modal">Bist Du dir sicher?</h5>
+                                <h5 class="modal-title">Bist Du dir sicher?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -291,10 +292,10 @@ else{
                                 gelöscht.
                             </div>
                             <div class="modal-footer">
-                                <form action="delete.php?delete=<?= $root['dateiname'] ?>" method="post">
+                                <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                     </button>
-                                    <button name="delete" type="submit" class="btn btn-primary" data-dismiss="modal">Löschen</button>
+                                    <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
                                 </form>
                             </div>
                         </div>
@@ -302,11 +303,11 @@ else{
                 </div>
 
                 <!---Funktion: Download--->
-                <i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;">
-                    <form action="download.php" method="get">
 
+                    <form action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+                        <button type="submit"><i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></i></button>
                     </form>
-                </i>
+
 
 
                 <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!

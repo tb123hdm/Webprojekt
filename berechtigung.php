@@ -17,3 +17,5 @@ $statement->bindParam(3,$berechtigung_id);
 $statement->execute();
 
 
+
+?>

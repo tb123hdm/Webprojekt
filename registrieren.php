@@ -29,7 +29,7 @@ require_once("config.inc.php");
 	<script>var __adobewebfontsappname__="dreamweaver"</script>
 	<script src="http://use.edgefonts.net/advent-pro:n1,n2,n4:default;gfs-neohellenic:n4:default;homenaje:n4:default;boogaloo:n4:default;roboto:n4:default;over-the-rainbow:n4:default;fresca:n4:default;ubuntu-condensed:n4:default;josefin-sans:n1,n3:default;acme:n4:default;droid-sans:n4:default.js" type="text/javascript">
 	</script>
-	
+
 </head>
 
 <body class="text-center">
@@ -103,6 +103,7 @@ endif;
 			<div class="checkbox mb-3">
 				<button class="btn btn-lg btn-success btn-block" name="absenden" type="submit">Registrieren</button>
 		</form>
+
 		<p class="mt-3 mb-5 text-muted">Cleo 2018</p>
 		</div>
 	</div>

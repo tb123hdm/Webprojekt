@@ -9,11 +9,11 @@ body {
 
 
 #headline {
-    background-color: #313131;
+    background-color: whitesmoke;
     word-spacing: 10px;
     letter-spacing: 1px;
-    color: #75B7DE;
-    height:18vh;
+    color: #333a40;
+    height:10vh;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +24,7 @@ body {
 #form {
     background-color: whitesmoke;
     display:flex;
-    height:80vh;
+    height: 80vh;
     align-items: center;
     justify-content: center;
 }
@@ -109,6 +109,7 @@ a:hover {
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 section {
     padding: 20px;
+    min-height: 25vh;
 }
 
 section .section-title {

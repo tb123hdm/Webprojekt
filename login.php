@@ -71,9 +71,9 @@ if(isset($_POST['absenden'])){
 
 
 	
-<div id="headline">
+<section id="headline">
   <h1> Hey willkommen bei Cleo</h1>
-</div>
+</section>
 
 <?php
 
@@ -81,8 +81,8 @@ if(isset($errorMessage)) {
     echo $errorMessage;
 }
 ?>
-		
-<div id="form">	
+<!-- Formular -->
+<section id="form">
   <form class="form-signin" action="" method="post">
   <img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
   <h2 class="h3 m-0 font-weight-light"><strong>Bitte anmelden</strong></h2>
@@ -103,7 +103,7 @@ if(isset($errorMessage)) {
  </form>
 
 
-</div>
+</section>
 
 
 

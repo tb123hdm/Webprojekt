@@ -6,7 +6,6 @@ if(!isset($userid)){
     header('Location: cover.html');
 }
 
-//https://mars.iuk.hdm-stuttgart.de/~gurzki/dl/download2.php?filename=bild.jpg
 $directory = "/home/tb123/public_html/cleo/uploads/";
 
 $mimetypes = array (
@@ -17,18 +16,30 @@ $mimetypes = array (
     '.pdf'=> 'application/pdf',
     '.ppt'=> 'application/mspowerpoint',
 );
-if(empty($_GET["dateiname"])) //ob Dateiname übergeben wurde
+if(empty($_GET["dateiname"])) //wenn dateiname leer ist, wenn man über URL download.php aufruft
 {
-    echo " keine Datei zum Download ausgewählt.";
+    echo "keine Datei zum Download ausgewählt.";
     die();
 }
 else
 {
     $filename=$_GET["dateiname"];
 }
-$filepath=$directory.$filename;
-header("Content-Type:".$mimetype);
-header('Content-Disposition: attachment;filename="'.$filename.'"');
-header("Content-Transfer-Encoding: binary ");
-header("Content-Length: ".filesize($filepath));
-readfile($filepath);
+
+$statement=$db->prepare('SELECT * FROM Datei WHERE (Freigabe=1 OR OwnerID=?) AND dateiname=?'); //Klammern überflüssig wenn nur OR oder nur AND, alles außerhalb der Klammer muss mitgenommen werden
+$statement->bindParam(1,$userid);
+$statement->bindParam(2,$filename);
+$statement->execute();
+
+if($statement->rowCount()!=0){
+
+    $filepath=$directory.$filename;
+    header("Content-Type:".$mimetype);
+    header('Content-Disposition: attachment;filename="'.$filename.'"');
+    header("Content-Transfer-Encoding: binary ");
+    header("Content-Length: ".filesize($filepath));
+    readfile($filepath);
+}
+else{
+    header('Location: hauptseite.php');
+}

@@ -222,8 +222,8 @@ else{
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal"></button>
-                <div class="modal fade" id="delete-folder-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal-<?=$root['ID']?>"></button>
+                <div class="modal fade" id="delete-folder-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -255,7 +255,7 @@ else{
 
     <?php
 
-    $statement=$db->prepare('SELECT * FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
+    $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
     $statement->bindParam(1, $userid);
     $statement->bindParam(2,$ordnerid);
     $statement->execute();
@@ -276,8 +276,8 @@ else{
             </td>
 
             <td>
-                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal"></button>
-                <div class="modal fade" id="delete-file-modal" tabindex="-1" role="dialog"
+                <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
+                <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -305,15 +305,15 @@ else{
                 <!---Funktion: Download--->
 
                     <form action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
-                        <button type="submit"><i class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></i></button>
+                        <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
                     </form>
 
 
 
-                <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal"> <!
+                <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal-<?=$root['ID']?>"> <!
                     Pop-Up für die Funktion: Benutzerverwaltung>
                 </button>
-                <div class="modal fade" id="licence-modal" tabindex="-1" role="dialog"
+                <div class="modal fade" id="licence-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -343,6 +343,7 @@ else{
                                         <input type="text" name="email" class="form-control"
                                                placeholder="E-Mail-Adresse" aria-label="e-mail"
                                                aria-describedby="basic-addon1">
+                                    </form>
                                 </div>
                             </div>
 
@@ -354,36 +355,71 @@ else{
                     </div>
                 </div>
 
-                <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal"></button>
-                <! Pop-Up für die Funktion: Teilen>
-                <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
+                <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal-<?=$root['ID']?>"></button>
+                <!-- Pop-Up für die Funktion: Teilen-->
+                <div class="modal fade" id="share-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="share-modal">Teile Deine Ideen...</h5>
+                                <h5 class="modal-title">Teile Deine Ideen...</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>... mit Deinen Freunden!</p>
-                                <input type="text" class="form-control" placeholder="Benutzername"
-                                       aria-label="benutzername" aria-describedby="basic-addon1">
-                                <br>
-                                <p>oder</p>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="E-Mail-Adresse"
-                                           aria-label="e-mail" aria-describedby="basic-addon1">
+                                <div class="form-group">
+                                    <label for="upload-file"></label>
+
+                                    <form action="teilen.php?dateiid=<?=$root['ID']?><?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '&ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post">
+                                        <br>
+                                        <div class="form-check">
+                                            <input <?php
+                                            if ( $root['Freigabe']=='1' ){
+                                                echo'checked';
+                                            }
+                                             ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Teilen mit fremden Personen erlauben
+                                            </label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                            <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                            <button type="button" class="btn btn-primary">Teilen</button>
+                    </div>
+                </div>
+                <button type="button" class="fas fa-share" data-toggle="modal" data-target="#move-modal-<?=$root['ID']?>"></button>
+                <div class="modal fade" id="move-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Datei verschieben nach...</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="upload-file"></label>
+
+                                    <form action="verschieben.php?dateiid=<?=$root['ID']?>" method="post">
+                                        <input type="text" name="ordnername" class="form-control">
+                                        <br>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                            <input type="submit" value="Verschieben" name="submit" class="btn btn-primary"> </input>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ require_once("config.inc.php");
 
 <body class="text-center">
 	<section id="willkommen">
-		<h1> Hey willkommen bei Cleo</h1>
+		<h1> Willkommen bei Cleo</h1>
 	</section>
 	
 <?php
@@ -87,7 +87,7 @@ endif;
 
 	<section id="form">
 		<form class="form-signin" form action="" method="post">
-			<img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
+			<img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
 			<h1 class="h3 mb-5 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
 			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>

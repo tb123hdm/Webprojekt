@@ -80,7 +80,7 @@ ul {
 h1 {
     font-family: 'Poppins';
     font-weight: 300;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
     font-variant: small-caps;
 
 }
@@ -210,13 +210,6 @@ footer a {
 
 }
 
-@media (max-width: 767px) {
-
-    #headline {
-        font-size: smaller;
-    }
-
-}
 
 @media (max-width: 767px) {
 

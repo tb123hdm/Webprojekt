@@ -71,7 +71,7 @@ if(isset($_POST['absenden'])){
 
 
 <section id="headline">
-  <h1> Hey willkommen bei Cleo</h1>
+  <h1> Willkommen bei Cleo</h1>
 </section>
 
 <?php
@@ -80,10 +80,12 @@ if(isset($errorMessage)) {
     echo $errorMessage;
 }
 ?>
+
+<img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
+
 <!-- Formular -->
 <section id="form">
   <form class="form-signin" action="" method="post">
-  <img class="m-0 rounded mx-auto d-block" src="https://trello-attachments.s3.amazonaws.com/5ab8d1b9621426ac0cecd98f/5ad5f3bb3595e5656f80b07b/8130da7a33f0ff5294aab16f2d4bba86/Cleo_Logo_neu2.png" alt="" width="auto" height="200">
   <h2 class="h3 m-0 font-weight-light"><strong>Bitte anmelden</strong></h2>
   <label for="inputEmail" class="sr-only">Email</label>
   <input type="email" name="email" class="form-control" placeholder="Deine Email Adresse" required autofocus>
@@ -94,9 +96,9 @@ if(isset($errorMessage)) {
 
 
       <button class="btn btn-lg btn-primary btn-block" name="absenden" type="submit">Loslegen</button>
-      <a href="registrieren.php" class="mt-3 btn btn-outline-info">Registrieren</a>
+      <a href="registrieren.php" class="mt-3 btn btn-outline-info">Du hast noch kein Konto?</a>
 
-  <p class="mt-3 mb-5 text-muted">Cleo 2018</p>
+  <p class="mt-3 mb-5 text-muted" id="subtext">Cleo 2018</p>
 
 
  </form>

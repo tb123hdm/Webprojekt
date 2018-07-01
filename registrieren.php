@@ -14,7 +14,9 @@ require_once("config.inc.php");
 	<!-- All CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="registrieren.css"/>
-	<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.resizable.min.css" rel="stylesheet" type="text/css">

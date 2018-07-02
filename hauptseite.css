@@ -82,6 +82,12 @@ h5{
 body{
     height: 1000px;
 }
+td{
+    list-style: none;
+}
+tr{
+    list-style: none;
+}
 
 /* Footer */
 footer{

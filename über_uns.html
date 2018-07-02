@@ -172,8 +172,9 @@
 <header>
 
     <!----Navbar--->
+
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <a class="navbar-brand" href="hauptseite.html" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
+        <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
         </a>
         <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -182,37 +183,65 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="hauptseite.html" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>
+                    <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php
+                        $userid = $_SESSION['user'];
+                        $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
+                        $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
+                        $statement->bindParam(1, $userid);
+                        $statement->execute();
+                        $row = $statement->fetch();
+                        $bild = $row['Bild'];
+                        $upload_bild=$upload_folder.$bild;
+                        if ($row['Bild']==NULL) {
+                        echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                        }
+                        else {
+                        echo '<img src="';
+                            echo $upload_bild;
+                            echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle" alt="">';
+                        }
+                        ?>
                         Einstellungen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Mein Konto</a>
+                        <a class="dropdown-item" href="profil.php">Mein Konto</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Abmleden</a>
+                        <a class="dropdown-item" href="#">Abmelden</a>
                     </div>
                 </li>
             </ul>
 
+
+
+
             <!---Datei-Upload--->
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#upload-modal"> + NEU</button>
-            <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
+
+            <div class="dropdown" style="width: 50px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    + NEU
+                </button>
+                <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
                                     <label for="upload-file"></label>
 
-                                    <form action="upload.php" method="post" enctype="multipart/form-data">
+                                    <form action="upload.php<?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '?ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post" enctype="multipart/form-data">
                                         <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
                                         <br>
                                         <div class="modal-footer">
@@ -221,25 +250,63 @@
                                         </div>
                                     </form>
                                 </div>
-                            </form>
-
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Neuer Ordner</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="upload-file"></label>
+
+                                    <form action="ordner.php<?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '?ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post">
+                                        <input type="text" name="ordnername" class="form-control">
+                                        <br>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                            <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal">Datei hochladen</button>
+
+                </div>
             </div>
+
+
+
 
             <!---Benutzer-Profilbild--->
             <img src="Bilder/userbild.jpg"  width="40" height="40" class="d-inline-block align-top img_profile" alt="" style="margin-right: auto;">
 
-            <!---Suchfunktion--->
+
+
+
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
             </form>
         </div>
     </nav>
-</header>
-
 <!---Slideshow---->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -270,11 +337,7 @@
 <!---/Slideshow--->
 
 <!--Überschrift der Seite--->
-<h1 id="story" style="color: #333a40">Unsere Gechichte</h1>
-<p>Lorem ipsum dorum. Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.
-    Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.
-    Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.
-    Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.Lorem ipsum dorum.</p>
+
 <h1 style="margin-left: 30px">Unser Team</h1>
 
 <!--Team-Bilder--->

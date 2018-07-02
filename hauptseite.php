@@ -80,7 +80,7 @@ else{
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="profil.php">Mein Konto</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Abmelden</a>
+                            <a class="dropdown-item" href="abmelden.php">Abmelden</a>
                         </div>
                     </li>
                 </ul>
@@ -157,7 +157,7 @@ else{
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal">Datei hochladen</button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
 
                     </div>
                 </div>

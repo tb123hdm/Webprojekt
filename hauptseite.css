@@ -59,7 +59,7 @@ h5{
     font-weight: 200;
     letter-spacing: 1px;
 }
-.btn-info{
+#dropdownMenuButton{
     margin-right: auto;
     font-size: 13px;
     letter-spacing: 1px;
@@ -70,7 +70,7 @@ h5{
     background-color: inherit;
     transition: all 0.3s ease 0s;
 }
-.btn-info:hover{
+#dropdownMenuButton:hover{
     background-color: inherit;
     border-color: inherit;
 }
@@ -86,6 +86,12 @@ h5{
 /*Body*/
 body{
     height: 1000px;
+}
+td{
+    list-style: none;
+}
+tr{
+    list-style: none;
 }
 
 /* Footer */

@@ -213,7 +213,7 @@ else{
             <tr>
                 <th scope="row"></th>
                 <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                    <a href="hauptseite.php?ordnerid=<?=$root['ID']?>">
+                    <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
                         <?=$root['ordnername']?></a>
                 </td>
 

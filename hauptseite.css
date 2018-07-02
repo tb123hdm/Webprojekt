@@ -88,6 +88,11 @@ td{
 tr{
     list-style: none;
 }
+.ordner-link, .ordner-link:hover{
+    text-decoration: none;
+    color: #333a40;
+}
+
 
 /* Footer */
 footer{

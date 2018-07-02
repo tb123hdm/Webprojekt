@@ -330,9 +330,31 @@ else{
                                             echo '&ordnerid='.$_GET['ordnerid'];
                                         }
                                         ?>" method="post">
+                                            <p id="teilen">Freunde, mit denen Du bereits teilst:</p>
+                                            <ul class="list-group" style="max-height: 300px;">
+
+                                                    <?php
+                                                    $dateiid=$root['ID'];
+
+                                                    $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
+                                                    $statement1->bindParam(1,$dateiid);
+                                                    $statement1->execute();
+                                                    $ergebnis=$statement1->fetchAll();
+                                                    foreach ($ergebnis as $aktuell){
+                                                        echo '<li class="list-group-item">';
+                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn btn-danger" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                     if(isset($_GET['ordnerid'])){
+                                                        echo '&ordnerid='.$_GET['ordnerid'];
+                                                     }
+                                                        echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
+                                                    }
+                                                    ?>
+
+                                            </ul>
+                                            <br>
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">E-Mail Adresse:</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@beispiel.de">
+                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
                                             </div>
                                             <br>
                                             <div class="form-check">
@@ -345,6 +367,7 @@ else{
                                                     Teilen mit fremden Personen erlauben
                                                 </label>
                                             </div>
+                                            <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                                 <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
@@ -434,7 +457,7 @@ else{
                                     gelöscht.
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
+                                    <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
                                         <button name="delete" type="submit" class="btn btn-primary">Löschen</button>

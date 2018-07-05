@@ -37,33 +37,44 @@ else {
         <!----Navbar--->
 
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand" href="hauptseite.php"
-               style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
+            <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
             </a>
-            <button class="navbar-toggler" style="border-color: darkgrey;" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="hauptseite.php"
-                           style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard
-                            <span class="sr-only">(current)</span></a>
+                        <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle"
-                           style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;"
-                           href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Einstellungen
+                        <a class="nav-link dropdown-toggle" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php
+                            $userid = $_SESSION['user'];
+                            $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
+                            $statement = $db->prepare('SELECT * FROM Nutzer WHERE ID=?');
+                            $statement->bindParam(1, $userid);
+                            $statement->execute();
+                            $row = $statement->fetch();
+                            $bild = $row['bild'];
+                            $upload_bild=$upload_folder.$bild;
+                            if ($row['bild']==NULL) {
+                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                            }
+                            else {
+                                echo '<img src="';
+                                echo $upload_bild;
+                                echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle mr-3" alt="">';
+                            }
+                            echo $row['vorname'];
+                            ?>
+
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="profil.php">Mein Konto</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Abmleden</a>
+                            <a class="dropdown-item" href="abmelden.php">Abmelden</a>
                         </div>
                     </li>
                 </ul>
@@ -153,7 +164,6 @@ else {
                 <input type="submit" value="Hochladen" name="hochladen">
             </form>
         </div>
-    </div>
     </div>
 
 

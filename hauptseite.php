@@ -50,7 +50,7 @@ else{
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
                         <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                     </li>
@@ -90,7 +90,7 @@ else{
 
                 <!---Datei-Upload--->
 
-                <div class="dropdown" style="width: 50px;">
+                <div class="dropdown ml-auto mr-auto">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         + NEU
                     </button>
@@ -162,11 +162,6 @@ else{
                     </div>
                 </div>
 
-
-
-
-                <!---Benutzer-Profilbild--->
-                <img src="Bilder/userbild.jpg"  width="40" height="40" class="d-inline-block align-top img_profile" alt="" style="margin-right: auto;">
 
 
 

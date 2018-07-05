@@ -97,7 +97,11 @@ tr{
     text-decoration: none;
     color: #333a40;
 }
-
+.button-delete{
+    background-color: white;
+    color: #333a40;
+    float: right;
+}
 
 /* Footer */
 #footer{
@@ -199,4 +203,11 @@ section .section-title {
     body {
         margin-bottom: 400px; /* Margin bottom by footer height changed due to smaller viewport width */
     }
+}
+@media (max-width: 767px) {
+
+    #footer {
+        height: 450px;
+    }
+
 }

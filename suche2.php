@@ -4,6 +4,7 @@ require_once('config.inc.php');
 $userid = $_SESSION['user'];
 if(!isset($userid)){
     header('Location: cover.html');
+    exit;
 }
 if(isset($_GET['ordnerid'])){
     $ordnerid=$_GET['ordnerid'];
@@ -13,7 +14,11 @@ else{
     $ordnerid= NULL;
     $operator= 'IS';
 }
+if(trim($_GET['suchwort'])==""){
+    header('Location:hauptseite.php');
+}
 ?>
+
 
     <!DOCTYPE html>
     <html lang="en">
@@ -50,7 +55,7 @@ else{
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                     </li>
@@ -59,28 +64,27 @@ else{
                             <?php
                             $userid = $_SESSION['user'];
                             $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
-                            $statement = $db->prepare('SELECT * FROM Nutzer WHERE ID=?');
+                            $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
                             $statement->bindParam(1, $userid);
                             $statement->execute();
                             $row = $statement->fetch();
-                            $bild = $row['bild'];
+                            $bild = $row['Bild'];
                             $upload_bild=$upload_folder.$bild;
-                            if ($row['bild']==NULL) {
+                            if ($row['Bild']==NULL) {
                                 echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
                             }
                             else {
                                 echo '<img src="';
                                 echo $upload_bild;
-                                echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle mr-3" alt="">';
+                                echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle" alt="">';
                             }
-                            echo $row['vorname'];
                             ?>
-
+                            Einstellungen
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="profil.php">Mein Konto</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="abmelden.php">Abmelden</a>
+                            <a class="dropdown-item" href="#">Abmelden</a>
                         </div>
                     </li>
                 </ul>
@@ -90,7 +94,7 @@ else{
 
                 <!---Datei-Upload--->
 
-                <div class="dropdown ml-auto mr-auto">
+                <div class="dropdown" style="width: 50px;">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         + NEU
                     </button>
@@ -157,12 +161,10 @@ else{
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal">Datei hochladen</button>
 
                     </div>
                 </div>
-
-
 
 
 
@@ -193,14 +195,14 @@ else{
         <tbody>
 
         <?php
-
-
+        $suchwort= $_GET['suchwort'];
+        $suchwort='%'.$suchwort.'%';
         //ORDNER ANZEIGEN
-        $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID '.$operator.' ? '); // user id eingefügt mit der ich eingeloggt bin
+        $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID '.$operator.' ? and ordnername LIKE ?'); // user id eingefügt mit der ich eingeloggt bin
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
+        $statement->bindParam(3,$suchwort);
         $statement->execute();
-        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>
@@ -208,7 +210,7 @@ else{
             <tr>
                 <th scope="row"></th>
                 <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                    <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
+                    <a href="hauptseite.php?ordnerid=<?=$root['ID']?>">
                         <?=$root['ordnername']?></a>
                 </td>
 
@@ -250,16 +252,13 @@ else{
         ?>
 
         <?php
-
-        $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
+        $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and Datei.OwnerID=? and Datei.original_name LIKE ? '); // user id eingefügt mit der ich eingeloggt bin
         $statement->bindParam(1, $userid);
-        $statement->bindParam(2,$ordnerid);
+        $statement->bindParam(2,$suchwort);
         $statement->execute();
-        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>
-
 
             <tr>
                 <th scope="row"></th>
@@ -300,13 +299,60 @@ else{
                     </div>
 
                     <!---Funktion: Download--->
-                    <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+
+                    <form action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
                         <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
                     </form>
 
 
-                    <!-- Pop-Up für die Funktion: Teilen-->
+
+                    <button type="button" class="fas fa-user-shield" data-toggle="modal" data-target="#licence-modal-<?=$root['ID']?>"> <!
+                        Pop-Up für die Funktion: Benutzerverwaltung>
+                    </button>
+                    <div class="modal fade" id="licence-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Benutzerverwaltung</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Freunde, mit denen Du deine Ideen bereits teilst:</p>
+                                    <?php //Abfrage wer hat Zugriff
+
+                                    $statement = $db->prepare('SELECT Nutzer.email FROM Nutzer, Freigabe WHERE Nutzer.id=Freigabe.UserID'); // user id eingefügt mit der ich eingeloggt bin
+                                    $statement->execute();
+                                    $berechtigung = $statement->fetch();
+                                    print_r($berechtigung[0]);
+                                    ?>
+                                    <br>
+                                    <br>
+                                    <p>Personen hinzufügen:</p>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">@</span>
+                                        </div>
+                                        <form method="post" action="berechtigung.php">
+                                            <input type="text" name="email" class="form-control"
+                                                   placeholder="E-Mail-Adresse" aria-label="e-mail"
+                                                   aria-describedby="basic-addon1">
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                    <button type="submit" class="btn btn-primary">Bestätigen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal-<?=$root['ID']?>"></button>
+                    <!-- Pop-Up für die Funktion: Teilen-->
                     <div class="modal fade" id="share-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -325,34 +371,7 @@ else{
                                             echo '&ordnerid='.$_GET['ordnerid'];
                                         }
                                         ?>" method="post">
-                                            <p class="teilen">Freunde, mit denen Du bereits teilst:</p>
-                                            <ul class="list-group" style="max-height: 300px;">
-
-                                                    <?php
-                                                    $dateiid=$root['ID'];
-
-                                                    $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
-                                                    $statement1->bindParam(1,$dateiid);
-                                                    $statement1->execute();
-                                                    $ergebnis=$statement1->fetchAll();
-                                                    foreach ($ergebnis as $aktuell){
-                                                        echo '<li class="list-group-item">';
-                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
-                                                     if(isset($_GET['ordnerid'])){
-                                                        echo '&ordnerid='.$_GET['ordnerid'];
-                                                     }
-                                                        echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
-                                                    }
-                                                    ?>
-
-                                            </ul>
                                             <br>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
-                                            </div>
-                                            <hr>
-                                            <p class="teilen">Teilen mit fremden Personen</p>
                                             <div class="form-check">
                                                 <input <?php
                                                 if ( $root['Freigabe']=='1' ){
@@ -363,12 +382,6 @@ else{
                                                     Teilen mit fremden Personen erlauben
                                                 </label>
                                             </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="fremder" placeholder="beispiel@email.de">
-                                            </div>
-                                            <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                                 <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
@@ -411,77 +424,78 @@ else{
             <?php
         }
         ?>
-
-
         <!---Freigegebene Dateien--->
         <?php
         if($ordnerid==NULL):
 
-        $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
+            $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
                                           FROM Datei
                                           INNER JOIN Nutzer ON (Datei.OwnerID=Nutzer.ID) 
                                           INNER JOIN Freigabe ON (Datei.ID=Freigabe.DateiID)
-                                          WHERE Freigabe.UserID=?'); // user id eingefügt mit der ich eingeloggt bin
-        $statement->bindParam(1,$userid);
-        $statement->execute();
+                                          WHERE Freigabe.UserID=? 
+                                          AND Datei.original_name LIKE ?'); // user id eingefügt mit der ich eingeloggt bin
+            $statement->bindParam(1,$userid);
+            $statement->bindParam(2,$suchwort);
+            $statement->execute();
 
-        foreach($statement->fetchAll() as $root) {
+            foreach($statement->fetchAll() as $root) {
 
-            ?>
+                ?>
 
 
-            <tr>
-                <th scope="row"></th>
-                <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
-                </td>
+                <tr>
+                    <th scope="row"></th>
+                    <td><i class="far fa-file" style="margin-right:25px; "></i>
+                        <?=$root['original_name']?>
+                    </td>
 
-                <!--Benutzername-->
-                <td>
-                    <?=$root['vorname']?>
-                </td>
+                    <!--Benutzername-->
+                    <td>
+                        <?=$root['vorname']?>
+                    </td>
 
-                <td>
-                    <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Bist Du dir sicher?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
-                                    gelöscht.
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                    <td>
+                        <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Bist Du dir sicher?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
-                                    </form>
+                                    </div>
+                                    <div class="modal-body">
+                                        Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                        gelöscht.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                            </button>
+                                            <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!---Funktion: Download--->
-                    <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
-                        <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
-                    </form>
-                </td>
-            </tr>
-            <?php
-        }
+                        <!---Funktion: Download--->
+                        <form action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+                            <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
+                        </form>
+                    </td>
+                </tr>
+                <?php
+            }
         endif;
         ?>
 
 
-
         </tbody>
+    </table>
+    </tbody>
     </table>
 
 
@@ -538,3 +552,4 @@ else{
 <?php
 
 ?>
+

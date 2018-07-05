@@ -2,9 +2,8 @@
 session_start();
 require_once('config.inc.php');
 $userid = $_SESSION['user'];
-if(!isset($userid)){
-    header('Location: cover.html');
-}
+
+//Kommentar den ich löschen muss wieder .. test
 
 $directory = "/home/tb123/public_html/cleo/uploads/";
 
@@ -26,7 +25,7 @@ else
     $filename=$_GET["dateiname"];
 }
 
-$statement=$db->prepare('SELECT * FROM Datei INNER JOIN Freigabe ON (Freigabe.DateiID=Datei.ID) WHERE (Freigabe=1 OR OwnerID=? OR Freigabe.UserID=?) AND dateiname=?'); //Klammern überflüssig wenn nur OR oder nur AND, alles außerhalb der Klammer muss mitgenommen werden
+$statement=$db->prepare('SELECT * FROM Datei LEFT JOIN Freigabe ON (Freigabe.DateiID=Datei.ID) WHERE (Freigabe=1 OR OwnerID=? OR Freigabe.UserID=?) AND dateiname=?'); //Klammern überflüssig wenn nur OR oder nur AND, alles außerhalb der Klammer muss mitgenommen werden
 $statement->bindParam(1,$userid);
 $statement->bindParam(2,$userid);
 $statement->bindParam(3,$filename);

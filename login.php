@@ -71,7 +71,7 @@ if(isset($_POST['absenden'])){
 
 
 <section id="headline">
-  <h1> Willkommen bei Cleo</h1>
+  <h1> Willkommen bei</h1>
 </section>
 
 <?php

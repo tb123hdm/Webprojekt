@@ -328,22 +328,22 @@ else{
                                             <p class="teilen">Freunde, mit denen Du bereits teilst:</p>
                                             <ul class="list-group" style="max-height: 300px;">
 
-                                                    <?php
-                                                    $dateiid=$root['ID'];
+                                                <?php
+                                                $dateiid=$root['ID'];
 
-                                                    $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
-                                                    $statement1->bindParam(1,$dateiid);
-                                                    $statement1->execute();
-                                                    $ergebnis=$statement1->fetchAll();
-                                                    foreach ($ergebnis as $aktuell){
-                                                        echo '<li class="list-group-item">';
-                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
-                                                     if(isset($_GET['ordnerid'])){
+                                                $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
+                                                $statement1->bindParam(1,$dateiid);
+                                                $statement1->execute();
+                                                $ergebnis=$statement1->fetchAll();
+                                                foreach ($ergebnis as $aktuell){
+                                                    echo '<li class="list-group-item">';
+                                                    echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                    if(isset($_GET['ordnerid'])){
                                                         echo '&ordnerid='.$_GET['ordnerid'];
-                                                     }
-                                                        echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
                                                     }
-                                                    ?>
+                                                    echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
+                                                }
+                                                ?>
 
                                             </ul>
                                             <br>
@@ -417,65 +417,65 @@ else{
         <?php
         if($ordnerid==NULL):
 
-        $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
+            $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
                                           FROM Datei
                                           INNER JOIN Nutzer ON (Datei.OwnerID=Nutzer.ID) 
                                           INNER JOIN Freigabe ON (Datei.ID=Freigabe.DateiID)
                                           WHERE Freigabe.UserID=?'); // user id eingefügt mit der ich eingeloggt bin
-        $statement->bindParam(1,$userid);
-        $statement->execute();
+            $statement->bindParam(1,$userid);
+            $statement->execute();
 
-        foreach($statement->fetchAll() as $root) {
+            foreach($statement->fetchAll() as $root) {
 
-            ?>
+                ?>
 
 
-            <tr>
-                <th scope="row"></th>
-                <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
-                </td>
+                <tr>
+                    <th scope="row"></th>
+                    <td><i class="far fa-file" style="margin-right:25px; "></i>
+                        <?=$root['original_name']?>
+                    </td>
 
-                <!--Benutzername-->
-                <td>
-                    <?=$root['vorname']?>
-                </td>
+                    <!--Benutzername-->
+                    <td>
+                        <?=$root['vorname']?>
+                    </td>
 
-                <td>
-                    <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Bist Du dir sicher?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
-                                    gelöscht.
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                    <td>
+                        <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Bist Du dir sicher?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
-                                    </form>
+                                    </div>
+                                    <div class="modal-body">
+                                        Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                        gelöscht.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                            </button>
+                                            <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!---Funktion: Download--->
-                    <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
-                        <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
-                    </form>
-                </td>
-            </tr>
-            <?php
-        }
+                        <!---Funktion: Download--->
+                        <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+                            <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
+                        </form>
+                    </td>
+                </tr>
+                <?php
+            }
         endif;
         ?>
 
@@ -536,5 +536,8 @@ else{
     </body>
     </html>
 <?php
-
+/*
+?>
+}
+*/
 ?>

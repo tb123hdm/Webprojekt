@@ -37,7 +37,7 @@ require_once("config.inc.php");
 
 <body class="text-center">
 	<section id="willkommen">
-		<h1> Willkommen bei Cleo</h1>
+		<h1> Willkommen bei</h1>
 	</section>
 	
 <?php

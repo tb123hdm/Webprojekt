@@ -65,8 +65,7 @@ body{
 .bild{
     float: left;
     height: 100%;
-    width: 300px;
-    margin-right: 50px;
+vertical-align: center;
 }
 #information{
     float: right;

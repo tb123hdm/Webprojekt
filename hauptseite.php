@@ -66,7 +66,7 @@ else{
                             $bild = $row['bild'];
                             $upload_bild=$upload_folder.$bild;
                             if ($row['bild']==NULL) {
-                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt=""  >';
                             }
                             else {
                                 echo '<img src="';
@@ -166,7 +166,7 @@ else{
 
 
 
-                <form action="suche2.php" class="form-inline my-2 my-lg-0">
+                <form action="suche.php" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
                 </form>
@@ -181,10 +181,10 @@ else{
 
 
     <!---Tabelle mit Ordnern und Dateien--->
-    <table class="table table-striped">
+    <div style="min-height: 100%;">
+    <table class="table table-striped tabelle">
         <thead>
         <tr>
-            <th scope="col"> </th>
             <th scope="col">Name</th>
             <th scope="col">Eigentümer</th>
             <th scope="col">Funktionen</th>
@@ -206,7 +206,7 @@ else{
             ?>
 
             <tr>
-                <th scope="row"></th>
+
                 <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
                     <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
                         <?=$root['ordnername']?></a>
@@ -262,7 +262,6 @@ else{
 
 
             <tr>
-                <th scope="row"></th>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
                     <?=$root['original_name']?>
                 </td>
@@ -431,7 +430,6 @@ else{
 
 
             <tr>
-                <th scope="row"></th>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
                     <?=$root['original_name']?>
                 </td>
@@ -483,23 +481,7 @@ else{
 
         </tbody>
     </table>
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    </div>
 
     <!-- Footer -->
     <section id="footer">

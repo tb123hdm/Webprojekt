@@ -117,7 +117,7 @@ else {
                         } else {
                             echo '<img src="';
                             echo $upload_bild;
-                            echo '" class="rounded-circle" width="100%" height="100%" >';
+                            echo '" width="350" height="350" style="object-fit:cover" class="rounded-circle mr-3" alt="" >';
                         }
 
                         ?>

@@ -243,6 +243,33 @@ else{
                             </div>
                         </div>
                     </div>
+                    <button type="button" class="far fa-edit" data-toggle="modal" data-target="#rename-modal-<?=$root['ID']?>"></button>
+                    <div class="modal fade" id="rename-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ordner umbenennen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="upload-file"></label>
+
+                                        <form action="umbenennen.php?ordnerid=<?=$root['ID']?>" method="post">
+                                            <input type="text" name="neuername" class="form-control">
+                                            <br>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                                <input type="submit" value="Umbenennen" name="submit" class="btn btn-primary"> </input>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <?php

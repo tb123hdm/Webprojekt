@@ -24,7 +24,7 @@ else{
 
         <title>Dashboard</title>
 
-        <link rel="stylesheet" type="text/css" href="hauptseite.css">
+        <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
@@ -66,7 +66,7 @@ else{
                             $bild = $row['bild'];
                             $upload_bild=$upload_folder.$bild;
                             if ($row['bild']==NULL) {
-                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt=""  >';
                             }
                             else {
                                 echo '<img src="';
@@ -166,7 +166,7 @@ else{
 
 
 
-                <form action="suche2.php" class="form-inline my-2 my-lg-0">
+                <form action="suche.php" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
                 </form>
@@ -181,10 +181,10 @@ else{
 
 
     <!---Tabelle mit Ordnern und Dateien--->
-    <table class="table table-striped">
+    <div style="min-height: 100%;">
+    <table class="table table-striped tabelle">
         <thead>
         <tr>
-            <th scope="col"> </th>
             <th scope="col">Name</th>
             <th scope="col">Eigentümer</th>
             <th scope="col">Funktionen</th>
@@ -206,7 +206,7 @@ else{
             ?>
 
             <tr>
-                <th scope="row"></th>
+
                 <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
                     <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
                         <?=$root['ordnername']?></a>
@@ -243,6 +243,33 @@ else{
                             </div>
                         </div>
                     </div>
+                    <button type="button" class="far fa-edit" data-toggle="modal" data-target="#rename-modal-<?=$root['ID']?>"></button>
+                    <div class="modal fade" id="rename-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ordner umbenennen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="upload-file"></label>
+
+                                        <form action="umbenennen.php?ordnerid=<?=$root['ID']?>" method="post">
+                                            <input type="text" name="neuername" class="form-control">
+                                            <br>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                                <input type="submit" value="Umbenennen" name="submit" class="btn btn-primary"> </input>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <?php
@@ -262,9 +289,8 @@ else{
 
 
             <tr>
-                <th scope="row"></th>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
                 </td>
 
                 <!--Benutzername-->
@@ -431,7 +457,6 @@ else{
 
 
             <tr>
-                <th scope="row"></th>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
                     <?=$root['original_name']?>
                 </td>
@@ -483,23 +508,7 @@ else{
 
         </tbody>
     </table>
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    </div>
 
     <!-- Footer -->
     <section id="footer">

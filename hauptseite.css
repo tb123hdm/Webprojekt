@@ -1,9 +1,9 @@
 /*Navbar*/
-
+/*KOMMENTAR ZUM LÖSCHEN*/
 html {
     font-size: 1rem;
     position: relative;
-    min-height: 100%;
+    height: 100%;
 }
 body{
     font-size: 1rem;
@@ -32,11 +32,6 @@ body{
     html {
         font-size: 1.6rem;
     }
-}
-
-body{
-    height: 1000px;
-
 }
 p{
     color: lightgrey;
@@ -85,7 +80,7 @@ h5{
 
 /*Body*/
 body{
-    height: 1000px;
+    height: 100%;
 }
 td{
     list-style: none;
@@ -106,8 +101,6 @@ tr{
 /* Footer */
 #footer{
     background-color: #333a40;
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 300px; /* Set the fixed height of the footer here */
 }

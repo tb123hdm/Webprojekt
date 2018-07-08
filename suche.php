@@ -13,6 +13,9 @@ else{
     $ordnerid= NULL;
     $operator= 'IS';
 }
+if(trim($_GET['suchwort'])==""){
+    header('Location:hauptseite.php');
+}
 ?>
 
     <!DOCTYPE html>
@@ -181,257 +184,81 @@ else{
 
 
     <!---Tabelle mit Ordnern und Dateien--->
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col"> </th>
-            <th scope="col">Name</th>
-            <th scope="col">Eigentümer</th>
-            <th scope="col">Funktionen</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <?php
-
-
-        //ORDNER ANZEIGEN
-        $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID '.$operator.' ? '); // user id eingefügt mit der ich eingeloggt bin
-        $statement->bindParam(1, $userid);
-        $statement->bindParam(2,$ordnerid);
-        $statement->execute();
-        //print_r ($statement->fetchAll());
-        foreach($statement->fetchAll() as $root) {
-
-            ?>
-
+    <div style="min-height: 100%;">
+        <table class="table table-striped tabelle">
+            <thead>
             <tr>
-                <th scope="row"></th>
-                <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                    <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
-                        <?=$root['ordnername']?></a>
-                </td>
-
-                <!--Benutzername-->
-                <td>
-                    ich
-                </td>
-
-                <td>
-                    <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="delete-folder-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Bist Du dir sicher?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
-                                    gelöscht.
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="delete.php" method="post">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
-                                        </button>
-                                        <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
+                <th scope="col">Name</th>
+                <th scope="col">Eigentümer</th>
+                <th scope="col">Funktionen</th>
             </tr>
+            </thead>
+            <tbody>
+
             <?php
-        }
-        ?>
-
-        <?php
-
-        $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
-        $statement->bindParam(1, $userid);
-        $statement->bindParam(2,$ordnerid);
-        $statement->execute();
-        //print_r ($statement->fetchAll());
-        foreach($statement->fetchAll() as $root) {
-
-            ?>
-
-
-            <tr>
-                <th scope="row"></th>
-                <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
-                </td>
-
-                <!--Benutzername-->
-                <td>
-                    <?=$root['vorname']?>
-                </td>
-
-                <td>
-                    <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Bist Du dir sicher?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
-                                    gelöscht.
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
-                                        </button>
-                                        <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!---Funktion: Download--->
-                    <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
-                        <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
-                    </form>
-
-
-                    <!-- Pop-Up für die Funktion: Teilen-->
-                    <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="share-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Teile Deine Ideen...</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="upload-file"></label>
-
-                                        <form action="teilen.php?dateiid=<?=$root['ID']?><?php
-                                        if(isset($_GET['ordnerid'])){
-                                            echo '&ordnerid='.$_GET['ordnerid'];
-                                        }
-                                        ?>" method="post">
-                                            <p class="teilen">Freunde, mit denen Du bereits teilst:</p>
-                                            <ul class="list-group" style="max-height: 300px;">
-
-                                                <?php
-                                                $dateiid=$root['ID'];
-
-                                                $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
-                                                $statement1->bindParam(1,$dateiid);
-                                                $statement1->execute();
-                                                $ergebnis=$statement1->fetchAll();
-                                                foreach ($ergebnis as $aktuell){
-                                                    echo '<li class="list-group-item">';
-                                                    echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
-                                                    if(isset($_GET['ordnerid'])){
-                                                        echo '&ordnerid='.$_GET['ordnerid'];
-                                                    }
-                                                    echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
-                                                }
-                                                ?>
-
-                                            </ul>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
-                                            </div>
-                                            <hr>
-                                            <p class="teilen">Teilen mit fremden Personen</p>
-                                            <div class="form-check">
-                                                <input <?php
-                                                if ( $root['Freigabe']=='1' ){
-                                                    echo'checked';
-                                                }
-                                                ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Teilen mit fremden Personen erlauben
-                                                </label>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="fremder" placeholder="beispiel@email.de">
-                                            </div>
-                                            <br>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="fas fa-share" data-toggle="modal" data-target="#move-modal-<?=$root['ID']?>"></button>
-                    <div class="modal fade" id="move-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Datei verschieben nach...</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="upload-file"></label>
-
-                                        <form action="verschieben.php?dateiid=<?=$root['ID']?>" method="post">
-                                            <input type="text" name="ordnername" class="form-control">
-                                            <br>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Verschieben" name="submit" class="btn btn-primary"> </input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <?php
-        }
-        ?>
-
-
-        <!---Freigegebene Dateien--->
-        <?php
-        if($ordnerid==NULL):
-
-            $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
-                                          FROM Datei
-                                          INNER JOIN Nutzer ON (Datei.OwnerID=Nutzer.ID) 
-                                          INNER JOIN Freigabe ON (Datei.ID=Freigabe.DateiID)
-                                          WHERE Freigabe.UserID=?'); // user id eingefügt mit der ich eingeloggt bin
-            $statement->bindParam(1,$userid);
+            //ORDNER ANZEIGEN
+            $suchwort= $_GET['suchwort'];
+            $suchwort='%'.$suchwort.'%';
+            //ORDNER ANZEIGEN
+            $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ordnername LIKE ?'); // user id eingefügt mit der ich eingeloggt bin
+            $statement->bindParam(1, $userid);
+            $statement->bindParam(2,$suchwort);
             $statement->execute();
-
             foreach($statement->fetchAll() as $root) {
+                ?>
 
+                <tr>
+
+                    <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
+                        <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
+                            <?=$root['ordnername']?></a>
+                    </td>
+
+                    <!--Benutzername-->
+                    <td>
+                        ich
+                    </td>
+
+                    <td>
+                        <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="delete-folder-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Bist Du dir sicher?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                        gelöscht.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="delete.php" method="post">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                            </button>
+                                            <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+            }
+
+            $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and Datei.OwnerID=? and Datei.original_name LIKE ? '); // user id eingefügt mit der ich eingeloggt bin
+            $statement->bindParam(1, $userid);
+            $statement->bindParam(2,$suchwort);
+            $statement->execute();
+            foreach($statement->fetchAll() as $root) {
                 ?>
 
 
                 <tr>
-                    <th scope="row"></th>
                     <td><i class="far fa-file" style="margin-right:25px; "></i>
                         <?=$root['original_name']?>
                     </td>
@@ -458,7 +285,7 @@ else{
                                         gelöscht.
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                        <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                             </button>
                                             <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
@@ -472,34 +299,189 @@ else{
                         <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
                             <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
                         </form>
+
+
+                        <!-- Pop-Up für die Funktion: Teilen-->
+                        <button type="button" class="fas fa-share-alt" data-toggle="modal" data-target="#share-modal-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="share-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Teile Deine Ideen...</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="upload-file"></label>
+
+                                            <form action="teilen.php?dateiid=<?=$root['ID']?><?php
+                                            if(isset($_GET['ordnerid'])){
+                                                echo '&ordnerid='.$_GET['ordnerid'];
+                                            }
+                                            ?>" method="post">
+                                                <p class="teilen">Freunde, mit denen Du bereits teilst:</p>
+                                                <ul class="list-group" style="max-height: 300px;">
+
+                                                    <?php
+                                                    $dateiid=$root['ID'];
+
+                                                    $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
+                                                    $statement1->bindParam(1,$dateiid);
+                                                    $statement1->execute();
+                                                    $ergebnis=$statement1->fetchAll();
+                                                    foreach ($ergebnis as $aktuell){
+                                                        echo '<li class="list-group-item">';
+                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                        if(isset($_GET['ordnerid'])){
+                                                            echo '&ordnerid='.$_GET['ordnerid'];
+                                                        }
+                                                        echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
+                                                    }
+                                                    ?>
+
+                                                </ul>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">E-Mail Adresse:</label>
+                                                    <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
+                                                </div>
+                                                <hr>
+                                                <p class="teilen">Teilen mit fremden Personen</p>
+                                                <div class="form-check">
+                                                    <input <?php
+                                                    if ( $root['Freigabe']=='1' ){
+                                                        echo'checked';
+                                                    }
+                                                    ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        Teilen mit fremden Personen erlauben
+                                                    </label>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">E-Mail Adresse:</label>
+                                                    <input type="email" class="form-control" id="exampleFormControlInput1" name="fremder" placeholder="beispiel@email.de">
+                                                </div>
+                                                <br>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                                    <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="fas fa-share" data-toggle="modal" data-target="#move-modal-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="move-modal-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Datei verschieben nach...</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="upload-file"></label>
+
+                                            <form action="verschieben.php?dateiid=<?=$root['ID']?>" method="post">
+                                                <input type="text" name="ordnername" class="form-control">
+                                                <br>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                                    <input type="submit" value="Verschieben" name="submit" class="btn btn-primary"> </input>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <?php
             }
-        endif;
-        ?>
+            ?>
+
+
+            <!---Freigegebene Dateien--->
+            <?php
+            if($ordnerid==NULL):
+
+                $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe
+                                          FROM Datei
+                                          INNER JOIN Nutzer ON (Datei.OwnerID=Nutzer.ID) 
+                                          INNER JOIN Freigabe ON (Datei.ID=Freigabe.DateiID)
+                                          WHERE Freigabe.UserID=? 
+                                          AND Datei.original_name LIKE ?'); // user id eingefügt mit der ich eingeloggt bin
+                $statement->bindParam(1,$userid);
+                $statement->bindParam(2,$suchwort);
+                $statement->execute();
+
+                foreach($statement->fetchAll() as $root) {
+
+
+                    ?>
+
+
+                    <tr>
+                        <td><i class="far fa-file" style="margin-right:25px; "></i>
+                            <?=$root['original_name']?>
+                        </td>
+
+                        <!--Benutzername-->
+                        <td>
+                            <?=$root['vorname']?>
+                        </td>
+
+                        <td>
+                            <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
+                            <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Bist Du dir sicher?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                            gelöscht.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                                </button>
+                                                <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!---Funktion: Download--->
+                            <form style="display:inline" action="download.php?dateiname=<?=$root['dateiname']?>" method="post">
+                                <button type="submit" class="fas fa-arrow-down" style="padding-right: 10px; padding-left:10px;"></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            endif;
+            ?>
 
 
 
-        </tbody>
-    </table>
-
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Footer -->
     <section id="footer">
@@ -536,8 +518,5 @@ else{
     </body>
     </html>
 <?php
-/*
-?>
-}
-*/
+
 ?>

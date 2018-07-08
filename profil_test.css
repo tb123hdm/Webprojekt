@@ -1,5 +1,3 @@
-/*Navbar*/
-
 html {
     font-size: 1rem;
     position: relative;
@@ -33,6 +31,30 @@ body{
         font-size: 1.6rem;
     }
 }
+#dropdownMenuButton{
+    margin-right: auto;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 1px solid rgba(108, 89, 179, 0.75);
+    border-radius: 40px;
+    border-color: lightgrey;
+    background-color: inherit;
+    transition: all 0.3s ease 0s;
+}
+#dropdownMenuButton:hover{
+    background-color: inherit;
+    border-color: inherit;
+}
+.fas {
+    border: none;
+    background-color: inherit;
+}
+.far{
+    border: none;
+    background-color: inherit;
+}
+
 .container{
     width:100%;
 }
@@ -44,28 +66,20 @@ body{
 }
 .img_profile
 {
-    position: relative;
-    top:0px;
-    left:0px;
-}
-#bild{
-    width: 300px;
-    height: 300px;
-}
-.inhalt{
-    margin-left: 85px;
-    margin-top:20px;
-    font-size: 15px;
+    position: center;
+   vertical-align: center;
 }
 .gemeinsam{
     width: 730px;
     height: 350px;
     clear: both;
 }
-.bild{
-    float: left;
+#bild{
     height: 100%;
-vertical-align: center;
+    display: block;
+    margin: auto;
+    width: 250px;
+
 }
 #information{
     float: right;
@@ -73,9 +87,27 @@ vertical-align: center;
     margin-left: 50px;
     font-size: 20px;
 }
-footer{
+.card-header{
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-weight: lighter;
+}
+.col{
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+
+
+
+/* Footer */
+#footer{
     background-color: #333a40;
-    height: 300px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px; /* Set the fixed height of the footer here */
 }
 /* Footer */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -88,9 +120,6 @@ section .section-title {
     color: #007b5e;
     margin-bottom: 50px;
     text-transform: uppercase;
-}
-#footer {
-    background: #333a40;
 }
 #footer h5{
     padding-left: 10px;
@@ -163,6 +192,20 @@ section .section-title {
         border-left: transparent;
         padding-bottom: 0px;
         margin-bottom: 10px;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    body {
+        margin-bottom: 400px; /* Margin bottom by footer height changed due to smaller viewport width */
+    }
+}
+@media (max-width: 767px) {
+
+    #footer {
+        height: 450px;
     }
 
 }

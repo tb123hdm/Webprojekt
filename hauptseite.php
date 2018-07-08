@@ -24,7 +24,7 @@ else{
 
         <title>Dashboard</title>
 
-        <link rel="stylesheet" type="text/css" href="hauptseite.css">
+        <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
@@ -290,7 +290,7 @@ else{
 
             <tr>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
                 </td>
 
                 <!--Benutzername-->

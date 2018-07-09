@@ -8,8 +8,8 @@ if(!isset($userid)){
 
 if (isset($_GET['dateiid'])) {
     $dateiid = $_GET['dateiid'];
-    $freigabe = $_POST['freigabe'];
-    if ($freigabe != '1') {
+    $freigabe = $_POST['freigabe']; //wenn Checkbox angeklick wurde -> Haken gesetzt
+    if ($freigabe != '1') { //Wert 1 wird gesetzt, wenns freigegeben ist
         $freigabe = '0';
     }
 
@@ -17,50 +17,55 @@ if (isset($_GET['dateiid'])) {
     $statement->bindParam(1, $userid);
     $statement->bindParam(2, $dateiid);
     $statement->execute();
-    if ($statement->rowCount() != 0) {
-        $ergebnis=$statement->fetch();
+    if ($statement->rowCount() != 0) { //zählen, wie viele Dateien zurückgekommen sind, darf nur 1 oder 0 sein,
+        $ergebnis=$statement->fetch(); //Ergebnisse werden in $ergebnis geschrieben
 
-        $statement = $db->prepare('UPDATE Datei SET Freigabe=? WHERE ID=?');   //Freigabe Button für Teilen mit Fremden
+        $statement = $db->prepare('UPDATE Datei SET Freigabe=? WHERE ID=?');   //Freigabe Button für Teilen mit Fremden, Freigabe wollen wir auf 0 oder 1 setzen, Upate Tabelle
         $statement->bindParam(1, $freigabe);
         $statement->bindParam(2, $dateiid);
         $statement->execute();
 
-        if (strlen($_POST['fremder']) > 4) {   //Teilen mit Fremden
+        //Teilen mit fremden
+
+        if (strlen($_POST['fremder']) > 4) {   //Teilen mit Fremden, wenn etwas eingegeben wurde, das > 4 ist, dann: wird Post in variable gespeichert , strlen checkt länge des Strings
             $email = $_POST['fremder'];
             $dateiname = $ergebnis['dateiname'];
             mail($email, 'Link für deine Datei', 'Lade dir die freigegebene Datei herunter <br><br> <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/download.php?dateiname=' . $dateiname . '">Hier kommst du zu deiner Datei</a><br><br> Liebe Grüße CLEO', [
-                'MIME-Version: 1.0','Content-type: text/html; charset=iso-8859-1']);
+                'MIME-Version: 1.0','Content-type: text/html; charset=iso-8859-1']); //übergebene Email adresse wird eingetragen, Mime version: Html kann ausgelesen werden
 
 
-            //Teilen mit CLEO-Nutzern -->
+            //Teilen mit CLEO-Nutzern
         }
 
-        if (strlen($_POST['email']) > 4) {
-            $email = $_POST['email'];
+        if (strlen($_POST['email']) > 4) { //Sicherheitsmaßnahme, wegen Aufteilung, niemals = 4, immer > 4
+            $email = $_POST['email']; //Email wird eingetragen und über Post übergeben
 
-            $statement = $db->prepare('SELECT ID FROM Nutzer WHERE email=?');
+            $statement = $db->prepare('SELECT ID FROM Nutzer WHERE email=?'); // Id von Person die gleiche EmailAdresse hat, wie die die eingegben wurde, wird abgefragt
             $statement->bindParam(1, $email);
             $statement->execute();
-            if ($statement->rowCount() != 0) {
-                $nutzerid = $statement->fetch()['ID'];
+            if ($statement->rowCount() != 0) { //wenn kein Nutzer gefunden wurde -> ELSE , wenn 1 rauskommt, wurde nutzer gefunden und
+                $nutzerid = $statement->fetch()['ID']; //NutzerID wird von ergebnis geholt und in $Nutzerid gespeichert, ID von Person, mit der geteilt wird
 
-                $statement = $db->prepare('SELECT * FROM Freigabe WHERE UserID=? AND DateiID=?'); //überprüfen ob Freigabe bereits vorhanden
+                $statement = $db->prepare('SELECT * FROM Freigabe WHERE UserID=? AND DateiID=?'); //überprüfen ob Freigabe bereits vorhanden für Person, wo UserId=NutzerId die gefetched wurde und dateiId=ID
                 $statement->bindParam(1, $nutzerid);
                 $statement->bindParam(2, $dateiid);
                 $statement->execute();
-                if ($statement->rowCount() == 0) {
+                if ($statement->rowCount() == 0) { //wenn kein ergebnis rauskommt, wurde Datei für diese Person noch nicht freigegeben, ist das der Fall dann...
 
-                    $statement = $db->prepare('INSERT INTO Freigabe (DateiID, UserID) VALUES (?,?)');
+                    $statement = $db->prepare('INSERT INTO Freigabe (DateiID, UserID) VALUES (?,?)'); //...In Freigabe wird neuer Datenbankeintrag gemacht
                     $statement->bindParam(1, $dateiid);
                     $statement->bindParam(2, $nutzerid);
                     $statement->execute();
                 }
             }
+            else {
+                header('Location: hauptseite.php?Fehler=Nutzer konnte nicht gefunden werden.'); // wenn Emailadresse Falsch oder Nutzer nicht vorhanden -> weiterleitung auf
+            }
         }
     }
 }
 if(isset($_GET['ordnerid'])){
-    header('Location: hauptseite.php?ordnerid='.$_GET['ordnerid']);
+    header('Location: hauptseite.php?ordnerid='.$_GET['ordnerid']); //wenn in Ordner
 }
 else
-    header('Location: hauptseite.php');
+    header('Location: hauptseite.php'); //wenn in Root

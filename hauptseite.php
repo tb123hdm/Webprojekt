@@ -86,10 +86,7 @@ else{
                 </ul>
 
 
-
-
                 <!---Datei-Upload--->
-
                 <div class="dropdown ml-auto mr-auto">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         + NEU
@@ -112,7 +109,7 @@ else{
                                             echo '?ordnerid='.$_GET['ordnerid'];
                                         }
                                         ?>" method="post" enctype="multipart/form-data">
-                                            <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
+                                            <input type="file" name="uploaddatei" size="32000000" class="form-control-file" id="upload-file"> <!---hier wird Uploaddatei übergeben--->
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
@@ -123,7 +120,7 @@ else{
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> <!---KOmmentar--->
                     <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -158,14 +155,8 @@ else{
                         <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
-
                     </div>
                 </div>
-
-
-
-
-
                 <form action="suche.php" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
@@ -174,7 +165,16 @@ else{
         </nav>
     </header>
 
+    <?php
+    if(isset($_GET['Fehler'])):
+    ?>
 
+    <div class="alert alert-danger" role="alert">
+        <strong>Uffpasst</strong> <?=$_GET['Fehler']?> <!--Falls Fehler auftaucht, wird dementsprechende Fehlermeldung angezeig-->
+    </div>
+        <?php
+    endif;
+        ?>
 
     <!---Überschrift Dashboard--->
     <h1 style="padding-left: 80px; margin-top: 40px; margin-bottom: 20px;">Meine Ablage</h1>
@@ -403,9 +403,9 @@ else{
                                             <div class="form-check">
                                                 <input <?php
                                                 if ( $root['Freigabe']=='1' ){
-                                                    echo'checked';
+                                                    echo'checked'; //wenn schonmal mit fremden geteilt wurde, ist Haken automatisch gesetzt
                                                 }
-                                                ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1">
+                                                ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1"> <!---wenn gecheckt, steht bei Post in Freigabe eine 1 drin, wenn keine drinsteht -> 0 ---->
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     Teilen mit fremden Personen erlauben
                                                 </label>

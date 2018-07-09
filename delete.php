@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); //Session wird gestartet
 require_once ('config.inc.php');
 $userid = $_SESSION['user'];
 $fullpath ='/home/tb123/public_html';

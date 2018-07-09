@@ -1,4 +1,4 @@
 <?php
-session_start();
-session_destroy();
+session_start(); //aktuelle Session erst herausfinden,
+session_destroy(); //damit man sie beenden kann & Weiterleitung auf...
 header('Location: cover.html');

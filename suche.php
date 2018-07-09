@@ -14,7 +14,7 @@ else{
     $operator= 'IS';
 }
 if(trim($_GET['suchwort'])==""){
-    header('Location:hauptseite.php');
+    header('Location:hauptseite.php?Fehler=Bitte Suchwort eingeben.');
 }
 ?>
 

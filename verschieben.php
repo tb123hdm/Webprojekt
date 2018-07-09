@@ -8,7 +8,7 @@ if(!isset($userid)){
 
 if(isset($_GET['dateiid'], $_POST['ordnername'])){ //voraussetzung das beides gestezt ist
     $dateiid=$_GET['dateiid'];
-    $ordnername=$_POST['ordnername'];
+    $ordnername=$_POST['ordnername']; //ordnername und dateiID wird übergeben
     $statement=$db->prepare('SELECT * FROM Ordner WHERE ordnername=? and OwnerID=?');
     $statement->bindParam(1,$ordnername);
     $statement->bindParam(2,$userid);
@@ -22,7 +22,7 @@ if(isset($_GET['dateiid'], $_POST['ordnername'])){ //voraussetzung das beides ge
         header('Location: hauptseite.php?ordnerid='.$ordnerid);
     }
     else{
-        header('Location: hauptseite.php'); // wenn Ordner nicht existiert oder nicht gefunden werden kann, dann gehe zurück auf Hauptseite
+        header('Location: hauptseite.php?Fehler=Ordner konnte nicht gefunden werden.'); // wenn Ordner nicht existiert oder nicht gefunden werden kann, dann gehe zurück auf Hauptseite
     }
 }
 else{

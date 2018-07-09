@@ -35,17 +35,6 @@ if (isset($_POST['hochladen'])) {
     $new_path = $fullpath.$upload_folder.$bildname;
 
 
-//Neuer Dateiname falls die Datei bereits existiert
-
-/*
-    if (file_exists($new_path)) { //Falls Datei existiert, hänge eine Zahl an den Dateinamen
-        $id = 1; // ID des Nutzers anfügen --> SESSION generieren und ID des Nutzers anhängen
-        do {
-            $new_path = $upload_folder . $filename . '_' . $id . '.' . $extension;
-            $id++;
-        } while (file_exists($new_path));
-    }
-*/
 //Alles okay, verschiebe Datei an neuen Pfad
     move_uploaded_file($_FILES['bild']['tmp_name'], $new_path);
         $statement = $db->prepare('UPDATE Nutzer SET bild=? WHERE ID=?');

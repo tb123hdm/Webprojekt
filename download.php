@@ -23,15 +23,10 @@ $mimetypes = array (
     '.mov'=> 'video/quicktime',
 
 );
-if(empty($_GET["dateiname"])) //wenn dateiname leer ist, wenn man über URL download.php aufruft
-{
-    echo "keine Datei zum Download ausgewählt.";
-    die();
-}
-else
+if(isset($_GET["dateiname"])) //wenn dateiname leer ist, wenn man über URL download.php aufruft
 {
     $filename=$_GET["dateiname"];
-}
+
 
 $statement=$db->prepare('SELECT * FROM Datei LEFT JOIN Freigabe ON (Freigabe.DateiID=Datei.ID) WHERE (Freigabe=1 OR OwnerID=? OR Freigabe.UserID=?) AND dateiname=?'); //Klammern überflüssig wenn nur OR oder nur AND, alles außerhalb der Klammer muss mitgenommen werden
 $statement->bindParam(1,$userid);
@@ -49,6 +44,4 @@ if($statement->rowCount()!=0){
     header("Content-Length: ".filesize($filepath));
     readfile($filepath);
 }
-else{
-    header('Location: hauptseite.php');
 }

@@ -290,7 +290,7 @@ else{
 
             <tr>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" target="_blank" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
                 </td>
 
                 <!--Benutzername-->

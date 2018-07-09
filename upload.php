@@ -20,7 +20,7 @@ if(isset($_POST['upload'])) {
 //Sicherer Dateiupload
 
 //Überprüfung ob Datei mit zugelassener Dateiendung hochgeladen wurde
-    $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif', 'pdf', 'doc', 'ppt', 'zip');
+    $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif', 'pdf', 'doc', 'docx' , 'ppt',  'pptx', 'zip', 'pages', 'key', 'mp3', 'mp4', 'mov');
 
     if (!in_array($extension, $allowed_extensions)) { //wenn eine Datei mit einem Dateiformat hochgeladen wird, dass hier nicht aufgelistet wird, erscheint folgendes:
         die ('Ungültiges Dateiformat.');
@@ -28,10 +28,10 @@ if(isset($_POST['upload'])) {
 
 //Überprüfung auf zugelassene Dateigröße
 
-    $max_size = 5000000;
+    $max_size = 10000000;
 
     if ($_FILES['uploaddatei']['size'] > $max_size) {
-        die ('Die Dateigröße darf 5MB nicht überschreiten.');
+        die ('Die Dateigröße darf 100 MB nicht überschreiten.');
     }
 
     echo $file;

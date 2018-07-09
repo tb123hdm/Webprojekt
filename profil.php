@@ -104,8 +104,6 @@ else {
 
 
     <div class="inhalt">
-
-
         <div class="container">
             <h1>Mein Konto</h1><br>
             <div class="row">

@@ -14,6 +14,14 @@ $mimetypes = array (
     '.png'=> 'image/png',
     '.pdf'=> 'application/pdf',
     '.ppt'=> 'application/mspowerpoint',
+    '.pptx'=> 'application/mspowerpoint',
+    '.docx'=> 'application/msword',
+    '.pages'=> 'application/applefile',
+    '.key'=> 'application/applefile',
+    '.mp4'=> 'video/mp4',
+    '.mp3'=> 'audio/mp3',
+    '.mov'=> 'video/quicktime',
+
 );
 if(empty($_GET["dateiname"])) //wenn dateiname leer ist, wenn man über URL download.php aufruft
 {

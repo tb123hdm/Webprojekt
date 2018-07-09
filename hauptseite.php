@@ -78,7 +78,7 @@ else{
 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profil.php">Mein Konto</a>
+                            <a class="dropdown-item" href="profil_test.php">Mein Konto</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="abmelden.php">Abmelden</a>
                         </div>
@@ -230,11 +230,15 @@ else{
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                    Wenn Du auf "Löschen" klickst, wird der von Dir ausgewählte Ordner und alle darin enthaltene Dateien und Ordner unwiederruflich
                                     gelöscht.
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="delete.php" method="post">
+                                    <form action="delete_ordner.php?ordnerid=<?=$root['ID']?><?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '&aktuellerordner='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
                                         <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
@@ -257,7 +261,11 @@ else{
                                     <div class="form-group">
                                         <label for="upload-file"></label>
 
-                                        <form action="umbenennen.php?ordnerid=<?=$root['ID']?>" method="post">
+                                        <form action="umbenennen.php?ordnerid=<?=$root['ID']?><?php
+                                        if(isset($_GET['ordnerid'])){
+                                            echo '&aktuellerordner='.$_GET['ordnerid'];
+                                        }
+                                        ?>" method="post">
                                             <input type="text" name="neuername" class="form-control">
                                             <br>
                                             <div class="modal-footer">
@@ -344,23 +352,28 @@ else{
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="upload-file"></label>
 
                                         <form action="teilen.php?dateiid=<?=$root['ID']?><?php
                                         if(isset($_GET['ordnerid'])){
                                             echo '&ordnerid='.$_GET['ordnerid'];
                                         }
                                         ?>" method="post">
+                                            <h5>Teilen mit Cleo-Nutzern:</h5>
+                                            <?php
+                                            $dateiid=$root['ID'];
+
+                                            $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
+                                            $statement1->bindParam(1,$dateiid);
+                                            $statement1->execute();
+                                            $ergebnis=$statement1->fetchAll();
+                                            if($statement1->rowCount()!=0):
+
+                                                ?>
+
                                             <p class="teilen">Freunde, mit denen Du bereits teilst:</p>
                                             <ul class="list-group" style="max-height: 300px;">
 
                                                     <?php
-                                                    $dateiid=$root['ID'];
-
-                                                    $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
-                                                    $statement1->bindParam(1,$dateiid);
-                                                    $statement1->execute();
-                                                    $ergebnis=$statement1->fetchAll();
                                                     foreach ($ergebnis as $aktuell){
                                                         echo '<li class="list-group-item">';
                                                         echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
@@ -370,15 +383,19 @@ else{
                                                         echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
                                                     }
                                                     ?>
-
                                             </ul>
-                                            <br>
+                                                <br>
+                                            <?php
+                                            endif;
+                                            ?>
+
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">E-Mail Adresse:</label>
                                                 <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
                                             </div>
+                                            <br>
                                             <hr>
-                                            <p class="teilen">Teilen mit fremden Personen</p>
+                                            <h5 class="teilen">Teilen mit fremden Personen:</h5>
                                             <div class="form-check">
                                                 <input <?php
                                                 if ( $root['Freigabe']=='1' ){
@@ -524,7 +541,7 @@ else{
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <h5>Allgemeines</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                        <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
                         <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                     </ul>
                 </div>

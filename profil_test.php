@@ -19,7 +19,7 @@ else {
 
         <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="profil_test.css">
-        <link rel="stylesheet" type="text/css" href="hauptseite.css">
+        <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">

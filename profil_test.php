@@ -15,9 +15,11 @@ else {
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>Mein Konto</title>
+        <title>Cleo - Mein Konto</title>
 
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="profil_test.css">
+        <link rel="stylesheet" type="text/css" href="hauptseite.css">
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
@@ -37,8 +39,10 @@ else {
 
     </head>
     <body>
+
     <header>
         <!----Navbar--->
+
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
             </a>
@@ -47,7 +51,7 @@ else {
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
                         <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
                     </li>
@@ -81,145 +85,68 @@ else {
                         </div>
                     </li>
                 </ul>
-
-                <div class="dropdown" style="width: 50px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        + NEU
-                    </button>
-                    <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="upload-file"></label>
-
-                                        <form action="upload.php<?php
-                                        if(isset($_GET['ordnerid'])){
-                                            echo '?ordnerid='.$_GET['ordnerid'];
-                                        }
-                                        ?>" method="post" enctype="multipart/form-data">
-                                            <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
-                                            <br>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Hochladen" name="upload" class="btn btn-primary"> </input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Neuer Ordner</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="upload-file"></label>
-
-                                        <form action="ordner.php<?php
-                                        if(isset($_GET['ordnerid'])){
-                                            echo '?ordnerid='.$_GET['ordnerid'];
-                                        }
-                                        ?>" method="post">
-                                            <input type="text" name="ordnername" class="form-control">
-                                            <br>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
-                    </div>
-                </div>
-
-                <div>
-                    <form action="suche.php" class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
-                    </form>
-                </div>
             </div>
         </nav>
     </header>
 
-
-    <div class="card text-center" style="margin: 20px; height: auto">
+    <!---Body--->
+    <div class="card" style="margin: 30px;">
+        <div class="card-header">
+            <h4 style="font-family: 'Poppins', sans-serif; margin: 5px">Mein Konto</h4>
+        </div>
         <div class="card-body">
-            <div class="container">
-                <h2 class="card-title">Mein Konto</h2><br>
-                <div class="row">
-                    <div class="col">
-                        <div class="bild">
-                            <?php
-                            if ($bild == NULL) {
-                                echo "<img src='standardbild.jpg'  id='bild'>";
-                            } else {
-                                echo '<img src="';
-                                echo $upload_bild;
-                                echo '" class="rounded-circle" width="200px" height="200px" >';
-                            }
+                <div class="container">
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div id="bild" >
+                                <?php
+                                if ($bild == NULL) {
+                                    echo "<img src='standardbild.jpg'>";
+                                } else {
+                                    echo '<img src="';
+                                    echo $upload_bild;
+                                    echo '" class="rounded-circle" width="250px" height="250px" >';
+                                }
 
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <br>
+                            <h5>Name:</h5>
+                            <?php
+                            $statement = $db->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
+                            $statement->bindParam(1, $userid);
+                            $statement->execute();
+                            while ($row = $statement->fetch()) {
+                                echo $row["Vorname"];
+                            }
                             ?>
+                            <?php
+                            $statement = $db->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
+                            $statement->bindParam(1, $userid);
+                            $statement->execute();
+                            while ($row = $statement->fetch()) {
+                                echo $row["Nachname"];
+                            }
+                            ?>
+                            <br><br>
+                            <h5>E-Mail Adresse:</h5>
+                            <?php
+                            $statement = $db->prepare('SELECT Email FROM Nutzer WHERE ID=?');
+                            $statement->bindParam(1, $userid);
+                            $statement->execute();
+                            while ($row = $statement->fetch()) {
+                                echo $row["Email"];
+                            }
+                            ?><br><br>
+
                         </div>
                     </div>
-
-                    <div class="col">
-                        <br>
-                        <h5>Mailadresse:</h5>
-                        <?php
-                        $statement = $db->prepare('SELECT Email FROM Nutzer WHERE ID=?');
-                        $statement->bindParam(1, $userid);
-                        $statement->execute();
-                        while ($row = $statement->fetch()) {
-                            echo $row["Email"];
-                        }
-                        ?><br><br>
-                        <h5>Vorname:</h5>
-                        <?php
-                        $statement = $db->prepare('SELECT Vorname FROM Nutzer WHERE ID=?');
-                        $statement->bindParam(1, $userid);
-                        $statement->execute();
-                        while ($row = $statement->fetch()) {
-                            echo $row["Vorname"];
-                        }
-                        ?><br><br>
-                        <h5>Nachname:</h5>
-                        <?php
-                        $statement = $db->prepare('SELECT Nachname FROM Nutzer WHERE ID=?');
-                        $statement->bindParam(1, $userid);
-                        $statement->execute();
-                        while ($row = $statement->fetch()) {
-                            echo $row["Nachname"];
-                        }
-                        ?>
-                        <br><br>
-                    </div>
+                    <br><br>
                 </div>
-                <br><br>
-            </div>
             <div class="aendern">
                 <form action="upload_profilbild.php" method="post" enctype="multipart/form-data">
                     <input type="file" name="bild">
@@ -227,9 +154,38 @@ else {
                 </form>
             </div>
         </div>
-        </div>
     </div>
 
+    <!-- Footer -->
+    <section id="footer">
+        <div class="container">
+            <div class="row text-center text-xs-center text-sm-left text-md-left">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h3>C L E O</h3>
+                    <br>
+                    <p>Hochschule der Medien<br>
+                        Nobelstraße 10<br>
+                        70569 Stuttgart</p>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>Allgemeines</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                        <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+            <br>
+            <div class="row" style="font-family: 'Open Sans Condensed', sans-serif;">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
+                </div>
+                </hr>
+            </div>
+        </div>
+    </section>
+    <!-- ./Footer -->
 
     </body>
     </html>

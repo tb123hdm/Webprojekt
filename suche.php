@@ -69,7 +69,7 @@ if(trim($_GET['suchwort'])==""){
                             $bild = $row['bild'];
                             $upload_bild=$upload_folder.$bild;
                             if ($row['bild']==NULL) {
-                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                                echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
                             }
                             else {
                                 echo '<img src="';
@@ -169,7 +169,7 @@ if(trim($_GET['suchwort'])==""){
 
 
 
-                <form action="suche2.php" class="form-inline my-2 my-lg-0">
+                <form action="suche.php" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
                 </form>
@@ -333,7 +333,7 @@ if(trim($_GET['suchwort'])==""){
                                                     $ergebnis=$statement1->fetchAll();
                                                     foreach ($ergebnis as $aktuell){
                                                         echo '<li class="list-group-item">';
-                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete_geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
                                                         if(isset($_GET['ordnerid'])){
                                                             echo '&ordnerid='.$_GET['ordnerid'];
                                                         }
@@ -456,7 +456,7 @@ if(trim($_GET['suchwort'])==""){
                                             gelöscht.
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                            <form action="delete_geteilt.php?delete=<?= $root['ID']  ?>" method="post">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                                 </button>
                                                 <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
@@ -497,7 +497,7 @@ if(trim($_GET['suchwort'])==""){
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <h5>Allgemeines</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                        <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
                         <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                     </ul>
                 </div>

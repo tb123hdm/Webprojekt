@@ -8,8 +8,10 @@ $userid = $_SESSION['user'];
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Über Uns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cleo - Über Uns</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
@@ -44,6 +46,7 @@ $userid = $_SESSION['user'];
 
         body{
             height: 1000px;
+            background-color: #eeeeee;
         }
         footer{
             background-color: #333a40;
@@ -72,27 +75,22 @@ $userid = $_SESSION['user'];
             font-weight: 200;
             letter-spacing: 1px;
         }
-
-        .btn-info{
-            margin-right: auto;
-            font-size: 13px;
-            letter-spacing: 1px;
-            line-height: 15px;
-            border: 1px solid rgba(108, 89, 179, 0.75);
-            border-radius: 40px;
-            border-color: lightgrey;
-            background-color: inherit;
-            transition: all 0.3s ease 0s;
-        }
-        .btn-info:hover{
-            background-color: inherit;
-            border-color: inherit;
-        }
         .card-deck{
             margin-right: 50px;
             margin-left: 50px;
             margin-top: auto;
             margin-bottom: 100px;
+
+        }
+        .zitat{
+            font-family: 'Slabo 27px', serif;
+            font-weight: lighter;
+            font-size: x-large;
+            text-align: center;
+            background-color: rosybrown;
+            color: white;
+            height: 300px;
+            padding: 50px;
         }
 
 
@@ -203,7 +201,7 @@ $userid = $_SESSION['user'];
                     $bild = $row['Bild'];
                     $upload_bild=$upload_folder.$bild;
                     if ($row['Bild']==NULL) {
-                        echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                        echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
                     }
                     else {
                         echo '<img src="';
@@ -220,92 +218,6 @@ $userid = $_SESSION['user'];
                 </div>
             </li>
         </ul>
-
-
-        <!---Datei-Upload--->
-
-        <div class="dropdown" style="width: 50px;">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                + NEU
-            </button>
-            <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="upload-file"></label>
-
-                                <form action="upload.php<?php
-                                if(isset($_GET['ordnerid'])){
-                                    echo '?ordnerid='.$_GET['ordnerid'];
-                                }
-                                ?>" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="uploaddatei" size="5000000" class="form-control-file" id="upload-file">
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                        <input type="submit" value="Hochladen" name="upload" class="btn btn-primary"> </input>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Neuer Ordner</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="upload-file"></label>
-
-                                <form action="ordner.php<?php
-                                if(isset($_GET['ordnerid'])){
-                                    echo '?ordnerid='.$_GET['ordnerid'];
-                                }
-                                ?>" method="post">
-                                    <input type="text" name="ordnername" class="form-control">
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                        <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
-                <div class="dropdown-divider"></div>
-                <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal">Datei hochladen</button>
-
-            </div>
-        </div>
-
-
-        <!---Benutzer-Profilbild--->
-        <img src="Bilder/userbild.jpg"  width="40" height="40" class="d-inline-block align-top img_profile" alt="" style="margin-right: auto;">
-
-
-        <!---Suche--->
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
-        </form>
     </div>
 </nav>
 </header>
@@ -330,6 +242,33 @@ $userid = $_SESSION['user'];
             <img class="card-img-top" src="Ellie%20Rodriguez.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Elina Rodriguez</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="zitat">
+        "Ganz besonders schlaues Zitat."
+    </div>
+    <div class="skills" style="height: 300px; background-color: lightsteelblue; text-align: center">
+        <h3 id="skill" style="color: white; font-family: 'Poppins', sans-serif; font-weight: lighter; padding-top: 30px">Skills</h3>
+        <div class="card-column" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">PHP</h5>
+            </div>
+        </div>
+        <div class="card-column" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">PHP</h5>
+            </div>
+        </div>
+        <div class="card-column" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">PHP</h5>
+            </div>
+        </div>
+        <div class="card-column" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">PHP</h5>
             </div>
         </div>
     </div>

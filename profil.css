@@ -1,0 +1,101 @@
+html {
+    font-size: 1rem;
+    position: relative;
+    min-height: 100%;
+}
+body{
+    font-size: 1rem;
+    background-color: whitesmoke;
+    margin-bottom: 300px; /* Margin bottom by footer height */
+}
+@media(max-width: 1024px){
+
+}
+@media(min-width: 576px){
+
+}
+
+@include media-breakpoint-up(sm) {
+    html {
+        font-size: 1.2rem;
+    }
+}
+@include media-breakpoint-up(md) {
+    html {
+        font-size: 1.4rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    html {
+        font-size: 1.6rem;
+    }
+}
+#dropdownMenuButton{
+    margin-right: auto;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 1px solid rgba(108, 89, 179, 0.75);
+    border-radius: 40px;
+    border-color: lightgrey;
+    background-color: inherit;
+    transition: all 0.3s ease 0s;
+}
+#dropdownMenuButton:hover{
+    background-color: inherit;
+    border-color: inherit;
+}
+.fas {
+    border: none;
+    background-color: inherit;
+}
+.far{
+    border: none;
+    background-color: inherit;
+}
+
+.container{
+    width:100%;
+}
+.layout h1{
+    padding-left: 50px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: azure;
+}
+.img_profile
+{
+    position: center;
+   vertical-align: center;
+}
+.gemeinsam{
+    width: 730px;
+    height: 350px;
+    clear: both;
+}
+#bild{
+    height: 100%;
+    display: block;
+    margin: auto;
+    width: 250px;
+
+}
+#information{
+    float: right;
+    width: 310px;
+    margin-left: 50px;
+    font-size: 20px;
+}
+.card-header{
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-weight: lighter;
+}
+.col{
+    text-align: center;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+

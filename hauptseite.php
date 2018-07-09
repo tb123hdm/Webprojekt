@@ -66,7 +66,7 @@ else{
                             $bild = $row['bild'];
                             $upload_bild=$upload_folder.$bild;
                             if ($row['bild']==NULL) {
-                                echo '<img src="standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt=""  >';
+                                echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt=""  >';
                             }
                             else {
                                 echo '<img src="';
@@ -323,7 +323,11 @@ else{
                                     gelöscht.
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="delete.php?delete=<?= $root['dateiname']  ?>&ordnerid=<?= $ordnerid?>" method="post">
+                                    <form action="delete.php?delete=<?= $root['dateiname']  ?><?php
+                                    if(isset($_GET['ordnerid'])){
+                                        echo '&ordnerid='.$_GET['ordnerid'];
+                                    }
+                                    ?>" method="post">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
                                         <button name="delete" type="submit" class="btn btn-primary">Löschen</button>
@@ -376,7 +380,7 @@ else{
                                                     <?php
                                                     foreach ($ergebnis as $aktuell){
                                                         echo '<li class="list-group-item">';
-                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete-geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete_geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
                                                      if(isset($_GET['ordnerid'])){
                                                         echo '&ordnerid='.$_GET['ordnerid'];
                                                      }
@@ -500,7 +504,7 @@ else{
                                     gelöscht.
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="delete-geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                    <form action="delete_geteilt.php?delete=<?= $root['ID']  ?>" method="post">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
                                         <button name="delete" type="submit" class="btn btn-primary">Löschen</button>

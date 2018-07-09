@@ -81,7 +81,7 @@ if(isset($errorMessage)) {
 }
 ?>
 
-<img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
+<img class="m-5 rounded mx-auto d-flex img-fluid" src="" alt="" width="350" height="auto">
 
 <!-- Formular -->
 <section id="form">
@@ -103,7 +103,6 @@ if(isset($errorMessage)) {
 
  </form>
 
-
 </section>
 
 
@@ -122,7 +121,7 @@ if(isset($errorMessage)) {
             <div class="col-xs-12 col-sm-4 col-md-4 mt-8">
                 <h5>Allgemeines</h5>
                 <ul class="list-unstyled quick-links">
-                    <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                    <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
                     <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                 </ul>
             </div>
@@ -135,8 +134,6 @@ if(isset($errorMessage)) {
             </div>
             </br>
         </div>
-
-
 </footer>
 <!-- ./Footer -->
 

@@ -39,7 +39,7 @@
         }
         ?>
 
-        <img class="m-5 rounded mx-auto d-flex img-fluid" src="logo_leer.png" alt="" width="150" height="auto">
+        <img class="m-5 rounded mx-auto d-flex img-fluid" src="Media/logo_leer.png" alt="" width="150" height="auto">
 
         <!-- Formular -->
         <section id="form">
@@ -79,7 +79,7 @@
             <div>
                 <h5>Allgemeines</h5>
                 <ul class="list-unstyled quick-links">
-                    <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                    <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
                     <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                 </ul>
             </div>

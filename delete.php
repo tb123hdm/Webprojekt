@@ -8,6 +8,14 @@ $new_path = $fullpath.$upload_ordner;
 
 if(isset($_GET['delete'])) {
     $dateiname = $_GET['delete'];
+
+    $statement = $db->prepare('SELECT * FROM Datei WHERE dateiname=? AND OwnerID=?');
+    $statement->bindParam(1, $dateiname);
+    $statement->bindParam(2, $userid);
+    $statement->execute();
+    var_dump($statement->fetch(), $userid);
+
+
     $statement = $db->prepare('DELETE FROM Datei WHERE dateiname=? AND OwnerID=?');
     $statement->bindParam(1, $dateiname);
     $statement->bindParam(2, $userid);

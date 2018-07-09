@@ -16,7 +16,7 @@ if(isset($_POST['upload'])) {
     $upload_ordner = '/cleo/uploads/'; //Ordner für hochgeladene Dateien
     $file = pathinfo($_FILES['uploaddatei']['name'], PATHINFO_FILENAME); //Pathinfo liefert Infos über den Dateipfad
     $extension = strtolower(pathinfo($_FILES['uploaddatei']['name'], PATHINFO_EXTENSION));
-    print_r ($_FILES );
+
 //Sicherer Dateiupload
 
 //Überprüfung ob Datei mit zugelassener Dateiendung hochgeladen wurde
@@ -28,10 +28,9 @@ if(isset($_POST['upload'])) {
 
 //Überprüfung auf zugelassene Dateigröße
 
-    $max_size = 10000000;
-
+    $max_size = 32000000;
     if ($_FILES['uploaddatei']['size'] > $max_size) {
-        die ('Die Dateigröße darf 100 MB nicht überschreiten.');
+        die ('Die Dateigröße darf 32 MB nicht überschreiten.');
     }
 
     echo $file;
@@ -42,21 +41,6 @@ if(isset($_POST['upload'])) {
     $new_path = $fullpath.$upload_ordner.$bildname;
 
 
-    /*
-//Pfad zum Upload
-   // $new_path = $upload_ordner . $file . '.' . $extension;
-    $new_path = $fullpath.$upload_ordner.$file . '.' . $extension;
-
-//Neuer Dateiname falls Datei mit dem gleichen Namen bereits existiert-> Zufällige ID gernerieren
-    if (file_exists($new_path)) { //Falls Datei mit name bereits existiert, wird Zahl angehängt
-        $id = 1;
-        do {
-            $dateiname =  $file . '-'.$id.'.' . $extension;
-            $new_path = $fullpath.$upload_ordner .$dateiname;
-            $id++;
-        } while (file_exists($new_path));
-    }
-    */
 
 //Falls Datei allen Anforderungen entspricht und erfolgreich hochgeladen wird:
     move_uploaded_file($_FILES['uploaddatei']['tmp_name'], $new_path);

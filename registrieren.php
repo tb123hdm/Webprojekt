@@ -120,7 +120,7 @@ endif;
                 <div class="col-xs-12 col-sm-4 col-md-4 mt-8">
                     <h5>Allgemeines</h5>
                     <ul class="list-unstyled quick-links">
-                        <li><a href="über_uns.html"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                        <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
                         <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                     </ul>
                 </div>

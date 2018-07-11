@@ -30,23 +30,23 @@ if (isset($_GET['dateiid'])) {
         if (strlen($_POST['fremder']) > 4) {   //Teilen mit Fremden, wenn etwas eingegeben wurde, das > 4 ist, dann: wird Post in variable gespeichert , strlen checkt länge des Strings
             $empfaenger = $_POST['fremder'];
             $dateiname = $ergebnis['dateiname'];
-            $betreff = "Jemand will dir etwas über Cleo teilen";
+            $betreff = "Jemand will etwas mit dir über Cleo teilen";
             $message = '
-<html>
-<head>
-      <title>Cleo</title>
-</head>
-<body>
+                <html>
+                <head>
+                  <title>Cleo</title>
+                </head>
+                <body>
 
-<h1>Hier geht es zu deiner Datei auf Cleo</h1> </br>
-<a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/download.php?dateiname=' . $dateiname . '">Ich bin dein Download!</a>
-<hr>
-<p> Mit besten Grüßen aus Stuttgart</p> </br>
-<p> Dein Cleo Team.</p>
+                    <h1>Hier geht es zu deiner Datei auf Cleo</h1> </br>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/download.php?dateiname=' . $dateiname . '">Ich bin dein Download!</a>
+                    <hr>
+                    <p> Mit besten Grüßen aus Stuttgart</p> </br>
+                    <p> Dein Cleo Team.</p>
 
 
-</body>
-</html>
+                </body>
+                </html>
 ';
             $header = "From: Cleo Download <tb123@hdm-stuttgart.de>" . "\r\n" .
                  "Reply-To: No-Reply <tb123@hdm-stuttgart.de'>" . "\r\n" .

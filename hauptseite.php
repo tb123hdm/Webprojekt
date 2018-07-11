@@ -78,7 +78,7 @@ else{
 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profil_test.php">Mein Konto</a>
+                            <a class="dropdown-item" href="profil.php">Mein Konto</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="abmelden.php">Abmelden</a>
                         </div>
@@ -292,7 +292,7 @@ else{
         $statement->execute();
         //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
-            // Anzeigen
+
             ?>
 
 

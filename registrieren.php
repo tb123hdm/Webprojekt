@@ -14,7 +14,7 @@ require_once("config.inc.php");
 	<!-- All CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="registrieren.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
 	<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
@@ -39,8 +39,11 @@ require_once("config.inc.php");
 	<section id="willkommen">
 		<h1> Willkommen bei</h1>
 	</section>
-	
-<?php
+
+    <img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
+
+
+    <?php
 if(isset($_POST['absenden'])):
 
   $vorname = $_POST['vorname'];
@@ -49,17 +52,50 @@ if(isset($_POST['absenden'])):
   $passwort = $_POST['passwort'];
   $passwort2 = $_POST['passwort2'];
 
+  $registriert = '
+      <div class="alert alert-success" role="alert">
+            <h3 class="alert-heading"><i class="fas fa-check"></i></h3>
+            <hr>
+            <h4>Dein Account wurde erfolgreich erstellt!</h4>
+            <p class="mb-0"> Schön dass du da bist <i class="far fa-smile-wink"> </i> </p>
+        </div>
+        ';
+
+  $passworterror = '
+      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <h3 class="alert-heading"><i class="fa-sad-tear"></i></h3>
+        <hr>
+        <h4> Oh crap! Deine Daten sind leider nicht gültig.</h4>
+        <p class="mb-0"> <strong> Deine Passwörter </strong> stimmen nicht miteinander überein.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    ';
+
+    $emailerror = '
+      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <h3 class="alert-heading"><i class="fas fa-sad-tear"></i></h3>
+        <hr>
+        <h4> Oh crap! Deine Daten sind leider nicht gültig.</h4>
+        <p class="mb-0"> <strong> Deine Email </strong> ist leider schon vergeben.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    ';
+
+
+
   $search_user = $db->prepare("SELECT id FROM Nutzer WHERE email = ?");
   $search_user->bindParam(1,$email);
   $search_user->execute();
- // $search_result = $search_user->getResult();
   $search_result = $search_user-> fetch(PDO::FETCH_ASSOC);
 
   if($search_user->rowCount()==0):
     if($passwort == $passwort2):
       $passwort = md5($passwort);
       $insert = $db->prepare("INSERT INTO Nutzer (vorname, nachname, email, passwort) VALUES (?,?,?,?)");
-  //    $insert->bindParam('ssss',$vorname,$nachname, $email, $passwort);
 	  $insert->bindParam(1, $vorname, PDO::PARAM_STR);
 	  $insert->bindParam(2, $nachname, PDO::PARAM_STR);
 	  $insert->bindParam(3, $email, PDO::PARAM_STR);
@@ -68,14 +104,15 @@ if(isset($_POST['absenden'])):
       
       if($erfolg !== false):
 	    $_SESSION['user'] =  $db->lastInsertId();
-        header('Location: hauptseite.php');
-		// echo 'Dein Account wurde erfolgreich erstellt!';
+        echo $registriert;
+          header("HTTP/1.1 301 Moved Permanently");
+          header("refresh:3;url=https://mars.iuk.hdm-stuttgart.de/~sg151/hauptseite.php");
       endif;
     else:
-      echo 'Deine Passwörter stimmen nicht überein!';
+      echo $passworterror;
     endif;
   else:
-    echo 'Die Email ist leider schon vergeben!';
+    echo $emailerror;
   endif;
 
 endif;
@@ -84,7 +121,6 @@ endif;
 
 	<section id="form">
 		<form class="form-signin" form action="" method="post">
-			<img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
 			<h1 class="h3 mb-5 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
 			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>

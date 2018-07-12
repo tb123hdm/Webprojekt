@@ -2,7 +2,6 @@
 session_start();
 require_once('config.inc.php');
 
-
 if(isset($_POST['absenden'])){
     $email = strtolower($_POST['email']);
     $passwort = $_POST['passwort'];
@@ -18,7 +17,7 @@ if(isset($_POST['absenden'])){
         header('Location: hauptseite.php');
         die();
     } else {
-        $errorMessage = "Deine Anmeldedaten sind leider nicht gültig<br>";
+        $errorMessage = "";
     }
 
 }
@@ -35,7 +34,7 @@ if(isset($_POST['absenden'])){
 <!-- All CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="login.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
 <link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
 <link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
@@ -62,17 +61,32 @@ if(isset($_POST['absenden'])){
 
 
 <section id="headline">
-  <h1> Willkommen bei</h1>
+  <h1>Willkommen bei</h1>
 </section>
+
+
+<img class="m-5 rounded mx-auto d-flex img-fluid" src="https://mars.iuk.hdm-stuttgart.de/~sg151/cleo_logo_final.png" alt="" width="350" height="auto">
 
 <?php
 
-if(isset($errorMessage)) {
-    echo $errorMessage;
-}
-?>
+if(isset($errorMessage)):
 
-<img class="m-5 rounded mx-auto d-flex img-fluid" src="" alt="" width="350" height="auto">
+    ?>
+
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <h3 class="alert-heading"><i class="fas fa-sad-tear"></i></h3>
+        <hr>
+        <h4>Oh crap! Deine Anmeldedaten sind leider nicht gültig.</h4>
+        <p class="mb-0">Check doch kurz <strong>deine Email</strong> oder <strong>dein Passwort</strong> und versuche es nochmal.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+<?php
+
+endif;
+?>
 
 <!-- Formular -->
 <section id="form">
@@ -94,6 +108,7 @@ if(isset($errorMessage)) {
 
  </form>
 
+
 </section>
 
 
@@ -113,7 +128,7 @@ if(isset($errorMessage)) {
                 <h5>Allgemeines</h5>
                 <ul class="list-unstyled quick-links">
                     <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
-                    <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
                 </ul>
             </div>
             <br>
@@ -125,6 +140,8 @@ if(isset($errorMessage)) {
             </div>
             </br>
         </div>
+
+
 </footer>
 <!-- ./Footer -->
 

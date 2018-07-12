@@ -67,7 +67,7 @@ else {
                             $bild = $row['bild'];
                             $upload_bild=$upload_folder.$bild;
                             if ($row['bild']==NULL) {
-                                echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                                echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt="" >';
                             }
                             else {
                                 echo '<img src="';
@@ -102,11 +102,11 @@ else {
                             <div id="bild" >
                                 <?php
                                 if ($bild == NULL) {
-                                    echo "<img src='Media/standardbild.jpg'>";
+                                    echo "<img src='Media/standardbild.jpg' class=\"rounded-circle\" width=\"250px\" height=\"250px\">";
                                 } else {
                                     echo '<img src="';
                                     echo $upload_bild;
-                                    echo '" class="rounded-circle" width="250px" height="250px" >';
+                                    echo '" class="rounded-circle" style="object-fit:cover" width="250px" height="250px" >';
                                 }
 
                                 ?>

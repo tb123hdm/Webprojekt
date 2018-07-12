@@ -50,10 +50,6 @@ if (isset($_POST['hochladen'])) {
     header('Location: profil.php');
 
 
-    // echo
-
-
-
 }
 
 ?>

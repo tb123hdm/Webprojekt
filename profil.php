@@ -102,11 +102,11 @@ else {
                             <div id="bild" >
                                 <?php
                                 if ($bild == NULL) {
-                                    echo "<img src='Media/standardbild.jpg' class=\"rounded-circle\" width=\"350px\" height=\"350px\">";
+                                    echo "<img src='Media/standardbild.jpg' class=\"rounded-circle\" width=\"250px\" height=\"250px\">";
                                 } else {
                                     echo '<img src="';
                                     echo $upload_bild;
-                                    echo '" class="rounded-circle" style="object-fit:cover" width="350px" height="350px" >';
+                                    echo '" class="rounded-circle" style="object-fit:cover" width="250px" height="250px" >';
                                 }
 
                                 ?>

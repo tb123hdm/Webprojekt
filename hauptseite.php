@@ -200,7 +200,6 @@ else{
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
         $statement->execute();
-        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>
@@ -290,7 +289,6 @@ else{
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
         $statement->execute();
-        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>

@@ -35,6 +35,8 @@ require_once("config.inc.php");
 
 </head>
 
+
+<!-- test -->
 <body class="text-center">
 	<section id="willkommen">
 		<h1> Willkommen bei</h1>

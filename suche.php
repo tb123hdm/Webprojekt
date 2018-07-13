@@ -161,7 +161,7 @@ if(trim($_GET['suchwort'])==""){
                     <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
                 </div>
             </div>
-            <form action="suche2.php" class="form-inline my-2 my-lg-0">
+            <form action="suche.php" class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
             </form>

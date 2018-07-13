@@ -28,6 +28,7 @@ body{
     }
 }
 
+
 p{
     color: lightgrey;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -80,7 +81,12 @@ h5{
 }
 td{
     list-style: none;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 tr{
     list-style: none;
 }
@@ -202,4 +208,25 @@ section .section-title {
     body {
         margin-bottom: 500px; /* Margin bottom by footer height changed due to smaller viewport width */
     }
+}
+
+.spaltedreialternative {
+    display: none;
+}
+
+
+@media (max-width: 767px) {
+
+    .spaltedrei {
+        display: none;
+    }
+
+    .spaltezwei {
+        display: none;
+    }
+
+    .spaltedreialternative {
+        display: inline;
+    }
+
 }

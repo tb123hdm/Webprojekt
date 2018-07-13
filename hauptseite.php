@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection CheckImageSize */
 session_start();
 require_once('config.inc.php');
 $userid = $_SESSION['user'];
@@ -15,7 +15,7 @@ else{
 }
 ?>
 
-    <!DOCTYPE html>
+    <!doctype html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -25,14 +25,25 @@ else{
         <title>Dashboard</title>
 
         <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
+        <!-- <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+        <link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+        <link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
+        <link href="jQueryAssets/jquery.ui.resizable.min.css" rel="stylesheet" type="text/css">
+        <link href="jQueryAssets/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="jQueryAssets/jquery.ui-1.10.4.dialog.min.js"></script>
+        <script src="jQueryAssets/jquery.ui-1.10.4.button.min.js"></script>
+
+        -->
+
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
 
 
 
@@ -182,12 +193,12 @@ else{
 
     <!---Tabelle mit Ordnern und Dateien--->
     <div style="min-height: 100%;">
-    <table class="table table-striped tabelle">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Eigentümer</th>
-            <th scope="col">Funktionen</th>
+            <th scope="col" class="spaltezwei">Eigentümer</th>
+            <th scope="col" class="spaltedrei">Funktionen</th>
         </tr>
         </thead>
         <tbody>
@@ -196,6 +207,7 @@ else{
 
 
         //ORDNER ANZEIGEN
+
         $statement=$db->prepare('SELECT * FROM Ordner WHERE OwnerID=? and ParentID '.$operator.' ? '); // user id eingefügt mit der ich eingeloggt bin
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
@@ -207,17 +219,94 @@ else{
 
             <tr>
 
-                <td><i class="far fa-folder-open" style="margin-right:25px; "></i>
-                    <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>">
-                        <?=$root['ordnername']?></a>
-                </td>
-
-                <!--Benutzername-->
                 <td>
+                    <i class="far fa-folder-open" style="margin-right:25px; "></i>
+                        <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>"><?=$root['ordnername']?></a>
+
+                    <div class="spaltedreialternative">
+                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="mobilemenu-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Funktionen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="color:black; white-space: normal">
+                                        <div id="accordion">
+                                            <div class="card">
+                                                <div class="card-header" style="padding:0px" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-secondary btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Löschen <i class="far fa-trash-alt" style="margin-left: 15px"></i>
+                                                        </button>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        Wenn Du auf "Löschen" klickst, wird der von Dir ausgewählte Ordner und alle darin enthaltene Dateien und Ordner unwiederruflich
+                                                        gelöscht.
+                                                    </div>
+                                                    <div class="modal-footer" style="display: block">
+                                                        <form action="delete_ordner.php?ordnerid=<?=$root['ID']?><?php
+                                                        if(isset($_GET['ordnerid'])){
+                                                            echo '&aktuellerordner='.$_GET['ordnerid'];
+                                                        }
+                                                        ?>" method="post">
+                                                            <button type="button" class="btn btn-light btn-block" data-dismiss="modal">Abbrechen
+                                                            </button>
+                                                            <button name="delete" type="submit" class="btn btn-info btn-block">Löschen</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" style="padding:0px" id="headingTwo">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            Umbenennen <i class="far fa-edit" style="margin-left: 15px"></i>
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        Gebe hier deinen neuen Ordnernamen ein:
+                                                        <div class="form-group">
+                                                            <label for="upload-file"></label>
+
+                                                            <form action="umbenennen.php?ordnerid=<?=$root['ID']?><?php
+                                                            if(isset($_GET['ordnerid'])){
+                                                                echo '&aktuellerordner='.$_GET['ordnerid'];
+                                                            }
+                                                            ?>" method="post">
+                                                                <input type="text" name="neuername" class="form-control">
+                                                                <br>
+                                                                <div class="modal-footer" style="display:block;">
+                                                                    <button type="button" class="btn btn-light btn-block" data-dismiss="modal">Abbrechen</button>
+                                                                    <input type="submit" value="Umbenennen" name="submit" class="btn btn-info btn-block ml-0">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </td>
+                <!--Benutzername-->
+                <td class="spaltezwei">
                     ich
                 </td>
 
-                <td>
+
+                <td class="spaltedrei">
                     <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-folder-modal-<?=$root['ID']?>"></button>
                     <div class="modal fade" id="delete-folder-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -284,6 +373,9 @@ else{
         }
         ?>
 
+
+
+
         <?php
 
         $statement=$db->prepare('SELECT Datei.ID, Datei.original_name, Datei.dateiname, Datei.OrdnerID, Datei.OwnerID, Nutzer.vorname, Datei.Freigabe FROM Datei, Nutzer WHERE Datei.OwnerID=Nutzer.ID and (Datei.OwnerID=? and Datei.OrdnerID '.$operator.' ?) '); // user id eingefügt mit der ich eingeloggt bin
@@ -299,14 +391,161 @@ else{
             <tr>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
                     <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" target="_blank" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
+
+
+                    <div class="spaltedreialternative">
+                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="mobilemenu-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Funktionen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                        <div class="modal-body" style="color:black; white-space: normal">
+                                            <div id="accordion">
+                                                <div class="card">
+                                                    <div class="card-header" style="padding:0px" id="headingOne">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-secondary btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                Löschen <i class="far fa-trash-alt" style="margin-left: 15px"></i>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+
+                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                                            gelöscht.
+                                                        </div>
+                                                        <div class="modal-footer" style="display: block">
+                                                            <form action="delete.php?delete=<?= $root['dateiname']  ?><?php
+                                                            if(isset($_GET['ordnerid'])){
+                                                                echo '&ordnerid='.$_GET['ordnerid'];
+                                                            }
+                                                            ?>" method="post">
+                                                                <button type="button" class="btn btn-light btn-block" data-dismiss="modal">Abbrechen
+                                                                </button>
+                                                                <button name="delete" type="submit" class="btn btn-info btn-block">Löschen</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" style="padding:0px" id="headingTwo">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                Verschieben <i class="fas fa-share" style="margin-left: 15px"></i>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <form action="verschieben.php?dateiid=<?=$root['ID']?>" method="post">
+                                                                <p class="mt-2 mb-1" style="color:black; white-space: normal;"> Datei verschieben nach..</p>
+                                                                <input type="text" name="ordnername" class="form-control mt-1 mb-5">
+                                                                <button type="button" class="btn btn-light btn-block mt-2" data-dismiss="modal">Abbrechen</button>
+                                                                <input type="submit" value="Verschieben" name="submit" class="btn btn-info btn-block">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" style="padding:0px" id="headingThree">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-secondary btn-block collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                Teilen <i class="fas fa-share-alt" style="margin-left: 15px"></i>
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <form action="teilen.php?dateiid=<?=$root['ID']?>
+
+                                                            <?php
+                                                            if(isset($_GET['ordnerid'])){
+                                                                echo '&ordnerid='.$_GET['ordnerid'];
+                                                            }
+                                                            ?>" method="post">
+                                                                <h5>Teilen mit Cleo-Nutzern:</h5>
+                                                                <?php
+                                                                $dateiid=$root['ID'];
+
+                                                                $statement1=$db->prepare('SELECT Freigabe.ID, Freigabe.UserID, Nutzer.vorname, Nutzer.nachname FROM Freigabe INNER JOIN Nutzer ON (Nutzer.ID=Freigabe.UserID) WHERE Freigabe.DateiID=?');
+                                                                $statement1->bindParam(1,$dateiid);
+                                                                $statement1->execute();
+                                                                $ergebnis=$statement1->fetchAll();
+                                                                if($statement1->rowCount()!=0):
+
+                                                                ?>
+
+                                                                <p class="teilen" style="color: black; white-space: normal">Freunde, mit denen Du bereits teilst:</p>
+                                                                <ul class="list-group" style="max-height: 300px;">
+
+                                                                    <?php
+                                                                    foreach ($ergebnis as $aktuell){
+                                                                        echo '<li class="list-group-item">';
+                                                                        echo $aktuell ['vorname'].' '.$aktuell['nachname'].'<a class="btn button-delete" href="delete_geteilt.php?delete='.$dateiid.'&userid='.$aktuell['UserID'];
+                                                                        if(isset($_GET['ordnerid'])){
+                                                                            echo '&ordnerid='.$_GET['ordnerid'];
+                                                                        }
+                                                                        echo '"><i class="far fa-times-circle" style="float: right"></i></a></li>';
+                                                                    }
+                                                                    ?>
+                                                                </ul>
+                                                            </form>
+                                                            <br>
+                                                            <?php
+                                                            endif;
+                                                            ?>
+
+                                                            <div class="form-group">
+                                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
+                                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="beispiel@email.de">
+                                                            </div>
+                                                            <br>
+                                                            <hr>
+                                                            <h5 class="teilen">Teilen mit fremden Personen:</h5>
+                                                            <div class="form-check">
+                                                                <input <?php
+                                                                if ( $root['Freigabe']=='1' ){
+                                                                    echo'checked'; //wenn schonmal mit fremden geteilt wurde, ist Haken automatisch gesetzt
+                                                                }
+                                                                ?> class="form-check-input" name="freigabe" type="checkbox" value="1" id="defaultCheck1"> <!---wenn gecheckt, steht bei Post in Freigabe eine 1 drin, wenn keine drinsteht -> 0 ---->
+                                                                <label class="form-check-label" for="defaultCheck1">
+                                                                    Teilen mit fremden Personen erlauben
+                                                                </label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-group">
+                                                                <label for="exampleFormControlInput1">E-Mail Adresse:</label>
+                                                                <input type="email" class="form-control" id="exampleFormControlInput1" name="fremder" placeholder="beispiel@email.de">
+                                                            </div>
+                                                            <br>
+                                                            <div class="modal-footer" style="display: block">
+                                                                <button type="button" class="btn btn-light btn-block" data-dismiss="modal">Abbrechen</button>
+                                                                <input type="submit" value="Bestätigen" name="submit" class="btn btn-info btn-block ml-0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
 
+
                 <!--Benutzername-->
-                <td>
+                <td class="spaltezwei">
                     <?=$root['vorname']?>
                 </td>
 
-                <td>
+                <td class="spaltedrei">
                     <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
                     <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -445,7 +684,7 @@ else{
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Verschieben" name="submit" class="btn btn-primary"> </input>
+                                                <input type="submit" value="Verschieben" name="submit" class="btn btn-primary">
                                             </div>
                                         </form>
                                     </div>
@@ -483,11 +722,11 @@ else{
                 </td>
 
                 <!--Benutzername-->
-                <td>
+                <td class="spaltezwei">
                     <?=$root['vorname']?>
                 </td>
 
-                <td>
+                <td class="spaltedrei">
                     <button type="button" class="far fa-trash-alt" data-toggle="modal" data-target="#delete-file-modal-<?=$root['ID']?>"></button>
                     <div class="modal fade" id="delete-file-modal-<?=$root['ID']?>" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -525,8 +764,6 @@ else{
         endif;
         ?>
 
-
-
         </tbody>
     </table>
     </div>
@@ -562,9 +799,10 @@ else{
     </section>
     <!-- ./Footer -->
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 
-    </body>
-    </html>
-<?php
+</body>
 
-?>
+</html>

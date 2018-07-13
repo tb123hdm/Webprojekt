@@ -63,7 +63,7 @@ if(isset($_POST['absenden'])):
 
   $passworterror = '
       <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-        <h3 class="alert-heading"><i class="fa-sad-tear"></i></h3>
+        <h3 class="alert-heading"><i class="fas fa-sad-tear"></i></h3>
         <hr>
         <h4> Oh crap! Deine Daten sind leider nicht gültig.</h4>
         <p class="mb-0"> <strong> Deine Passwörter </strong> stimmen nicht miteinander überein.</p>

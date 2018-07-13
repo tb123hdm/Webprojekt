@@ -8,7 +8,7 @@ html {
 body{
     font-size: 1rem;
     margin-bottom: 300px; /* Margin bottom by footer height */
-    height: 100%; /* Margin bottom by footer height */
+    height: 100%;
 }
 
 @include media-breakpoint-up(sm) {
@@ -27,12 +27,8 @@ body{
         font-size: 1.6rem;
     }
 }
-@media screen and (max-width: 600px){
-    .dropdown .ml-auto .mr-auto{
-        display: block;
-        width: 90%;
-    }
-}
+
+
 p{
     color: lightgrey;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -69,35 +65,6 @@ h5{
     background-color: inherit;
     border-color: inherit;
 }
-.btn-block{
-    display: block;
-    width: 100%;
-    margin-right: auto;
-    font-size: 13px;
-    letter-spacing: 1px;
-    line-height: 15px;
-    border: 1px solid rgba(108, 89, 179, 0.75);
-    border-radius: 40px;
-    border-color: lightgrey;
-    background-color: inherit;
-    transition: all 0.3s ease 0s;
-}
-.form-control{
-    display: block;
-    width: 70%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-.btn-outline-success{
-    width: 70px;
-}
 .fas {
     border: none;
     background-color: inherit;
@@ -114,7 +81,12 @@ h5{
 }
 td{
     list-style: none;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 tr{
     list-style: none;
 }
@@ -236,4 +208,26 @@ section .section-title {
     body {
         margin-bottom: 500px; /* Margin bottom by footer height changed due to smaller viewport width */
     }
+}
+
+.spaltedreialternative {
+    display: none;
+}
+
+
+
+@media (max-width: 767px) {
+
+    .spaltedrei {
+        display: none;
+    }
+
+    .spaltezwei {
+        display: none;
+    }
+
+    .spaltedreialternative {
+        display: inline;
+    }
+
 }

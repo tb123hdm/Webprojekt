@@ -86,7 +86,7 @@ if (isset($_GET['dateiid'])) {
                 $statement->execute();
                 if ($statement->rowCount() == 0) { //wenn kein ergebnis rauskommt, wurde Datei für diese Person noch nicht freigegeben, ist das der Fall dann...
 
-                    $statement = $db->prepare('INSERT INTO Freifgabe (DateiID, UserID) VALUES (?,?)'); //...In Freigabe wird neuer Datenbankeintrag gemacht
+                    $statement = $db->prepare('INSERT INTO Freigabe (DateiID, UserID) VALUES (?,?)'); //...In Freigabe wird neuer Datenbankeintrag gemacht
                     $statement->bindParam(1, $dateiid);
                     $statement->bindParam(2, $nutzerid);
                     $statement->execute();

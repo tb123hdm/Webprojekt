@@ -19,7 +19,7 @@ else {
 
         <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="profil.css">
-        <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
+        <link rel="stylesheet" type="text/css" href="hauptseite.css">
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
@@ -35,7 +35,9 @@ else {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+<script>
 
+</script>
 
     </head>
     <body>
@@ -102,11 +104,11 @@ else {
                             <div id="bild" >
                                 <?php
                                 if ($bild == NULL) {
-                                    echo "<img src='Media/standardbild.jpg' class=\"rounded-circle\" width=\"350px\" height=\"350px\">";
+                                    echo "<img src='Media/standardbild.jpg' class=\"rounded-circle\" width=\"250px\" height=\"250px\">";
                                 } else {
                                     echo '<img src="';
                                     echo $upload_bild;
-                                    echo '" class="rounded-circle" style="object-fit:cover" width="350px" height="350px" >';
+                                    echo '" class="rounded-circle" style="object-fit:cover" width="250px" height="250px" >';
                                 }
 
                                 ?>
@@ -150,7 +152,7 @@ else {
             <div class="aendern">
                 <form action="upload_profilbild.php" method="post" enctype="multipart/form-data">
                     <input type="file" name="bild">
-                    <input type="submit" value="Hochladen" name="hochladen">
+                    <input type="submit" value="Hochladen" name="hochladen" style="background-color: inherit; border-radius: 15px;">
                 </form>
             </div>
         </div>
@@ -181,11 +183,11 @@ else {
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
                     <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
                 </div>
-                </hr>
             </div>
         </div>
     </section>
     <!-- ./Footer -->
+
 
     </body>
     </html>

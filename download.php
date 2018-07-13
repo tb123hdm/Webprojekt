@@ -5,9 +5,9 @@ $userid = $_SESSION['user'];
 
 //Kommentar den ich löschen muss wieder .. test
 
-$directory = "/home/tb123/public_html/cleo/uploads/";
+$directory = "/home/tb123/public_html/cleo/uploads/"; //hieraus sollen Dateien zum Download genommen werden
 
-$mimetypes = array (
+$mimetypes = array ( //mimetypes werden in eim assoziativen Array gespeichert -> Schlüssel & Wert Paare
     '.doc'=> 'application/msword',
     '.jpeg'=> 'image/jpeg',
     '.jpg'=> 'image/jpg',
@@ -35,13 +35,13 @@ $statement->bindParam(3,$filename);
 
 $statement->execute();
 
-if($statement->rowCount()!=0){
+if($statement->rowCount()!=0){ //wenn rowCount nicht = 0 ist...
 
-    $filepath=$directory.$filename;
-    header("Content-Type:".$mimetype);
+    $filepath=$directory.$filename; //... $filepath die werte von $directory und $filename angehängt
+    header("Content-Type:".$mimetypes);
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header("Content-Transfer-Encoding: binary ");
     header("Content-Length: ".filesize($filepath));
-    readfile($filepath);
+    readfile($filepath); //readfile gibt endgültigen Dateipfad aus
 }
 }

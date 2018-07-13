@@ -25,6 +25,6 @@ if(isset($_GET['delete'])) {
     if (isset($_GET['ordnerid'])) { //Überpüfung ob OrdnerID gesetzt wurde
         header('Location: hauptseite.php?ordnerid=' . $_GET['ordnerid']); //falls gesetzt wieder angefügt
     } else {
-        header('Location: hauptseite.php');
+        header('Location: hauptseite.php'); //weiterleitung auf Hauptseite
     }
 }

@@ -11,7 +11,7 @@ $userid = $_SESSION['user'];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Cleo - Über Uns</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
     <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
@@ -59,7 +59,6 @@ $userid = $_SESSION['user'];
             font-size: large;
         }
         h2{
-            font-family: 'Karla', sans-serif;
             font-size: xx-large;
             margin: 50px;
         }
@@ -176,8 +175,7 @@ $userid = $_SESSION['user'];
 
 <body>
 
-    <!----Navbar--->
-<header>
+<!----Navbar--->
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
     </a>
@@ -185,12 +183,8 @@ $userid = $_SESSION['user'];
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <?php if(isset($_SESSION['user'])):
-
-        ?>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav">
             <li class="nav-item active">
                 <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
             </li>
@@ -199,22 +193,23 @@ $userid = $_SESSION['user'];
                     <?php
                     $userid = $_SESSION['user'];
                     $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
-                    $statement = $db->prepare('SELECT Bild FROM Nutzer WHERE ID=?');
+                    $statement = $db->prepare('SELECT * FROM Nutzer WHERE ID=?');
                     $statement->bindParam(1, $userid);
                     $statement->execute();
                     $row = $statement->fetch();
-                    $bild = $row['Bild'];
+                    $bild = $row['bild'];
                     $upload_bild=$upload_folder.$bild;
-                    if ($row['Bild']==NULL) {
-                        echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle" alt="" >';
+                    if ($row['bild']==NULL) {
+                        echo '<img src="Media/standardbild.jpg"  width="50" height="50" class="rounded-circle mr-3" alt=""  >';
                     }
                     else {
                         echo '<img src="';
                         echo $upload_bild;
-                        echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle" alt="">';
+                        echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle mr-3" alt="">';
                     }
+                    echo $row['vorname'];
                     ?>
-                    Einstellungen
+
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="profil.php">Mein Konto</a>
@@ -223,14 +218,91 @@ $userid = $_SESSION['user'];
                 </div>
             </li>
         </ul>
+        <br>
+
+        <!---Datei-Upload--->
+        <div class="dropdown ml-auto mr-auto">
+            <button class="btn btn-secondary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                + NEU
+            </button>
+            <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="upload-file"></label>
+
+                                <form action="upload.php<?php
+                                if(isset($_GET['ordnerid'])){
+                                    echo '?ordnerid='.$_GET['ordnerid'];
+                                }
+                                ?>" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="uploaddatei" size="32000000" class="form-control-file" id="upload-file"> <!---hier wird Uploaddatei übergeben--->
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                        <input type="submit" value="Hochladen" name="upload" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Neuer Ordner</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="upload-file"></label>
+
+                                <form action="ordner.php<?php
+                                if(isset($_GET['ordnerid'])){
+                                    echo '?ordnerid='.$_GET['ordnerid'];
+                                }
+                                ?>" method="post">
+                                    <input type="text" name="ordnername" class="form-control">
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                        <input type="submit" value="Erstellen" name="submit" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
+            </div>
+        </div>
+        <br>
+        <div class="div-suche" style="display: inline-block">
+            <form action="suche.php" class="form-inline my-2 my-md-0" style="width: 70%">
+                <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
+                <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit; width: 25%; text-align: center">Los</button>
+            </form>
+        </div>
     </div>
-    <?php
-    endif;
-    ?>
 </nav>
 </header>
 
-<h2>Das Team</h2>
+<h2 id="header-about" style="font-family: 'Poppins', sans-serif">Das Team</h2>
 
     <!--Team-Bilder--->
     <div class="card-deck">
@@ -254,32 +326,6 @@ $userid = $_SESSION['user'];
         </div>
     </div>
 
-    <div class="zitat">
-        "Ganz besonders schlaues Zitat."
-    </div>
-    <div class="skills" style="height: 300px; background-color: lightsteelblue; text-align: center">
-        <h3 id="skill" style="color: white; font-family: 'Poppins', sans-serif; font-weight: lighter; padding-top: 30px">Skills</h3>
-        <div class="card-column" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">PHP</h5>
-            </div>
-        </div>
-        <div class="card-column" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">PHP</h5>
-            </div>
-        </div>
-        <div class="card-column" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">PHP</h5>
-            </div>
-        </div>
-        <div class="card-column" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">PHP</h5>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <section id="footer">

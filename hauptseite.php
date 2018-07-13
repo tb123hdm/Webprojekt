@@ -41,7 +41,6 @@ else{
     <header>
 
         <!----Navbar--->
-
         <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
             </a>
@@ -84,11 +83,11 @@ else{
                         </div>
                     </li>
                 </ul>
-
+                <br>
 
                 <!---Datei-Upload--->
                 <div class="dropdown ml-auto mr-auto">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         + NEU
                     </button>
                     <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -120,7 +119,7 @@ else{
                                 </div>
                             </div>
                         </div>
-                    </div> <!---KOmmentar--->
+                    </div>
                     <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -157,10 +156,13 @@ else{
                         <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
                     </div>
                 </div>
-                <form action="suche.php" class="form-inline my-2 my-lg-0">
+                <br>
+                <div class="div-suche" style="display: inline-block">
+                <form action="suche.php" class="form-inline my-2 my-md-0" style="width: 70%">
                     <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit;">Los</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit; text-align: center">Los</button>
                 </form>
+                </div>
             </div>
         </nav>
     </header>
@@ -170,11 +172,13 @@ else{
     ?>
 
     <div class="alert alert-danger" role="alert">
-        <strong>Uffpasst</strong> <?=$_GET['Fehler']?> <!--Falls Fehler auftaucht, wird dementsprechende Fehlermeldung angezeig-->
+        <strong>Achtung!</strong> <?=$_GET['Fehler']?> <!--Falls Fehler auftaucht, wird dementsprechende Fehlermeldung angezeig-->
     </div>
         <?php
     endif;
         ?>
+
+
 
     <!---Überschrift Dashboard--->
     <h1 style="padding-left: 80px; margin-top: 40px; margin-bottom: 20px;">Meine Ablage</h1>

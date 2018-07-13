@@ -1,5 +1,4 @@
 /*Navbar*/
-/*KOMMENTAR ZUM LÖSCHEN*/
 html {
     font-size: 1rem;
     position: relative;
@@ -69,6 +68,7 @@ h5{
     background-color: inherit;
     border-color: inherit;
 }
+
 .fas {
     border: none;
     background-color: inherit;

@@ -25,17 +25,6 @@ else{
         <title>Dashboard</title>
 
         <link rel="stylesheet" type="text/css" href="hauptseite_test.css">
-        <!-- <link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
-        <link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
-        <link href="jQueryAssets/jquery.ui.dialog.min.css" rel="stylesheet" type="text/css">
-        <link href="jQueryAssets/jquery.ui.resizable.min.css" rel="stylesheet" type="text/css">
-        <link href="jQueryAssets/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="jQueryAssets/jquery.ui-1.10.4.dialog.min.js"></script>
-        <script src="jQueryAssets/jquery.ui-1.10.4.button.min.js"></script>
-
-        -->
-
         <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">

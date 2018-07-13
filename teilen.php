@@ -30,21 +30,30 @@ if (isset($_GET['dateiid'])) {
         if (strlen($_POST['fremder']) > 4) {   //Teilen mit Fremden, wenn etwas eingegeben wurde, das > 4 ist, dann: wird Post in variable gespeichert , strlen checkt länge des Strings
             $empfaenger = $_POST['fremder'];
             $dateiname = $ergebnis['dateiname'];
-            $betreff = "Jemand will etwas mit dir über Cleo teilen";
+            $betreff = "Hier geht's zu Deinem Download...";
             $message = '
                 <html>
                 <head>
                   <title>Cleo</title>
                 </head>
-                <body>
-
-                    <h1>Hier geht es zu deiner Datei auf Cleo</h1> </br>
-                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/download.php?dateiname=' . $dateiname . '">Ich bin dein Download!</a>
-                    <hr>
-                    <p> Mit besten Grüßen aus Stuttgart</p> </br>
-                    <p> Dein Cleo Team.</p>
-
-
+                <body id="email-body" style="background-color:#eeeeee">
+                <div class="card">
+                <img class="card-img-top" src="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/Media/logo_leer.png" alt="" style="width: 120px; height: auto; margin: auto; display: block; padding-top: 30px">
+                <div class="card-body">
+                <br>
+                 <h2 class="card-title" style="text-align: center; color: #333a40">Jemand möchte mit Dir über Cleo etwas teilen!</h2>
+                 <br>
+                 <p class="card-text" style="color: #333a40; font-size: medium; text-align: center">Du bist nur noch einen Klick von deiner Datei entfernt.</p>
+                 <br>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/download.php?dateiname=' . $dateiname . '" class="btn btn-primary" style="text-decoration: none; display: block; background-color: deepskyblue; color: white; padding: 20px; width: auto; text-align: center; font-size: large; border-radius: 15px">Hol dir deine Datei</a>
+                    <br>
+                    <br>
+                    <hr id="hr-email" style="width: 90%; color: #eeeeee; height: 0.5px">
+                    <br>
+                    <p class="email-footer" style="color: #333a40; text-align: center">Mit besten Grüßen aus Stuttgart.</p>
+                    <p class="email-footer" style="color: #333a40; text-align: center">Dein Cleo Team</p>
+                </div>
+                </div>
                 </body>
                 </html>
 ';

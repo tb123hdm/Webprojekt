@@ -124,7 +124,7 @@ else{
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Hochladen" name="upload" class="btn btn-primary">
+                                                <input type="submit" value="Hochladen" name="upload" class="btn btn-primary"> </input>
                                             </div>
                                         </form>
                                     </div>
@@ -154,7 +154,7 @@ else{
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Erstellen" name="submit" class="btn btn-primary">
+                                                <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
                                             </div>
                                         </form>
                                     </div>
@@ -212,6 +212,7 @@ else{
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
         $statement->execute();
+        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>
@@ -223,8 +224,8 @@ else{
                         <a  class="ordner-link" href="hauptseite.php?ordnerid=<?=$root['ID']?>"><?=$root['ordnername']?></a>
 
                     <div class="spaltedreialternative">
-                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu-<?=$root['ID']?>"></button>
-                        <div class="modal fade" id="mobilemenu-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu1-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="mobilemenu1-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -358,7 +359,7 @@ else{
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Umbenennen" name="submit" class="btn btn-primary">
+                                                <input type="submit" value="Umbenennen" name="submit" class="btn btn-primary"> </input>
                                             </div>
                                         </form>
                                     </div>
@@ -381,6 +382,7 @@ else{
         $statement->bindParam(1, $userid);
         $statement->bindParam(2,$ordnerid);
         $statement->execute();
+        //print_r ($statement->fetchAll());
         foreach($statement->fetchAll() as $root) {
 
             ?>
@@ -392,8 +394,8 @@ else{
 
 
                     <div class="spaltedreialternative">
-                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu-<?=$root['ID']?>"></button>
-                        <div class="modal fade" id="mobilemenu-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu2-<?=$root['ID']?>"></button>
+                        <div class="modal fade" id="mobilemenu2-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -655,7 +657,7 @@ else{
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary">
+                                                <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
                                             </div>
                                         </form>
                                     </div>
@@ -716,8 +718,56 @@ else{
 
             <tr>
                 <td><i class="far fa-file" style="margin-right:25px; "></i>
-                    <?=$root['original_name']?>
+                    <a href="https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/<?=$root['dateiname']?>" target="_blank" style="color: black; text-decoration:none;"><?=$root['original_name']?></a>
+
+
+
+                <div class="spaltedreialternative">
+                    <button type="button" class="fas fa-ellipsis-v spaltedreialternative" style="float: right" data-toggle="modal" data-target="#mobilemenu3-<?=$root['ID']?>"></button>
+                    <div class="modal fade" id="mobilemenu3-<?=$root['ID']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Funktionen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="color:black; white-space: normal">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" style="padding:0px" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-secondary btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Löschen <i class="far fa-trash-alt" style="margin-left: 15px"></i>
+                                                    </button>
+                                                </h5>
+                                            </div>
+
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    Wenn Du auf "Löschen" klickst, wird die von Dir ausgewählte Datei unwiederruflich
+                                                    gelöscht.
+                                                </div>
+                                                <div class="modal-footer"style="display: block">
+                                                    <form action="delete_geteilt.php?delete=<?= $root['ID']  ?>" method="post">
+                                                        <button type="button" class="btn btn-light btn-block" data-dismiss="modal">Abbrechen
+                                                        </button>
+                                                        <button name="delete" type="submit" class="btn btn-info btn-block">Löschen</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </td>
+
+
+
 
                 <!--Benutzername-->
                 <td class="spaltezwei">
@@ -791,7 +841,7 @@ else{
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
                     <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
                 </div>
-
+                </hr>
             </div>
         </div>
     </section>

@@ -157,10 +157,10 @@ else{
                     </div>
                 </div>
                 <br>
-                <div class="div-suche" style="display: inline-block">
-                <form action="suche.php" class="form-inline my-2 my-md-0" style="width: 70%">
-                    <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
-                    <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit; text-align: center">Los</button>
+                <div class="div-suche">
+                <form action="suche.php" class="form-inline my-2 my-md-0">
+                    <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px; width: 70%">
+                    <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit; text-align: center; width: 25%">Los</button>
                 </form>
                 </div>
             </div>

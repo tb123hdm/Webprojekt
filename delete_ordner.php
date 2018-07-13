@@ -38,4 +38,3 @@ if (isset($_GET['aktuellerordner'])) {
 } else {
     header('Location: hauptseite.php');
 }
-?>

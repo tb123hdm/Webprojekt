@@ -106,7 +106,7 @@ if(isset($_POST['absenden'])):
 	    $_SESSION['user'] =  $db->lastInsertId();
         echo $registriert;
           header("HTTP/1.1 301 Moved Permanently");
-          header("refresh:3;url=https://mars.iuk.hdm-stuttgart.de/~sg151/hauptseite.php");
+          header("refresh:3;url=https://mars.iuk.hdm-stuttgart.de/~tb123/hauptseite.php");
       endif;
     else:
       echo $passworterror;
@@ -120,7 +120,7 @@ endif;
 ?>
 
 	<section id="form">
-		<form class="form-signin" form action="" method="post">
+		<form class="form-signin" action="" method="post">
 			<h1 class="h3 mb-5 font-weight-light"><strong>Neu bei Cleo?</strong></h1>
 			<label for="inputvorname" class="sr-only">vorname</label>
 			<input type="text" name="vorname" class="form-control" placeholder="Vorname" required autofocus>

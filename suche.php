@@ -119,7 +119,7 @@ if(trim($_GET['suchwort'])==""){
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Hochladen" name="upload" class="btn btn-primary"> </input>
+                                                <input type="submit" value="Hochladen" name="upload" class="btn btn-primary">
                                             </div>
                                         </form>
                                     </div>
@@ -149,7 +149,7 @@ if(trim($_GET['suchwort'])==""){
                                             <br>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <input type="submit" value="Erstellen" name="submit" class="btn btn-primary"> </input>
+                                                <input type="submit" value="Erstellen" name="submit" class="btn btn-primary">
                                             </div>
                                         </form>
                                     </div>
@@ -367,7 +367,7 @@ if(trim($_GET['suchwort'])==""){
                                                 <br>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                    <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary"> </input>
+                                                    <input type="submit" value="Bestätigen" name="submit" class="btn btn-primary">
                                                 </div>
                                             </form>
                                         </div>
@@ -394,7 +394,7 @@ if(trim($_GET['suchwort'])==""){
                                                 <br>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                    <input type="submit" value="Verschieben" name="submit" class="btn btn-primary"> </input>
+                                                    <input type="submit" value="Verschieben" name="submit" class="btn btn-primary">
                                                 </div>
                                             </form>
                                         </div>
@@ -508,7 +508,7 @@ if(trim($_GET['suchwort'])==""){
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
                     <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
                 </div>
-                </hr>
+
             </div>
         </div>
     </section>

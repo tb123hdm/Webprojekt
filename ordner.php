@@ -40,5 +40,3 @@ if(isset($_POST['ordnername'])) {
 
 }
 
-?>
-

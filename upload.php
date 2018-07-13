@@ -57,4 +57,4 @@ if(isset($_POST['upload'])) { //wenn Button gedrückt wurde, passiert folgendes:
         header('Location: hauptseite.php'); //wenn man sich in keinem Ordner befindet -> Root, wird man direkt auf Hauptseite weitergeleitet, es wird keine ID angehängt, ID = Null da wir uns in Root befinden
     }
 }
-?>
+

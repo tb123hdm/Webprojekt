@@ -168,7 +168,7 @@ $userid = $_SESSION['user'];
             #footer h5 {
                 padding-left: 0;
                 border-left: transparent;
-                padding-bottom: 0px;
+                padding-bottom: 0;
                 margin-bottom: 10px;
             }
         }
@@ -235,19 +235,19 @@ $userid = $_SESSION['user'];
     <!--Team-Bilder--->
     <div class="card-deck">
         <div class="card">
-            <img class="card-img-top" src="Tabea%20Baranek.jpg" alt="Card image cap">
+            <img class="card-img-top" src="Media/Tabea%20Baranek.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Tabea Baranek</h5>
             </div>
         </div>
         <div class="card">
-            <img class="card-img-top" src="Sebastian%20Gröner.jpg" alt="Card image cap">
+            <img class="card-img-top" src="Media/Sebastian%20Gröner.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Sebastian Gröner</h5>
             </div>
         </div>
         <div class="card">
-            <img class="card-img-top" src="Ellie%20Rodriguez.jpg" alt="Card image cap">
+            <img class="card-img-top" src="Media/Ellie%20Rodriguez.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Elina Rodriguez</h5>
             </div>
@@ -306,7 +306,6 @@ $userid = $_SESSION['user'];
                 <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
                     <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
                 </div>
-                </hr>
             </div>
         </div>
     </section>

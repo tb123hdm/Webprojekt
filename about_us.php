@@ -220,85 +220,14 @@ $userid = $_SESSION['user'];
         </ul>
         <br>
 
-        <!---Datei-Upload--->
-        <div class="dropdown ml-auto mr-auto">
-            <button class="btn btn-secondary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                + NEU
-            </button>
-            <div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="upload-modal">Füge neue Dateien hinzu!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="upload-file"></label>
 
-                                <form action="upload.php<?php
-                                if(isset($_GET['ordnerid'])){
-                                    echo '?ordnerid='.$_GET['ordnerid'];
-                                }
-                                ?>" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="uploaddatei" size="32000000" class="form-control-file" id="upload-file"> <!---hier wird Uploaddatei übergeben--->
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                        <input type="submit" value="Hochladen" name="upload" class="btn btn-primary">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Neuer Ordner</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Abbrechen">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="upload-file"></label>
-
-                                <form action="ordner.php<?php
-                                if(isset($_GET['ordnerid'])){
-                                    echo '?ordnerid='.$_GET['ordnerid'];
-                                }
-                                ?>" method="post">
-                                    <input type="text" name="ordnername" class="form-control">
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                        <input type="submit" value="Erstellen" name="submit" class="btn btn-primary">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <button class="dropdown-item" data-toggle="modal" data-target="#folder-modal"><i class="fas fa-folder" style="margin-right: 10px"></i>Ordner erstellen</button>
                 <div class="dropdown-divider"></div>
                 <button class="dropdown-item" data-toggle="modal" data-target="#upload-modal"><i class="fas fa-file-upload" style="margin-right: 10px"></i>Datei hochladen</button>
             </div>
-        </div>
         <br>
-        <div class="div-suche" style="display: inline-block">
-            <form action="suche.php" class="form-inline my-2 my-md-0" style="width: 70%">
-                <input class="form-control mr-sm-2" name="suchwort" type="search" placeholder="Suche..." aria-label="Search" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 1px;">
-                <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit" style="font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; border-color: lightgrey; color: lightgrey; background-color: inherit; width: 25%; text-align: center">Los</button>
-            </form>
-        </div>
-    </div>
 </nav>
 </header>
 
@@ -327,33 +256,35 @@ $userid = $_SESSION['user'];
     </div>
 
 
-    <!-- Footer -->
-    <section id="footer">
-        <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <h3>C L E O</h3>
-                    <br>
-                    <p>Hochschule der Medien<br>
-                        Nobelstraße 10<br>
-                        70569 Stuttgart</p>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4">
-                    <h5>Allgemeines</h5>
-                    <ul class="list-unstyled quick-links">
-                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
-                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
-                    </ul>
-                </div>
+<!-- Footer -->
+<section id="footer">
+    <div class="container">
+        <div class="row text-center text-xs-center text-sm-left text-md-left">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <h3>C L E O</h3>
                 <br>
+                <p>Hochschule der Medien<br>
+                    Nobelstraße 10<br>
+                    70569 Stuttgart</p>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <h5>Allgemeines</h5>
+                <ul class="list-unstyled quick-links">
+                    <li><a href="about_us.php"><i class="fa fa-angle-double-right"></i>Über uns</a></li>
+                    <li><a href="datenschutz.html"><i class="fa fa-angle-double-right"></i>Datenschutz</a></li>
+                </ul>
             </div>
             <br>
-            <div class="row" style="font-family: 'Open Sans Condensed', sans-serif;">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-                    <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
-                </div>
-            </div>
         </div>
-    </section>
+        <br>
+        <div class="row" style="font-family: 'Open Sans Condensed', sans-serif;">
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                <p class="h6">&copy Alle Rechte vorbehalten.<a class="text-green ml-2" href="https://www.hdm-stuttgart.de/" target="_blank">Hochschule der Medien Stuttgart</a></p>
+            </div>
+            </hr>
+        </div>
+    </div>
+</section>
+<!-- ./Footer -->
 </body>
 </html>

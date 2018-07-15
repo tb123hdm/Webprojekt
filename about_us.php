@@ -179,18 +179,18 @@ $userid = $_SESSION['user'];
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <a class="navbar-brand" href="hauptseite.php" style="font-family:'Megrim', cursive;  font-size: x-large; color: white; ">C L E O
     </a>
-    <button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <!--<button class="navbar-toggler"  style="border-color: darkgrey;" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-    </button>
+    </button>-->
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <!--<a class="nav-link" href="hauptseite.php" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;">Dashboard <span class="sr-only">(current)</span></a>-->
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php
+            <!--<li class="nav-item dropdown">-->
+                <!---<a class="nav-link dropdown-toggle" style=" font-family: 'Open Sans Condensed', sans-serif; font-weight: normal; letter-spacing: 2px; color: lightgrey; margin-left: 20px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    --><?php /*
                     $userid = $_SESSION['user'];
                     $upload_folder='https://mars.iuk.hdm-stuttgart.de/~tb123/cleo/uploads/';
                     $statement = $db->prepare('SELECT * FROM Nutzer WHERE ID=?');
@@ -207,7 +207,7 @@ $userid = $_SESSION['user'];
                         echo $upload_bild;
                         echo '" width="50" height="50" style="object-fit:cover" class="rounded-circle mr-3" alt="">';
                     }
-                    echo $row['vorname'];
+                    echo $row['vorname'];*/
                     ?>
 
                 </a>
@@ -232,7 +232,6 @@ $userid = $_SESSION['user'];
 </header>
 
 <h2 id="header-about" style="font-family: 'Poppins', sans-serif">Das Team</h2>
-
     <!--Team-Bilder--->
     <div class="card-deck">
         <div class="card">
